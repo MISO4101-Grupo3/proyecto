@@ -4,5 +4,6 @@ from webapp import views
 
 urlpatterns = [
     path('', views.inicio , name='inicio'),
+    path('buscar', views.buscar , name='buscar'),
 
 ]
