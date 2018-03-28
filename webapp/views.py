@@ -13,13 +13,32 @@ def inicio(request):
     return render(request, 'pages/inicio.html', context)
 
 def buscar(request):
-    if request.method == 'POST':
-        form = BusquedaSimpleForm(request.POST)
-        if form.is_valid():
-            q = form.cleaned_data.get("query",'')
-            keywords = q.split()
-            filters = reduce(lambda x, y: x & y, [Q(descripcion__icontains=word) for word in keywords])
-            filters |= reduce(lambda x, y: x & y, [Q(nombre__icontains=word) for word in keywords])
-            qs = Ejemplo_De_Uso.objects.filter(filters)
 
-    return render(request,'pages/resultados.html')
+    q = request.GET.get('query','')
+    keywords = q.split()
+
+    if len(keywords) > 0:
+        # Filtros para ejemplos de uso
+        filters = reduce(lambda x, y: x & y, [Q(descripcion__icontains=word) for word in keywords])
+        filters |= reduce(lambda x, y: x & y, [Q(nombre__icontains=word) for word in keywords])
+        filters |= reduce(lambda x, y: x & y, [Q(estrategia__nombre__icontains=word) for word in keywords])
+        filters |= reduce(lambda x, y: x & y, [Q(disciplinas__nombre__icontains=word) for word in keywords])
+        filters |= reduce(lambda x, y: x & y, [Q(herramientas__nombre__icontains=word) for word in keywords])
+
+        qs_ejemplos = Ejemplo_De_Uso.objects.filter(filters).all()
+
+        # Filtros para herramientas
+        filters = reduce(lambda x, y: x & y, [Q(nombre__icontains=word) for word in keywords])
+        filters |= reduce(lambda x, y: x & y, [Q(descripcion__icontains=word) for word in keywords])
+        filters |= reduce(lambda x, y: x & y, [Q(descripcion_funcional__icontains=word) for word in keywords])
+        filters |= reduce(lambda x, y: x & y, [Q(sistemas_operativos__icontains=word) for word in keywords])
+        filters |= reduce(lambda x, y: x & y, [Q(restricciones_de_uso__icontains=word) for word in keywords])
+
+        qs_herramientas = Herramienta.objects.filter(filters).all()
+
+    else:
+        qs_ejemplos = Ejemplo_De_Uso.objects.all()
+        qs_herramientas = Herramienta.objects.all()
+
+
+    return render(request,'pages/resultados.html', {"herramientas":qs_herramientas,"ejemplos":qs_ejemplos})
