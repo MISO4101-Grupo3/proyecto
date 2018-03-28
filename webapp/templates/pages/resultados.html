@@ -1,13 +1,702 @@
-{% extends 'base.html' %}
-{% load static %}
+{% extends 'base.html' %} {% load static %} {% block body %}
+    <section class="slice sct-color-2 border-top border-bottom">
+        <div class="container mt-5">
+            <h3 class="heading heading-1 strong-400 mt-0 mb-4 text-normal text-center">
+                <span>Toma el siguiente paso</span>
+            </h3>
 
-{% block body %}
-    <h1> Hola Mundo</h1>
-{% endblock %}
+            <span class="clearfix"></span>
 
-{% block custom_js %}
+            <div class="fluid-paragraph fluid-paragraph-sm c-gray-light strong-300 text-center">
+                Empieza a rediseñar tus clases, haciendo uso de todas las estrategias pedagogicas que tienes a tu alcance. Busca todas las herramientas, ejemplos de uso y tutoriales que hemos desarrollado y que podrán ser utiles para ti.
+            </div>
 
-    <script>
-        alert("hola mundo");
-    </script>
-{% endblock %}
+            <span class="space-xs-lg"></span>
+
+            <div class="feature feature--boxed-border feature--bg-1">
+                <form role="form" class="form-default">
+                    <div class="row cols-md-space cols-sm-space cols-xs-space">
+                        <div class="col-lg-9">
+                            <div class="form-group mb-0">
+                                <input class="form-control form-control-lg " type="text" placeholder="Keywords">
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <button type="button" class="btn btn-styled btn-block btn-base-1">
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- <section class="slice sct-color-2">
+        <div class="container swiper-js-container">
+            <div class="swiper-container" data-swiper-items="6" data-swiper-space-between="20" data-swiper-md-items="4" data-swiper-md-space-between="20"
+                 data-swiper-sm-items="3" data-swiper-sm-space-between="20" data-swiper-xs-items="2" data-swiper-xs-space-between="20">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="block">
+                            <div class="block-image">
+                                <div class="view view-first">
+                                    <a href="#">
+                                        <img src="{% static 'assets/images/prv/shop/electronics/img-5.png' %}" class="img-fluid img-center img-primary">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <h2 class="heading heading-6 product-title text-normal strong-500">
+                                    <a href="#">Tablets</a>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="block">
+                            <div class="block-image">
+                                <div class="view view-first">
+                                    <a href="#">
+                                        <img src="{% static 'assets/images/prv/shop/electronics/img-6.png' %}" class="img-fluid img-center img-primary">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <h2 class="heading heading-6 product-title text-normal strong-500">
+                                    <a href="#">Smart watches</a>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="block">
+                            <div class="block-image">
+                                <div class="view view-first">
+                                    <a href="#">
+                                        <img src="{% static 'assets/images/prv/shop/electronics/img-8.png' %}" class="img-fluid img-center img-primary">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <h2 class="heading heading-6 product-title text-normal strong-500">
+                                    <a href="#">Headphones</a>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="block">
+                            <div class="block-image">
+                                <div class="view view-first">
+                                    <a href="#">
+                                        <img src="{% static 'assets/images/prv/shop/electronics/img-2.png' %}" class="img-fluid img-center img-primary">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <h2 class="heading heading-6 product-title text-normal strong-500">
+                                    <a href="#">In-Earh Heads</a>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="block">
+                            <div class="block-image">
+                                <div class="view view-first">
+                                    <a href="#">
+                                        <img src="{% static 'assets/images/prv/shop/electronics/img-1.png' %}" class="img-fluid img-center img-primary">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <h2 class="heading heading-6 product-title text-normal strong-500">
+                                    <a href="#">Desktops</a>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="block">
+                            <div class="block-image">
+                                <div class="view view-first">
+                                    <a href="#">
+                                        <img src="{% static 'assets/images/prv/shop/electronics/img-3.png' %}" class="img-fluid img-center img-primary">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <h2 class="heading heading-6 product-title text-normal strong-500">
+                                    <a href="#">Laptops</a>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="block">
+                            <div class="block-image">
+                                <div class="view view-first">
+                                    <a href="#">
+                                        <img src="{% static 'assets/images/prv/shop/electronics/img-4.png' %}" class="img-fluid img-center img-primary">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <h2 class="heading heading-6 product-title text-normal strong-500">
+                                    <a href="#">Phones</a>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <section class="slice sct-color-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="sidebar sidebar--style-4 z-depth-1-top">
+                        <div class="sidebar-object">
+                            <h5 class="heading heading-sm strong-600 mb-4">Resultado</h5>
+
+                            <div class="filter-checkbox">
+                                <div class="checkbox">
+                                    <input type="checkbox" id="chkCategory-1b">
+                                    <label class="text-sm" for="chkCategory-1b">Herramientas</label>
+                                </div>
+
+                                <div class="checkbox">
+                                    <input type="checkbox" id="chkCategory-2b">
+                                    <label class="text-sm" for="chkCategory-2b">Ejemplos de uso</label>
+                                </div>
+
+                                <div class="checkbox">
+                                    <input type="checkbox" id="chkCategory-3b">
+                                    <label class="text-sm" for="chkCategory-3b">Tutoriales</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sidebar-object">
+                            <h5 class="heading heading-sm strong-600 mb-4">Disciplina</h5>
+
+                            <div class="filter-checkbox">
+                                <div class="checkbox">
+                                    <input type="checkbox" id="chkCategory-1b">
+                                    <label class="text-sm" for="chkCategory-1b">Economia</label>
+                                </div>
+
+                                <div class="checkbox">
+                                    <input type="checkbox" id="chkCategory-2b">
+                                    <label class="text-sm" for="chkCategory-2b">Ingeniería</label>
+                                </div>
+
+                                <div class="checkbox">
+                                    <input type="checkbox" id="chkCategory-3b">
+                                    <label class="text-sm" for="chkCategory-3b">Derecho</label>
+                                </div>
+
+                                <div class="checkbox">
+                                    <input type="checkbox" id="chkCategory-4b">
+                                    <label class="text-sm" for="chkCategory-4b">Artes y Humanidades</label>
+                                </div>
+
+                                <div class="checkbox">
+                                    <input type="checkbox" id="chkCategory-5b">
+                                    <label class="text-sm" for="chkCategory-5b">Ciencias</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sidebar-object">
+                            <h5 class="heading heading-sm strong-600 mb-4">Estrategía Pedagogica</h5>
+
+                            <div class="filter-checkbox">
+                                <div class="checkbox">
+                                    <input type="checkbox" id="chkCategory-1b">
+                                    <label class="text-sm" for="chkCategory-1b">Educación Invertida</label>
+                                </div>
+
+                                <div class="checkbox">
+                                    <input type="checkbox" id="chkCategory-2b">
+                                    <label class="text-sm" for="chkCategory-2b">Educación Blended</label>
+                                </div>
+
+                                <div class="checkbox">
+                                    <input type="checkbox" id="chkCategory-3b">
+                                    <label class="text-sm" for="chkCategory-3b">Educación Semipresencial</label>
+                                </div>
+
+                                <div class="checkbox">
+                                    <input type="checkbox" id="chkCategory-4b">
+                                    <label class="text-sm" for="chkCategory-4b">Educación Virtual</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="sidebar-object">
+                            <h5 class="heading heading-sm strong-600 mb-4">Color</h5>
+
+                            <ul class="list-inline checkbox-color mb-0 text-xs-center">
+                                <li>
+                                    <input type="radio" id="color-1" name="color" checked="">
+                                    <label style="background: #38393d;" for="color-1" onclick="galleryTop.slideTo(0)" data-toggle="tooltip" data-original-title="Black"></label>
+                                </li>
+                                <li>
+                                    <input type="radio" id="color-2" name="color">
+                                    <label style="background: #bfc0c2;" for="color-2" onclick="galleryTop.slideTo(1)" data-toggle="tooltip" data-original-title="Silver"></label>
+                                </li>
+                                <li>
+                                    <input type="radio" id="color-3" name="color">
+                                    <label style="background: #eabfb9;" for="color-3" onclick="galleryTop.slideTo(2)" data-toggle="tooltip" data-original-title="Rose"></label>
+                                </li>
+                                <li>
+                                    <input type="radio" id="color-4" name="color">
+                                    <label style="background: #000000;" for="color-4" onclick="galleryTop.slideTo(3)" data-toggle="tooltip" data-original-title="Jet Black"></label>
+                                </li>
+                                <li>
+                                    <input type="radio" id="color-5" name="color">
+                                    <label style="background: #dcc4ac;" for="color-5" data-toggle="tooltip" data-original-title="Gold"></label>
+                                </li>
+                                <li>
+                                    <input type="radio" id="color-6" name="color">
+                                    <label style="background: #2189db;" for="color-6" data-toggle="tooltip" data-original-title="Blue"></label>
+                                </li>
+                                <li>
+                                    <input type="radio" id="color-7" name="color">
+                                    <label style="background: #ac92d9;" for="color-7" data-toggle="tooltip" data-original-title="Purple"></label>
+                                </li>
+                                <li>
+                                    <input type="radio" id="color-8" name="color">
+                                    <label style="background: #ef574a;" for="color-8" data-toggle="tooltip" data-original-title="Red"></label>
+                                </li>
+                            </ul>
+                        </div> -->
+
+                        <!-- <div class="sidebar-object mt-2">
+                            <div class="sidebar-object">
+                                <h5 class="heading heading-sm strong-600 mb-4">Price range</h5>
+
+                                <div class="range-slider-wrapper mt-3">
+                                    <div id="input-slider-range" data-range-value-min="1000" data-range-value-max="5000"></div>
+
+                                    <div class="row">
+                                        <div class="col-6">
+                                        <span class="range-slider-value value-low" data-range-value-low="1500" id="input-slider-range-value-low">
+                                        </div>
+
+                                        <div class="col-6 text-right">
+                                        <span class="range-slider-value value-high" data-range-value-high="5000" id="input-slider-range-value-high">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+
+                <div class="col-lg-9">
+                    <div class="row-wrapper">
+                        <div class="row cols-xs-space cols-sm-space cols-md-space">
+                            <div class="col-lg-4">
+                                <div class="card card-product z-depth-1-top z-depth-2--hover">
+                                    <div class="card-body">
+                                        <h2 class="heading heading-6 strong-600 mt-2 mb-3">
+                                            <a href="#">SicuaPlus</a>
+                                        </h2>
+
+                                        <div class="card-image swiper-js-container">
+                                            <div class="">
+                                                <div class="swiper-container" data-swiper-items="1" data-swiper-space-between="0">
+                                                    <div class="swiper-wrapper">
+                                                        <div class="swiper-slide">
+                                                            <img src="{% static 'assets/images/sicua.jpg' %}" class="img-fluid img-center img-primary">
+                                                        </div>
+                                                        <div class="swiper-slide">
+                                                            <img src="{% static 'assets/images/sicua.jpg' %}" class="img-fluid img-center img-primary">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-3">
+                                            <div class="price-wrapper">
+                                            <span class="price price-sm c-gray-dark">
+                                                <span class="strong-300">$</span>
+                                                <span class="price-value strong-600">Free</span>
+                                            </span>
+                                                <span class="clearfix"></span>
+                                            </div>
+                                            <h6 class="heading heading-sm strong-400 c-red">Lic. MIT</h6>
+                                            <p class="product-description mt-3 mb-0">
+                                                Administra y enriquece tus cursos haciendo uso de todo tipo de funcionalidades academicas.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="product-buttons">
+                                            <div class="row align-items-center">
+                                                <div class="col-2">
+                                                    <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Visit">
+                                                        <i class="ion-android-open"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Download">
+                                                        <i class="ion-ios-cloud-download"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="col-8">
+                                                    <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left">
+                                                        <i class="ion-information-circled"></i> More Info
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="card card-product z-depth-1-top z-depth-2--hover">
+                                    <div class="card-body">
+                                        <h2 class="heading heading-6 strong-600 mt-2 mb-3">
+                                            <a href="#">Moodle</a>
+                                        </h2>
+
+                                        <div class="card-image swiper-js-container">
+                                            <div class="">
+                                                <div class="swiper-container" data-swiper-items="1" data-swiper-space-between="0">
+                                                    <div class="swiper-wrapper">
+                                                        <div class="swiper-slide">
+                                                            <img src="{% static 'assets/images/moodle.png' %}" class="img-fluid img-center img-primary">
+                                                        </div>
+                                                        <div class="swiper-slide">
+                                                            <img src="{% static 'assets/images/moodle.png' %}" class="img-fluid img-center img-primary">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-3">
+                                            <div class="price-wrapper">
+                                            <span class="price price-sm c-gray-dark">
+                                                <span class="strong-300">$</span>
+                                                <span class="price-value strong-600">Free</span>
+                                            </span>
+                                                <span class="clearfix"></span>
+                                            </div>
+                                            <h6 class="heading heading-sm strong-400 c-green">Lic. MIT</h6>
+                                            <p class="product-description mt-3 mb-0">
+                                                Administra y enriquece tus cursos haciendo uso de todo tipo de funcionalidades academicas.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="product-buttons">
+                                            <div class="row align-items-center">
+                                                <div class="col-2">
+                                                    <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Visit">
+                                                        <i class="ion-android-open"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Download">
+                                                        <i class="ion-ios-cloud-download"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="col-8">
+                                                    <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left">
+                                                        <i class="ion-information-circled"></i> More Info
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="card card-product z-depth-1-top z-depth-2--hover">
+                                    <div class="card-body">
+                                        <h2 class="heading heading-6 strong-600 mt-2 mb-3">
+                                            <a href="#">Libratone Q Adapt</a>
+                                        </h2>
+
+                                        <div class="card-image swiper-js-container">
+                                            <div class="">
+                                                <div class="swiper-container" data-swiper-items="1" data-swiper-space-between="0">
+                                                    <div class="swiper-wrapper">
+                                                        <div class="swiper-slide">
+                                                            <img src="{% static 'assets/images/prv/shop/electronics/img-3.png' %}" class="img-fluid img-center img-primary">
+                                                        </div>
+                                                        <div class="swiper-slide">
+                                                            <img src="{% static 'assets/images/prv/shop/electronics/img-3.png' %}" class="img-fluid img-center img-primary">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-3">
+                                            <div class="price-wrapper">
+                                            <span class="price price-sm c-gray-dark">
+                                                <span class="strong-300">$</span>
+                                                <span class="price-value strong-600">245.</span>
+                                                <small class="strong-300">00</small>
+                                            </span>
+                                                <span class="clearfix"></span>
+                                            </div>
+                                            <h6 class="heading heading-sm strong-400 c-gray-light">Limited stock</h6>
+                                            <p class="product-description mt-3 mb-0">
+                                                Customize your Google Home to fit into your space.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="product-buttons">
+                                            <div class="row align-items-center">
+                                                <div class="col-2">
+                                                    <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Favorite">
+                                                        <i class="ion-ios-heart"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Compare">
+                                                        <i class="ion-ios-browsers-outline"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="col-8">
+                                                    <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left">
+                                                        <i class="icon ion-android-cart"></i>Add to cart
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row cols-xs-space cols-sm-space cols-md-space">
+                            <div class="col-lg-4">
+                                <div class="card card-product z-depth-1-top z-depth-2--hover">
+                                    <div class="card-body">
+                                        <h2 class="heading heading-6 strong-600 mt-2 mb-3">
+                                            <a href="#">Google Pixel 2</a>
+                                        </h2>
+
+                                        <div class="card-image swiper-js-container">
+                                            <div class="">
+                                                <div class="swiper-container" data-swiper-items="1" data-swiper-space-between="0">
+                                                    <div class="swiper-wrapper">
+                                                        <div class="swiper-slide">
+                                                            <img src="{% static 'assets/images/prv/shop/electronics/img-5.png' %}" class="img-fluid img-center img-primary">
+                                                        </div>
+                                                        <div class="swiper-slide">
+                                                            <img src="{% static 'assets/images/prv/shop/electronics/img-5.png' %}" class="img-fluid img-center img-primary">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-3">
+                                            <div class="price-wrapper">
+                                            <span class="price price-sm c-gray-dark">
+                                                <span class="strong-300">$</span>
+                                                <span class="price-value strong-600">699.</span>
+                                                <small class="strong-300">00</small>
+                                            </span>
+                                                <span class="clearfix"></span>
+                                            </div>
+                                            <h6 class="heading heading-sm strong-400 c-red">Save 10%</h6>
+                                            <p class="product-description mt-3 mb-0">
+                                                Customize your Google Home to fit into your space.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="product-buttons">
+                                            <div class="row align-items-center">
+                                                <div class="col-2">
+                                                    <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Favorite">
+                                                        <i class="ion-ios-heart"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Compare">
+                                                        <i class="ion-ios-browsers-outline"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="col-8">
+                                                    <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left">
+                                                        <i class="icon ion-android-cart"></i>Add to cart
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="card card-product z-depth-1-top z-depth-2--hover">
+                                    <div class="card-body">
+                                        <h2 class="heading heading-6 strong-600 mt-2 mb-3">
+                                            <a href="#">Google Chromecast</a>
+                                        </h2>
+
+                                        <div class="card-image swiper-js-container">
+                                            <div class="">
+                                                <div class="swiper-container" data-swiper-items="1" data-swiper-space-between="0">
+                                                    <div class="swiper-wrapper">
+                                                        <div class="swiper-slide">
+                                                            <img src="{% static 'assets/images/prv/shop/electronics/img-6.png' %}" class="img-fluid img-center img-primary">
+                                                        </div>
+                                                        <div class="swiper-slide">
+                                                            <img src="{% static 'assets/images/prv/shop/electronics/img-6.png' %}" class="img-fluid img-center img-primary">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-3">
+                                            <div class="price-wrapper">
+                                            <span class="price price-sm c-gray-dark">
+                                                <span class="strong-300">$</span>
+                                                <span class="price-value strong-600">59.</span>
+                                                <small class="strong-300">00</small>
+                                            </span>
+                                                <span class="clearfix"></span>
+                                            </div>
+                                            <h6 class="heading heading-sm strong-400 c-green">In stock</h6>
+                                            <p class="product-description mt-3 mb-0">
+                                                Customize your Google Home to fit into your space.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="product-buttons">
+                                            <div class="row align-items-center">
+                                                <div class="col-2">
+                                                    <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Favorite">
+                                                        <i class="ion-ios-heart"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Compare">
+                                                        <i class="ion-ios-browsers-outline"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="col-8">
+                                                    <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left">
+                                                        <i class="icon ion-android-cart"></i>Add to cart
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="card card-product z-depth-1-top z-depth-2--hover">
+                                    <div class="card-body">
+                                        <h2 class="heading heading-6 strong-600 mt-2 mb-3">
+                                            <a href="#">Google Pixel Bud</a>
+                                        </h2>
+
+                                        <div class="card-image swiper-js-container">
+                                            <div class="">
+                                                <div class="swiper-container" data-swiper-items="1" data-swiper-space-between="0">
+                                                    <div class="swiper-wrapper">
+                                                        <div class="swiper-slide">
+                                                            <img src="{% static 'assets/images/prv/shop/electronics/img-7.png' %}" class="img-fluid img-center img-primary">
+                                                        </div>
+                                                        <div class="swiper-slide">
+                                                            <img src="{% static 'assets/images/prv/shop/electronics/img-7.png' %}" class="img-fluid img-center img-primary">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-3">
+                                            <div class="price-wrapper">
+                                            <span class="price price-sm c-gray-dark">
+                                                <span class="strong-300">$</span>
+                                                <span class="price-value strong-600">245.</span>
+                                                <small class="strong-300">00</small>
+                                            </span>
+                                                <span class="clearfix"></span>
+                                            </div>
+                                            <h6 class="heading heading-sm strong-400 c-gray-light">Limited stock</h6>
+                                            <p class="product-description mt-3 mb-0">
+                                                Customize your Google Home to fit into your space.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="product-buttons">
+                                            <div class="row align-items-center">
+                                                <div class="col-2">
+                                                    <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Favorite">
+                                                        <i class="ion-ios-heart"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Compare">
+                                                        <i class="ion-ios-browsers-outline"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="col-8">
+                                                    <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left">
+                                                        <i class="icon ion-android-cart"></i>Add to cart
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-5">
+                        <nav aria-label="Product pagination">
+                            <ul class="pagination pagination--style-2 justify-content-end">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">1</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">2</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">3</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %} {% block custom_js %} {% endblock %}
