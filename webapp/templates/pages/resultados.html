@@ -357,6 +357,17 @@
         </div>
     </section>
 
+
+    <div>
+        {% for ejemplo in ejemplos %}
+            <h1>{{ ejemplo.nombre }}</h1>
+        {% endfor %}
+        <hr>
+        {% for herramienta in herramientas %}
+
+            <h1>{{ herramienta.nombre }}</h1>
+        {% endfor %}
+    </div>
 {% endblock %} 
 {% block custom_js %} 
 <script type="text/javascript">

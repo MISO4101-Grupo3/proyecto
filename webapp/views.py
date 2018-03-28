@@ -14,9 +14,10 @@ def inicio(request):
 
 def buscar(request):
 
-    q = request.GET.get('query','')
+    q = request.GET.get('q','')
     keywords = q.split()
-
+    print(q)
+    print(keywords)
     if len(keywords) > 0:
         # Filtros para ejemplos de uso
         filters = reduce(lambda x, y: x & y, [Q(descripcion__icontains=word) for word in keywords])
@@ -41,4 +42,6 @@ def buscar(request):
         qs_herramientas = Herramienta.objects.all()
 
 
+    print(qs_ejemplos)
+    print(qs_herramientas)
     return render(request,'pages/resultados.html', {"herramientas":qs_herramientas,"ejemplos":qs_ejemplos})
