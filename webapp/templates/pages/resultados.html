@@ -14,39 +14,35 @@
             <span class="space-xs-lg"></span>
 
             <div class="feature feature--boxed-border feature--bg-1" style="background-color: rgba(255,255,255,0.8);">
-                <form role="form" class="form-default">
+                <form role="form" class="form-default" method="GET">
                     <div class="row cols-md-space cols-sm-space cols-xs-space">
-                        <div class="col-lg-3 basic-search-input">
+                        <div class="col-lg-9 basic-search-input">
                             <div class="form-group mb-0">
-                                <input class="form-control form-control-lg " type="text" placeholder="¿Qu&eacute; est&aacute;s buscando?">
+                                <input class="form-control form-control-lg " name="q" type="text" placeholder="¿Qu&eacute; est&aacute;s buscando?">
                             </div>
                         </div>
-                        <div class="col-lg-3 advanced-search-input">
+                        <div class="col-lg-3 advanced-search-input" style="display: none;">
                             <div class="form-group mb-0">
-                                <select class="form-control form-control-lg">
+                                <select class="form-control form-control-lg" name="e">
                                     <option value="">Estrategia Pedagógica</option>
-                                    <option value="">Bucharest</option>
-                                    <option value="">Cluj Napoca</option>
-                                    <option value="">Piatra Neamt</option>
-                                    <option value="">Timisoara</option>
-                                    <option value="">Sibiu</option>
+                                    {% for estrategia in estrategias %}
+                                    <option value="{{ estrategia.id }}">{{ estrategia.nombre }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-3 advanced-search-input">
+                        <div class="col-lg-3 advanced-search-input" style="display: none;">
                             <div class="form-group mb-0">
-                                <select class="form-control form-control-lg">
-                                        <option value="">Disciplina</option>
-                                        <option value="">Bucharest</option>
-                                        <option value="">Cluj Napoca</option>
-                                        <option value="">Piatra Neamt</option>
-                                        <option value="">Timisoara</option>
-                                        <option value="">Sibiu</option>
-                                    </select>
+                                <select class="form-control form-control-lg" name="d">
+                                    <option value="">Disciplina</option>
+                                    {% for disciplina in disciplinas %}
+                                    <option value="{{ disciplina.id }}">{{ disciplina.nombre }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
                         </div>
                         <div class="col-lg-3">
-                            <button type="button" class="btn btn-styled btn-block btn-base-1" onclick="mostrarBusquedaAvanzada()">
+                            <button type="submit" class="btn btn-styled btn-block btn-base-1">
                                 Buscar
                             </button>
                             <div style="position:absolute;">
@@ -147,12 +143,13 @@
 
                 <div class="col-lg-9">
                     <div class="row-wrapper">
-                        <div class="row cols-xs-space cols-sm-space cols-md-space">
-                            <div class="col-lg-4">
+                        <div class="row cols-xs-space cols-sm-space cols-md-space grid">
+                            {% for ejemplo in ejemplos %}
+                            <div class="col-lg-4 element-item ejemplos-de-uso--element">
                                 <div class="card card-product z-depth-1-top z-depth-2--hover">
                                     <div class="card-body">
                                         <h2 class="heading heading-6 strong-600 mt-2 mb-3">
-                                            <a href="#">SicuaPlus</a>
+                                            <a href="#">{{ ejemplo.nombre }}</a>
                                         </h2>
 
                                         <div class="card-image swiper-js-container">
@@ -207,12 +204,13 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="col-lg-4">
+                            {% endfor %}
+                            {% for herramienta in herramientas %}
+                            <div class="col-lg-4 element-item herramientas--element">
                                 <div class="card card-product z-depth-1-top z-depth-2--hover">
                                     <div class="card-body">
                                         <h2 class="heading heading-6 strong-600 mt-2 mb-3">
-                                            <a href="#">Moodle</a>
+                                            <a href="#">{{ herramienta.nombre }}</a>
                                         </h2>
 
                                         <div class="card-image swiper-js-container">
@@ -220,10 +218,10 @@
                                                 <div class="swiper-container" data-swiper-items="1" data-swiper-space-between="0">
                                                     <div class="swiper-wrapper">
                                                         <div class="swiper-slide">
-                                                            <img src="{% static 'assets/images/moodle.png' %}" class="img-fluid img-center img-primary">
+                                                            <img src="{% static 'assets/images/sicua.jpg' %}" class="img-fluid img-center img-primary">
                                                         </div>
                                                         <div class="swiper-slide">
-                                                            <img src="{% static 'assets/images/moodle.png' %}" class="img-fluid img-center img-primary">
+                                                            <img src="{% static 'assets/images/sicua.jpg' %}" class="img-fluid img-center img-primary">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -238,7 +236,7 @@
                                             </span>
                                                 <span class="clearfix"></span>
                                             </div>
-                                            <h6 class="heading heading-sm strong-400 c-green">Lic. MIT</h6>
+                                            <h6 class="heading heading-sm strong-400 c-red">Lic. MIT</h6>
                                             <p class="product-description mt-3 mb-0">
                                                 Administra y enriquece tus cursos haciendo uso de todo tipo de funcionalidades academicas.
                                             </p>
@@ -267,67 +265,7 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="col-lg-4">
-                                <div class="card card-product z-depth-1-top z-depth-2--hover">
-                                    <div class="card-body">
-                                        <h2 class="heading heading-6 strong-600 mt-2 mb-3">
-                                            <a href="#">Libratone Q Adapt</a>
-                                        </h2>
-
-                                        <div class="card-image swiper-js-container">
-                                            <div class="">
-                                                <div class="swiper-container" data-swiper-items="1" data-swiper-space-between="0">
-                                                    <div class="swiper-wrapper">
-                                                        <div class="swiper-slide">
-                                                            <img src="{% static 'assets/images/prv/shop/electronics/img-3.png' %}" class="img-fluid img-center img-primary">
-                                                        </div>
-                                                        <div class="swiper-slide">
-                                                            <img src="{% static 'assets/images/prv/shop/electronics/img-3.png' %}" class="img-fluid img-center img-primary">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mt-3">
-                                            <div class="price-wrapper">
-                                            <span class="price price-sm c-gray-dark">
-                                                <span class="strong-300">$</span>
-                                                <span class="price-value strong-600">245.</span>
-                                                <small class="strong-300">00</small>
-                                            </span>
-                                                <span class="clearfix"></span>
-                                            </div>
-                                            <h6 class="heading heading-sm strong-400 c-gray-light">Limited stock</h6>
-                                            <p class="product-description mt-3 mb-0">
-                                                Customize your Google Home to fit into your space.
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer">
-                                        <div class="product-buttons">
-                                            <div class="row align-items-center">
-                                                <div class="col-2">
-                                                    <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Favorite">
-                                                        <i class="ion-ios-heart"></i>
-                                                    </button>
-                                                </div>
-                                                <div class="col-2">
-                                                    <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Compare">
-                                                        <i class="ion-ios-browsers-outline"></i>
-                                                    </button>
-                                                </div>
-                                                <div class="col-8">
-                                                    <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left">
-                                                        <i class="icon ion-android-cart"></i>Add to cart
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
 
@@ -356,26 +294,26 @@
             </div>
         </div>
     </section>
-
-
-    <div>
-        {% for ejemplo in ejemplos %}
-            <h1>{{ ejemplo.nombre }}</h1>
-        {% endfor %}
-        <hr>
-        {% for herramienta in herramientas %}
-
-            <h1>{{ herramienta.nombre }}</h1>
-        {% endfor %}
-    </div>
 {% endblock %} 
 {% block custom_js %} 
 <script type="text/javascript">
+
+    var $grid;
+
+    function bajarSiHayResultados() {
+        if( window.location.search.indexOf("q=") >= 0 ) {
+            $('html, body').animate({
+                scrollTop: $(".sct-color-2").offset().top + 50
+            }, 1500);
+        }
+    }
 
     function mostrarBusquedaBasica() {
         $('.basic-search-input').removeClass('col-lg-3');
         $('.basic-search-input').addClass('col-lg-9');
 
+        $("select[name='d']").val("");
+        $("select[name='e']").val("");
         $('.advanced-search-input').hide();
 
         $('.basic-search-button').hide();
@@ -392,8 +330,31 @@
         $('.basic-search-button').show();
     }
 
+    function configurarFiltros() {
+        $(".filter-checkbox>.checkbox>input[type=checkbox]").click(function( el ) {
+            var filters = [];
+            
+            $("input:checked").each(function(index, el) {
+                var id = $(el).attr('id');
+                var index = id.indexOf("--category");
+                var filtro = "." + id.substr(0, index) + "--element";
+                filters.push(filtro);
+            });
+
+            var filtro = filters.join(",");
+            console.log(filtro);
+            $grid.isotope({ filter: filtro });
+        });
+    }
+
 $( document ).ready(function() {
     mostrarBusquedaBasica();
+    bajarSiHayResultados();
+    $grid = $('.grid').isotope({
+        itemSelector: '.element-item',
+        layoutMode: 'fitRows'
+    });
+    configurarFiltros();
 });
 </script>
 {% endblock %}
