@@ -27,6 +27,9 @@ def buscar(request):
         filters |= reduce(lambda x, y: x & y, [Q(estrategia__nombre__icontains=word) for word in keywords])
         filters |= reduce(lambda x, y: x & y, [Q(disciplinas__nombre__icontains=word) for word in keywords])
         filters |= reduce(lambda x, y: x & y, [Q(herramientas__nombre__icontains=word) for word in keywords])
+        filters |= reduce(lambda x, y: x & y, [Q(archivos__descripcion__icontains=word) for word in keywords])
+        filters |= reduce(lambda x, y: x & y, [Q(archivos__nombre__icontains=word) for word in keywords])
+        filters |= reduce(lambda x, y: x & y, [Q(archivos__tipo__icontains=word) for word in keywords])
 
         qs_ejemplos = Ejemplo_De_Uso.objects.filter(filters)
 
