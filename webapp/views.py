@@ -44,4 +44,4 @@ def buscar(request):
 
     print(qs_ejemplos)
     print(qs_herramientas)
-    return render(request,'pages/resultados.html', {"herramientas":qs_herramientas,"ejemplos":qs_ejemplos})
+    return render(request,'pages/resultados.html', {"herramientas":qs_herramientas,"ejemplos":qs_ejemplos,"disciplinas":Disciplina.objects.all(),"estrategias":Estrategia_Pedagogica.objects.all()})
