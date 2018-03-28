@@ -46,6 +46,7 @@ class Herramienta(models.Model):
     sistemas_operativos = models.CharField(null=True, blank=True, max_length=255)
     version = models.CharField(null=True, blank=True, max_length=10)
     integracion_con_lms = models.BooleanField(default=False, null=False)
+    imagen = models.ImageField(upload_to=UploadToPathAndRename('uploads/imagenes'), null=True)
 
 # Ejemplo_De_Uso
 
