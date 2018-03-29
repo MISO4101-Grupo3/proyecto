@@ -294,7 +294,34 @@
             </div>
         </div>
     </section>
-{% endblock %} 
+
+
+    <div>
+
+        {% for res in resultados %}
+            <h1>{{ res.nombre }}</h1>
+            <p>{{ res.class_name }}</p>
+        {% endfor %}
+        <hr>
+    <div class="pagination">
+    <span class="step-links">
+        {% if resultados.has_previous %}
+            <a href="?p=1">&laquo; first</a>
+            <a href="?p={{ resultados.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ resultados.number }} of {{ resultados.paginator.num_pages }}.
+        </span>
+
+        {% if resultados.has_next %}
+            <a href="?p={{ resultados.next_page_number }}">next</a>
+            <a href="?p={{ resultados.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+    </div>
+{% endblock %}
 {% block custom_js %} 
 <script type="text/javascript">
 
@@ -333,7 +360,7 @@
     function configurarFiltros() {
         $(".filter-checkbox>.checkbox>input[type=checkbox]").click(function( el ) {
             var filters = [];
-            
+
             $("input:checked").each(function(index, el) {
                 var id = $(el).attr('id');
                 var index = id.indexOf("--category");
