@@ -65,7 +65,7 @@ class Ejemplo_De_Uso(models.Model):
 
 class Tutorial(models.Model):
     def __str__(self):
-        return self.tema
+        return self.nombre
     class Meta:
         verbose_name_plural = "Tutoriales"
     nombre = models.CharField(null=True, blank=True, max_length=255)
