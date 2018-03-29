@@ -64,6 +64,7 @@ def buscar(request):
 
         qs_ejemplos= qs_ejemplos.filter(estrategia_id=e)
         qs_herramientas = qs_herramientas.filter(ejemplos_de_uso__estrategia_id=e)
+        qs_archivos = qs_archivos.filter(ejemplos_de_uso__estrategia_id=e)
 
     # Filtro por disciplina
 
@@ -74,10 +75,11 @@ def buscar(request):
 
         qs_ejemplos = qs_ejemplos.filter(disciplinas__in=[d,])
         qs_herramientas = qs_herramientas.filter(ejemplos_de_uso__disciplinas__in=[d,])
+        qs_archivos = qs_archivos.filter(ejemplos_de_uso__disciplinas__in=[d,])
 
     #qs_ejemplos = qs_ejemplos.all()
     #qs_herramientas = qs_herramientas.all()
-
+    #qs_archivos = qs_archivos.all()
 
     qs_ejemplos = qs_ejemplos.order_by('nombre')[:page_size]
     qs_herramientas = qs_herramientas.order_by('nombre')[:page_size]

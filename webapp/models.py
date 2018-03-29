@@ -74,3 +74,15 @@ class Ejemplo_De_Uso(models.Model):
     disciplinas = models.ManyToManyField('Disciplina', related_name='ejemplos_de_uso', blank=True)
     herramientas = models.ManyToManyField('Herramienta', related_name='ejemplos_de_uso', blank=True)
     estrategia = models.ForeignKey('Estrategia_Pedagogica', related_name='ejemplos_de_uso', on_delete=models.CASCADE)
+
+# Tutorial
+
+class Tutorial(models.Model):
+    def __str__(self):
+        return self.tema
+    class Meta:
+        verbose_name_plural = "Tutoriales"
+    nombre = models.CharField(null=True, blank=True, max_length=255)
+    descripcion = models.TextField(null=True, blank=True)
+    url_recurso = models.URLField(null=True, blank=True)
+    herramienta = models.ForeignKey('Herramienta', related_name='tutoriales', null=True, on_delete=models.CASCADE)
