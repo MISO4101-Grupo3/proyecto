@@ -359,14 +359,29 @@
 
 
     <div>
-        {% for ejemplo in ejemplos %}
-            <h1>{{ ejemplo.nombre }}</h1>
+
+        {% for res in resultados %}
+            <h1>{{ res.nombre }}</h1>
+            <p>{{ res.class_name }}</p>
         {% endfor %}
         <hr>
-        {% for herramienta in herramientas %}
+    <div class="pagination">
+    <span class="step-links">
+        {% if resultados.has_previous %}
+            <a href="?p=1">&laquo; first</a>
+            <a href="?p={{ resultados.previous_page_number }}">previous</a>
+        {% endif %}
 
-            <h1>{{ herramienta.nombre }}</h1>
-        {% endfor %}
+        <span class="current">
+            Page {{ resultados.number }} of {{ resultados.paginator.num_pages }}.
+        </span>
+
+        {% if resultados.has_next %}
+            <a href="?p={{ resultados.next_page_number }}">next</a>
+            <a href="?p={{ resultados.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
     </div>
 {% endblock %} 
 {% block custom_js %} 

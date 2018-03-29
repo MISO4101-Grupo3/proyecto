@@ -5,6 +5,9 @@ from .forms import *
 from .models import *
 from django.db.models import Q
 from functools import reduce
+from itertools import chain
+from operator import attrgetter
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -17,6 +20,8 @@ def buscar(request):
     q = request.GET.get('q','')
     e = request.GET.get('e','')
     d = request.GET.get('d','')
+    page_size = request.GET.get('s',1)
+    page_num = request.GET.get('p',1)
 
     keywords = q.split()
 
@@ -39,9 +44,16 @@ def buscar(request):
 
         qs_herramientas = Herramienta.objects.filter(filters)
 
+        # Filtros para archivos
+        filters = reduce(lambda x, y: x & y, [Q(nombre__icontains=word) for word in keywords])
+        filters |= reduce(lambda x, y: x & y, [Q(descripcion__icontains=word) for word in keywords])
+
+        qs_archivos = Archivo.objects.filter(filters)
+
     else:
         qs_ejemplos = Ejemplo_De_Uso.objects
         qs_herramientas = Herramienta.objects
+        qs_archivos = Archivo.objects
 
     # Filtro por estrategía
 
@@ -63,10 +75,22 @@ def buscar(request):
         qs_ejemplos = qs_ejemplos.filter(disciplinas__in=[d,])
         qs_herramientas = qs_herramientas.filter(ejemplos_de_uso__disciplinas__in=[d,])
 
-    qs_ejemplos = qs_ejemplos.all()
-    qs_herramientas = qs_herramientas.all()
+    #qs_ejemplos = qs_ejemplos.all()
+    #qs_herramientas = qs_herramientas.all()
 
-    return render(request,'pages/resultados.html', {"herramientas":qs_herramientas,"ejemplos":qs_ejemplos,"disciplinas":Disciplina.objects.all(),"estrategias":Estrategia_Pedagogica.objects.all()})
+
+    qs_ejemplos = qs_ejemplos.order_by('nombre')[:page_size]
+    qs_herramientas = qs_herramientas.order_by('nombre')[:page_size]
+    qs_archivos = qs_archivos.order_by('nombre')[:page_size]
+
+    # ascending order
+    result_list = sorted(chain(qs_ejemplos, qs_herramientas, qs_archivos),key=attrgetter('nombre'))
+
+    # https://docs.djangoproject.com/en/2.0/topics/pagination/
+    paginator = Paginator(result_list,page_size)
+    page = paginator.page(page_num)
+    print(page)
+    return render(request,'pages/resultados.html', {"resultados":page,"disciplinas":Disciplina.objects.all(),"estrategias":Estrategia_Pedagogica.objects.all()})
 
 
 def is_number(s):

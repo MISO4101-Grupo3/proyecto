@@ -24,6 +24,10 @@ class Estrategia_Pedagogica(models.Model):
 class Archivo(models.Model):
     def __str__(self):
         return 'id:'+ str(self.id)
+
+    def class_name(self):
+        return self.__class__.__name__
+
     descripcion = models.TextField(null=True, blank=True)
     tipo = models.CharField(null=True, blank=True, max_length=10)
     file = models.FileField(upload_to=UploadToPathAndRename('uploads/archivos'))
@@ -35,6 +39,10 @@ class Archivo(models.Model):
 class Herramienta(models.Model):
     def __str__(self):
         return self.nombre
+
+
+    def class_name(self):
+        return self.__class__.__name__
 
     descripcion = models.TextField(null=True, blank=True)
     tipo_de_licencia = models.CharField(null=True, blank=True, max_length=50)
@@ -48,11 +56,17 @@ class Herramienta(models.Model):
     integracion_con_lms = models.BooleanField(default=False, null=False)
     imagen = models.ImageField(upload_to=UploadToPathAndRename('uploads/imagenes'), null=True)
 
+
+
 # Ejemplo_De_Uso
 
 class Ejemplo_De_Uso(models.Model):
     def __str__(self):
         return self.nombre
+
+    def class_name(self):
+        return self.__class__.__name__
+
     class Meta:
         verbose_name_plural = "Ejemplos de uso"
     nombre = models.CharField(null=True, blank=True, max_length=255)
