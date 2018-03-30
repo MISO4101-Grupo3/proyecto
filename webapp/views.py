@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 
 from .forms import *
@@ -64,7 +64,7 @@ def buscar(request):
         qs_ejemplos = Ejemplo_De_Uso.objects
         qs_herramientas = Herramienta.objects
         qs_archivos = Archivo.objects
-        qs_tutoriales = Tutorial.objects.all()
+        qs_tutoriales = Tutorial.objects
 
     # Filtro por estrategía
 
@@ -91,19 +91,23 @@ def buscar(request):
         qs_tutoriales = qs_tutoriales.filter(herramienta__ejemplos_de_uso__disciplinas__in=[d,])
 
 
-    qs_ejemplos = qs_ejemplos.order_by('nombre')[:page_size]
-    qs_herramientas = qs_herramientas.order_by('nombre')[:page_size]
-    qs_archivos = qs_archivos.order_by('nombre')[:page_size]
-    qs_tutoriales = qs_tutoriales.order_by('nombre')[:page_size]
+    qs_ejemplos = qs_ejemplos.order_by('nombre')[:page_size].all()
+    qs_herramientas = qs_herramientas.order_by('nombre')[:page_size].all()
+    qs_archivos = qs_archivos.order_by('nombre')[:page_size].all()
+    qs_tutoriales = qs_tutoriales.order_by('nombre')[:page_size].all()
 
     # ascending order
-    result_list = sorted(chain(qs_ejemplos, qs_herramientas, qs_archivos,qs_tutoriales),key=attrgetter('nombre'))
+    result_list = sorted(chain(qs_ejemplos, qs_herramientas, qs_archivos,qs_tutoriales),key=lambda obj: obj.nombre.upper())
 
     # https://docs.djangoproject.com/en/2.0/topics/pagination/
     paginator = Paginator(result_list,page_size)
     page = paginator.page(page_num)
     return render(request,'pages/resultados.html', {"resultados":page,"disciplinas":Disciplina.objects.all(),"estrategias":Estrategia_Pedagogica.objects.all()})
 
+def info_herramienta(request,slug):
+    herramienta = get_object_or_404(Herramienta,slug=slug)
+    context = {"herramienta":herramienta}
+    return render(request,'pages/info_herramienta.html', context)
 
 def is_number(s):
     try:

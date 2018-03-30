@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.text import slugify
+
 from .utils import *
 
 # Disciplina
@@ -49,13 +51,17 @@ class Herramienta(models.Model):
     sitio = models.URLField(null=True, blank=True)
     descarga = models.URLField(null=True, blank=True)
     restricciones_de_uso = models.TextField(null=True, blank=True)
-    nombre = models.CharField(null=True, blank=True, max_length=255)
+    nombre = models.CharField(null=True, blank=True, max_length=200)
     descripcion_funcional = models.TextField(null=True, blank=True)
     sistemas_operativos = models.CharField(null=True, blank=True, max_length=255)
     version = models.CharField(null=True, blank=True, max_length=10)
     integracion_con_lms = models.BooleanField(default=False, null=False)
     imagen = models.ImageField(upload_to=UploadToPathAndRename('uploads/imagenes'), null=True)
+    slug = models.SlugField(max_length=250, default='')
 
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.nombre)
+        super(Herramienta, self).save(*args, **kwargs)
 
 
 # Ejemplo_De_Uso

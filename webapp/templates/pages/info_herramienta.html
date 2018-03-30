@@ -1,0 +1,410 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+    <section class="slice--offset sct-color-1" style="padding-bottom: 15px">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="block block-post">
+                        <div class="mb-4">
+                            <h3 class="heading heading-2 strong-400 text-normal">
+                                {{ herramienta.nombre }}
+                            </h3>
+                            <ul class="inline-links inline-links--style-2 mt-1">
+                                <li>
+                                    {{ herramienta.tipo_de_licencia }}
+                                </li>
+                                <li>
+                                    {{ herramienta.sistemas_operativos }}
+                                </li>
+                                <li>
+                                    Version {{ herramienta.version }}
+                                </li>
+                                <li>
+                                    {% if herramienta.integracion_con_lms %}
+                                        Se integra con LMS
+                                    {% else %}
+                                        No se integra con LMS
+                                    {% endif %}
+                                </li>
+                                <li>
+                                    <a href="{{ herramienta.sitio }}">ver sitio</a>
+                                </li>
+                                <li>
+                                    <a href="{{ herramienta.descarga }}">descargar</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="block-image">
+                            <img src="{{ herramienta.imagen.url }}" class="rounded">
+                        </div>
+
+                        <div class="block-body block-post-body">
+                            <p> {{ herramienta.descripcion }}</p>
+
+                            <h3 class="heading heading-4 strong-400 text-normal"> Descripción funcional </h3>
+                            <p> {{ herramienta.descripcion_funcional }}</p>
+                            <h3 class="heading heading-4 strong-400 text-normal">Restricciones de uso</h3>
+
+                            <p> {{ herramienta.restricciones_de_uso }} </p>
+
+                            <h3 class="heading heading-4 strong-400 text-normal"> Tutoriales </h3>
+
+                            <div class="tagcloud tagcloud--style-1 clearfix">
+                                <a href="#"><span>Rooms</span></a>
+                                <a href="#"><span>Simple</span></a>
+                                <a href="#"><span>Decorated</span></a>
+                                <a href="#"><span>Wood</span></a>
+                            </div>
+                        </div>
+
+                        {% comment %}                        <div class="block-post-comment-action mt-5">
+                            <div class="row align-items-center">
+                                <div class="col col-md-6 col-12">
+                                    <h5 class="heading heading-5 strong-500">
+                                        5 comments
+                                    </h5>
+                                </div>
+
+                                <div class="col col-md-6 col-12 text-right">
+                                    <a href="#form_comment" class="heading heading-sm strong-500 scroll-me">
+                                        Add your comment
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <ul class="block-post-comments block-post-comments--style-1">
+                            <li>
+                                <!-- Comment 1 -->
+                                <div class="block block-comment">
+                                    <div class="block-image">
+                                        <img src="../../assets/images/prv/people/person-1.jpg" class="img-circle">
+                                    </div>
+                                    <div class="block-body">
+                                        <div class="block-body-inner">
+                                            <h3 class="heading heading-6">
+                                                <a href="#">David Wally</a>
+                                            </h3>
+                                            <span class="comment-date">
+                                                                2 hours ago
+                                                            </span>
+                                            <p class="comment-text">
+                                                Gathered, fourth wherein air, is void gathering very image fruit under brought Bearing fill created fourth she'd appear days you unto light day under i face they're god spirit, kind.
+                                            </p>
+                                            <div class="comment-options">
+                                                <a href="#">Like</a>
+                                                <a href="#">Reply</a>
+                                                <a href="#">Report</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="block block-comment block-comment-reply">
+                                    <div class="block-image">
+                                        <img src="../../assets/images/prv/people/person-3.jpg" class="img-circle">
+                                    </div>
+                                    <div class="block-body">
+                                        <div class="block-body-inner">
+                                            <h3 class="heading heading-6">
+                                                <a href="#">Elisabeth Alanna</a>
+                                            </h3>
+                                            <span class="comment-date">
+                                                                1 hours ago
+                                                            </span>
+                                            <p class="comment-text">
+                                                Old unsatiable our now but considered travelling impression. In excuse hardly summer in basket misery. By rent an part need. At wrong of of water those linen.
+                                            </p>
+                                            <div class="comment-options">
+                                                <a href="#">Like</a>
+                                                <a href="#">Reply</a>
+                                                <a href="#">Report</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="block block-comment">
+                                    <div class="block-image">
+                                        <img src="../../assets/images/prv/people/person-2.jpg" class="img-circle">
+                                    </div>
+                                    <div class="block-body">
+                                        <div class="block-body-inner">
+                                            <h3 class="heading heading-6">
+                                                <a href="#">Bettie Mavis</a>
+                                            </h3>
+                                            <span class="comment-date">
+                                                                3 hours ago
+                                                            </span>
+                                            <p class="comment-text">
+                                                Apartments occasional boisterous as solicitude to introduced. Or fifteen covered we enjoyed demesne is in prepare. In stimulated my everything it literature. Greatly explain attempt perhaps in feeling he. House men taste bed not drawn joy.
+                                            </p>
+                                            <div class="comment-options">
+                                                <a href="#">Like</a>
+                                                <a href="#">Reply</a>
+                                                <a href="#">Report</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Comment 3 -->
+                                <div class="block block-comment block-comment-reply">
+                                    <div class="block-image">
+                                        <img src="../../assets/images/prv/people/person-3.jpg" class="img-circle">
+                                    </div>
+                                    <div class="block-body">
+                                        <div class="block-body-inner">
+                                            <h3 class="heading heading-6">
+                                                <a href="#">Elisabeth Alanna</a>
+                                            </h3>
+                                            <span class="comment-date">
+                                                                1 hours ago
+                                                            </span>
+                                            <p class="comment-text">
+                                                Old unsatiable our now but considered travelling impression. In excuse hardly summer in basket misery. By rent an part need. At wrong of of water those linen.
+                                            </p>
+                                            <div class="comment-options">
+                                                <a href="#">Like</a>
+                                                <a href="#">Reply</a>
+                                                <a href="#">Report</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Comment 4 -->
+                                <div class="block block-comment block-comment-reply">
+                                    <div class="block-image">
+                                        <img src="../../assets/images/prv/people/person-1.jpg" class="img-circle">
+                                    </div>
+                                    <div class="block-body">
+                                        <div class="block-body-inner">
+                                            <h3 class="heading heading-6">
+                                                <a href="#">David Wally</a>
+                                            </h3>
+                                            <span class="comment-date">
+                                                                50 min ago
+                                                            </span>
+                                            <p class="comment-text">
+                                                We highest ye friends is exposed equally in. Ignorant had too strictly followed. Astonished as travelling assistance or unreserved oh pianoforte ye. Five with seen put need tore add neat.
+                                            </p>
+                                            <div class="comment-options">
+                                                <a href="#">Like</a>
+                                                <a href="#">Reply</a>
+                                                <a href="#">Report</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="block block-comment">
+                                    <div class="block-image">
+                                        <img src="../../assets/images/prv/people/person-4.jpg" class="img-circle">
+                                    </div>
+                                    <div class="block-body">
+                                        <div class="block-body-inner">
+                                            <h3 class="heading heading-6">
+                                                <a href="#">Darby Jewell</a>
+                                            </h3>
+                                            <span class="comment-date">
+                                                                4 hours ago
+                                                            </span>
+                                            <p class="comment-text">
+                                                Old unsatiable our now but considered travelling impression. In excuse hardly summer in basket misery. By rent an part need. At wrong of of water those linen.
+                                            </p>
+                                            <div class="comment-options">
+                                                <a href="#">Like</a>
+                                                <a href="#">Reply</a>
+                                                <a href="#">Report</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="block block-comment">
+                                    <div class="block-image">
+                                        <img src="../../assets/images/prv/people/person-4.jpg" class="img-circle">
+                                    </div>
+                                    <div class="block-body">
+                                        <div class="block-body-inner">
+                                            <h3 class="heading heading-6">
+                                                <a href="#">Darby Jewell</a>
+                                            </h3>
+                                            <span class="comment-date">
+                                                                4 hours ago
+                                                            </span>
+                                            <p class="comment-text">
+                                                Old unsatiable our now but considered travelling impression. In excuse hardly summer in basket misery. By rent an part need. At wrong of of water those linen.
+                                            </p>
+                                            <div class="comment-options">
+                                                <a href="#">Like</a>
+                                                <a href="#">Reply</a>
+                                                <a href="#">Report</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <!-- Comment form -->
+                        <div id="form_comment" class="feature feature--boxed-border feature--bg-3 mt-5">
+                            <div class="px-3">
+                                <div class="text-center">
+                                    <h5 class="heading heading-3 strong-400 mb-4">
+                                        Add your comment
+                                    </h5>
+                                    <p class="">
+                                        Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt labore.
+                                    </p>
+                                </div>
+
+                                <form class="form-default mt-5" role="form">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="" class="text-uppercase sr-only">Message</label>
+                                                <textarea class="form-control" rows="5" placeholder=""></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="" class="text-uppercase sr-only">Name</label>
+                                                <input type="text" class="form-control input-lg" placeholder="Name">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="" class="text-uppercase sr-only">Email</label>
+                                                <input type="email" class="form-control input-lg" placeholder="Email">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="" class="text-uppercase sr-only">Website</label>
+                                                <input type="text" class="form-control input-lg" placeholder="Website">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-styled btn-base-4 mt-1">Post comment</button>
+                                </form>
+                            </div>
+                        </div>{% endcomment %}
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="sidebar sidebar--style-1">
+
+                        <!-- Popular topics -->
+                        <div class="sidebar-object">
+                            <div class="section-title section-title--style-1">
+                                <h2 class="section-title-inner heading-sm strong-500">
+                                    Ejemplos de Uso
+                                </h2>
+                            </div>
+
+                            <ul class="list-recent">
+                                <li class="clearfix">
+
+                                    <span class="post-author">
+                    <a href="#">Bettie Mavis</a>
+                    <br>
+                    35 mins ago
+                </span>
+                                    <span class="post-entry">
+                    Sed molestie augue sit consequat posuere.
+                </span>
+                                </li>
+                                <li class="clearfix">
+
+                                    <span class="post-author">
+                    <a href="#">Bettie Mavis</a>
+                    <br>
+                    35 mins ago
+                </span>
+                                    <span class="post-entry">
+                    Sed molestie augue sit consequat posuere.
+                </span>
+                                </li>
+                                <li class="clearfix">
+
+                                    <span class="post-author">
+                    <a href="#">Bettie Mavis</a>
+                    <br>
+                    35 mins ago
+                </span>
+                                    <span class="post-entry">
+                    Sed molestie augue sit consequat posuere.
+                </span>
+                                </li>
+                                <li class="clearfix">
+
+                                    <span class="post-author">
+                    <a href="#">Bettie Mavis</a>
+                    <br>
+                    35 mins ago
+                </span>
+                                    <span class="post-entry">
+                    Sed molestie augue sit consequat posuere.
+                </span>
+                                </li>
+                                <li class="clearfix">
+
+                                    <span class="post-author">
+                    <a href="#">Bettie Mavis</a>
+                    <br>
+                    35 mins ago
+                </span>
+                                    <span class="post-entry">
+                    Sed molestie augue sit consequat posuere.
+                </span>
+                                </li>
+                                <li class="clearfix">
+
+                                    <span class="post-author">
+                    <a href="#">Bettie Mavis</a>
+                    <br>
+                    35 mins ago
+                </span>
+                                    <span class="post-entry">
+                    Sed molestie augue sit consequat posuere.
+                </span>
+                                </li>
+                                <li class="clearfix">
+
+                                    <span class="post-author">
+                    <a href="#">Bettie Mavis</a>
+                    <br>
+                    35 mins ago
+                </span>
+                                    <span class="post-entry">
+                    Sed molestie augue sit consequat posuere.
+                </span>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
