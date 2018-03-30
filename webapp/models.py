@@ -57,7 +57,7 @@ class Herramienta(models.Model):
     version = models.CharField(null=True, blank=True, max_length=10)
     integracion_con_lms = models.BooleanField(default=False, null=False)
     imagen = models.ImageField(upload_to=UploadToPathAndRename('uploads/imagenes'), null=True)
-    slug = models.SlugField(max_length=250, default='')
+    slug = models.SlugField(max_length=250, unique=True, null=False, blank=False)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.nombre)
