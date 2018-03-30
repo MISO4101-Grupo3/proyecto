@@ -80,6 +80,11 @@ class Ejemplo_De_Uso(models.Model):
     disciplinas = models.ManyToManyField('Disciplina', related_name='ejemplos_de_uso', blank=True)
     herramientas = models.ManyToManyField('Herramienta', related_name='ejemplos_de_uso', blank=True)
     estrategia = models.ForeignKey('Estrategia_Pedagogica', related_name='ejemplos_de_uso', on_delete=models.CASCADE)
+    slug = models.SlugField(max_length=250, default="")
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.nombre)
+        super(Ejemplo_De_Uso, self).save(*args, **kwargs)
 
 # Tutorial
 
@@ -89,7 +94,7 @@ class Tutorial(models.Model):
 
     def class_name(self):
         return self.__class__.__name__
-        
+
     class Meta:
         verbose_name_plural = "Tutoriales"
     nombre = models.CharField(null=True, blank=True, max_length=200)

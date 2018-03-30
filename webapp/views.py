@@ -136,6 +136,12 @@ def info_herramienta(request,slug):
     context = {"herramienta":herramienta}
     return render(request,'pages/info_herramienta.html', context)
 
+def info_ejemplo_de_uso(request,slug):
+    ejemplo_de_uso = get_object_or_404(Ejemplo_De_Uso,slug=slug)
+    context = {"ejemplo_de_uso":ejemplo_de_uso}
+    return render(request,'pages/info_ejemplo_de_uso.html', context)
+
+
 def tutoriales(request,slug_herramienta,slug_tutorial):
     tutorial = Tutorial.objects.filter(slug=slug_tutorial,herramienta__slug=slug_herramienta)
     if tutorial.count()==0:

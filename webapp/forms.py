@@ -38,6 +38,39 @@ class HerramientaForm(forms.ModelForm):
             if exist.id != id :
                 self.add_error('nombre',"No se puede crear un slug único con este nombre.")
 
+class Ejemplo_De_UsoForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(Ejemplo_De_UsoForm, self).__init__(*args, **kwargs)
+
+        # Ensure that data is a regular Python dictionary so we can
+        # modify it later.
+        if isinstance(self.data, QueryDict):
+            self.data = self.data.copy()
+
+        # We assume here that the slug is only generated once, when
+        # saving the object. Since they are used in URLs they should
+        # not change when valid.
+        if not self.instance.pk and self.data.get('nombre'):
+            self.data['slug'] = slugify(self.data['nombre'])
+
+    class Meta:
+        model = Ejemplo_De_Uso
+        exclude = ['slug']
+
+    def _post_clean(self):
+        super()._post_clean()
+
+        nombre = self.cleaned_data['nombre']
+        ejemplos_de_uso = self.instance
+        id = ejemplos_de_uso.id
+        slug = slugify(nombre)
+        qs = Ejemplo_De_Uso.objects.filter(slug=slug)
+        if qs.count()>0:
+            exist = qs.first()
+            if exist.id != id :
+                self.add_error('nombre',"No se puede crear un slug único con este nombre.")
+
 class TutorialForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
@@ -70,4 +103,3 @@ class TutorialForm(forms.ModelForm):
             exist = qs.first()
             if exist.id != id :
                 self.add_error('nombre',"No se puede crear un slug único con este nombre.")
-
