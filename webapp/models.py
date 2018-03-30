@@ -25,7 +25,7 @@ class Estrategia_Pedagogica(models.Model):
 
 class Archivo(models.Model):
     def __str__(self):
-        return 'id:'+ str(self.id)
+        return  str(self.ejemplo_de_uso)+" : " + str(self.nombre)
 
     def class_name(self):
         return self.__class__.__name__
@@ -33,8 +33,13 @@ class Archivo(models.Model):
     descripcion = models.TextField(null=True, blank=True)
     tipo = models.CharField(null=True, blank=True, max_length=10)
     file = models.FileField(upload_to=UploadToPathAndRename('uploads/archivos'))
-    nombre = models.CharField(null=True, blank=True, max_length=255)
+    nombre = models.CharField(null=True, blank=True, max_length=200)
     ejemplo_de_uso = models.ForeignKey('Ejemplo_De_Uso', related_name='archivos', null=True, on_delete=models.CASCADE)
+    slug = models.SlugField(max_length=250, unique=True, null=False, blank=False)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.nombre)
+        super(Archivo, self).save(*args, **kwargs)
 
 # Herramienta
 

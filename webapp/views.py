@@ -23,6 +23,9 @@ def buscar(request):
     d = request.GET.get('d','')
     tipos = request.GET.get('t','e,h,a,t').split(',')
 
+    if len(tipos) == 0:
+        tipos = 't', 'e,h,a,t'.split(',')
+
     page_size = request.GET.get('s',1)
     page_num = request.GET.get('p',1)
 

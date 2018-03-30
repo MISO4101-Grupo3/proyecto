@@ -12,9 +12,12 @@ class Ejemplo_De_UsoAdmin(admin.ModelAdmin):
 class TutorialAdmin(admin.ModelAdmin):
     form = TutorialForm
 
+class ArchivoAdmin(admin.ModelAdmin):
+    form = ArchivoForm
+
 admin.site.register(Disciplina)
 admin.site.register(Estrategia_Pedagogica)
-admin.site.register(Archivo)
+admin.site.register(Archivo, ArchivoAdmin)
 admin.site.register(Herramienta, HerramientaAdmin)
 admin.site.register(Ejemplo_De_Uso, Ejemplo_De_UsoAdmin )
 admin.site.register(Tutorial, TutorialAdmin)
