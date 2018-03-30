@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponseNotFound
 
 from .forms import *
 from .models import *
@@ -108,6 +109,13 @@ def info_herramienta(request,slug):
     herramienta = get_object_or_404(Herramienta,slug=slug)
     context = {"herramienta":herramienta}
     return render(request,'pages/info_herramienta.html', context)
+
+def tutoriales(request,slug_herramienta,slug_tutorial):
+    tutorial = Tutorial.objects.filter(slug=slug_tutorial,herramienta__slug=slug_herramienta)
+    if tutorial.count()==0:
+        return HttpResponseNotFound()
+    context = {"tutorial":tutorial.first()}
+    return render(request,'pages/tutoriales.html', context)
 
 def is_number(s):
     try:
