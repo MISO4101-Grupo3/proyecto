@@ -53,10 +53,9 @@
                             <h3 class="heading heading-4 strong-400 text-normal"> Tutoriales </h3>
 
                             <div class="tagcloud tagcloud--style-1 clearfix">
-                                <a href="#"><span>Rooms</span></a>
-                                <a href="#"><span>Simple</span></a>
-                                <a href="#"><span>Decorated</span></a>
-                                <a href="#"><span>Wood</span></a>
+                                {% for tutorial in herramienta.tutoriales.all %}
+                                     <a href="#"><span>{{ tutorial.nombre }}</span></a>
+                                {% endfor %}
                             </div>
                         </div>
 
@@ -321,83 +320,20 @@
                             </div>
 
                             <ul class="list-recent">
-                                <li class="clearfix">
+                                {% for ejemplo in herramienta.ejemplos_de_uso.all %}
+                                    <li class="clearfix">
 
                                     <span class="post-author">
-                    <a href="#">Bettie Mavis</a>
+                    <a href="#">{{ ejemplo.nombre }}</a>
                     <br>
-                    35 mins ago
+                    {{ ejemplo.estrategia }}
                 </span>
                                     <span class="post-entry">
-                    Sed molestie augue sit consequat posuere.
+                    {{ ejemplo.descripcion }}
                 </span>
                                 </li>
-                                <li class="clearfix">
+                                {% endfor %}
 
-                                    <span class="post-author">
-                    <a href="#">Bettie Mavis</a>
-                    <br>
-                    35 mins ago
-                </span>
-                                    <span class="post-entry">
-                    Sed molestie augue sit consequat posuere.
-                </span>
-                                </li>
-                                <li class="clearfix">
-
-                                    <span class="post-author">
-                    <a href="#">Bettie Mavis</a>
-                    <br>
-                    35 mins ago
-                </span>
-                                    <span class="post-entry">
-                    Sed molestie augue sit consequat posuere.
-                </span>
-                                </li>
-                                <li class="clearfix">
-
-                                    <span class="post-author">
-                    <a href="#">Bettie Mavis</a>
-                    <br>
-                    35 mins ago
-                </span>
-                                    <span class="post-entry">
-                    Sed molestie augue sit consequat posuere.
-                </span>
-                                </li>
-                                <li class="clearfix">
-
-                                    <span class="post-author">
-                    <a href="#">Bettie Mavis</a>
-                    <br>
-                    35 mins ago
-                </span>
-                                    <span class="post-entry">
-                    Sed molestie augue sit consequat posuere.
-                </span>
-                                </li>
-                                <li class="clearfix">
-
-                                    <span class="post-author">
-                    <a href="#">Bettie Mavis</a>
-                    <br>
-                    35 mins ago
-                </span>
-                                    <span class="post-entry">
-                    Sed molestie augue sit consequat posuere.
-                </span>
-                                </li>
-                                <li class="clearfix">
-
-                                    <span class="post-author">
-                    <a href="#">Bettie Mavis</a>
-                    <br>
-                    35 mins ago
-                </span>
-                                    <span class="post-entry">
-                    Sed molestie augue sit consequat posuere.
-                </span>
-                                </li>
 
                             </ul>
                         </div>
