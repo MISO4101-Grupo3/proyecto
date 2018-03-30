@@ -6,7 +6,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
-                    <div class="block block-post">
+                    <div class="block block-post" style="">
                         <div class="mb-4">
                             <h3 class="heading heading-2 strong-400 text-normal">
                                 {{ herramienta.nombre }}
@@ -309,7 +309,7 @@
                 </div>
 
                 <div class="col-lg-4">
-                    <div class="sidebar sidebar--style-1">
+                    <div class="sidebar sidebar--style-1" style="height: 100%;">
 
                         <!-- Popular topics -->
                         <div class="sidebar-object">
@@ -324,7 +324,7 @@
                                     <li class="clearfix">
 
                                     <span class="post-author">
-                    <a href="#">{{ ejemplo.nombre }}</a>
+                    <a href="{% url 'ejemplos' ejemplo.slug %}">{{ ejemplo.nombre }}</a>
                     <br>
                     {{ ejemplo.estrategia }}
                 </span>
