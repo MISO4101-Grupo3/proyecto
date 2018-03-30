@@ -21,8 +21,11 @@ def buscar(request):
     q = request.GET.get('q','')
     e = request.GET.get('e','')
     d = request.GET.get('d','')
+    tipos = request.GET.get('t','e,h,a,t').split(',')
+
     page_size = request.GET.get('s',1)
     page_num = request.GET.get('p',1)
+
 
     if is_number(page_size):
         page_size = int(page_size)
@@ -91,17 +94,7 @@ def buscar(request):
         qs_archivos = qs_archivos.filter(ejemplos_de_uso__disciplinas__in=[d,])
         qs_tutoriales = qs_tutoriales.filter(herramienta__ejemplos_de_uso__disciplinas__in=[d,])
 
-
-    qs_ejemplos = qs_ejemplos.order_by('nombre')
-    qs_herramientas = qs_herramientas.order_by('nombre')
-    qs_archivos = qs_archivos.order_by('nombre')
-    qs_tutoriales = qs_tutoriales.order_by('nombre')
-
-    chained_list = list(chain(qs_ejemplos, qs_herramientas, qs_archivos,qs_tutoriales))
-
-    # ascending order
-    result_list = sorted(chained_list,key=lambda obj: obj.nombre.upper())
-
+    # Filtros Resultados
     filtros_resultados = []
     if qs_ejemplos.count()>0:
         filtros_resultados+=(IdNombre('e','Ejemplos de uso'),)
@@ -111,6 +104,27 @@ def buscar(request):
         filtros_resultados+=(IdNombre('a','Archivos'),)
     if qs_tutoriales.count()>0:
         filtros_resultados+=(IdNombre('t','Tutoriales'),)
+
+    if 'e' in tipos:
+        qs_ejemplos = qs_ejemplos.order_by('nombre')
+    else: qs_ejemplos = []
+
+    if 'h' in tipos:
+        qs_herramientas = qs_herramientas.order_by('nombre')
+    else: qs_herramientas = []
+
+    if 'a' in tipos:
+        qs_archivos = qs_archivos.order_by('nombre')
+    else: qs_archivos=[]
+
+    if 't' in tipos:
+        qs_tutoriales = qs_tutoriales.order_by('nombre')
+    else: qs_tutoriales=[]
+
+    chained_list = list(chain(qs_ejemplos, qs_herramientas, qs_archivos,qs_tutoriales))
+
+    # ascending order
+    result_list = sorted(chained_list,key=lambda obj: obj.nombre.upper())
 
     # https://docs.djangoproject.com/en/2.0/topics/pagination/
     paginator = Paginator(result_list,page_size)
