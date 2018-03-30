@@ -23,6 +23,10 @@ def buscar(request):
     page_size = request.GET.get('s',1)
     page_num = request.GET.get('p',1)
 
+    if is_number(page_size):
+        page_size = int(page_size)
+    else:
+        page_size = 10
     keywords = q.split()
 
     if len(keywords) > 0:
@@ -46,14 +50,21 @@ def buscar(request):
 
         # Filtros para archivos
         filters = reduce(lambda x, y: x & y, [Q(nombre__icontains=word) for word in keywords])
-        filters |= reduce(lambda x, y: x & y, [Q(descripcion__icontains=word) for word in keywords])
 
         qs_archivos = Archivo.objects.filter(filters)
+
+        #Filtros para tutoriales
+        filters = reduce(lambda x, y: x & y, [Q(nombre__icontains=word) for word in keywords])
+        filters |= reduce(lambda x, y: x & y, [Q(descripcion__icontains=word) for word in keywords])
+        filters |= reduce(lambda x, y: x & y, [Q(url_recurso__icontains=word) for word in keywords])
+
+        qs_tutoriales = Tutorial.objects.filter(filters)
 
     else:
         qs_ejemplos = Ejemplo_De_Uso.objects
         qs_herramientas = Herramienta.objects
         qs_archivos = Archivo.objects
+        qs_tutoriales = Tutorial.objects.all()
 
     # Filtro por estrategía
 
@@ -65,6 +76,7 @@ def buscar(request):
         qs_ejemplos= qs_ejemplos.filter(estrategia_id=e)
         qs_herramientas = qs_herramientas.filter(ejemplos_de_uso__estrategia_id=e)
         qs_archivos = qs_archivos.filter(ejemplos_de_uso__estrategia_id=e)
+        qs_tutoriales = qs_tutoriales.filter(herramienta__ejemplos_de_uso__estrategia_id=e)
 
     # Filtro por disciplina
 
@@ -76,22 +88,20 @@ def buscar(request):
         qs_ejemplos = qs_ejemplos.filter(disciplinas__in=[d,])
         qs_herramientas = qs_herramientas.filter(ejemplos_de_uso__disciplinas__in=[d,])
         qs_archivos = qs_archivos.filter(ejemplos_de_uso__disciplinas__in=[d,])
+        qs_tutoriales = qs_tutoriales.filter(herramienta__ejemplos_de_uso__disciplinas__in=[d,])
 
-    #qs_ejemplos = qs_ejemplos.all()
-    #qs_herramientas = qs_herramientas.all()
-    #qs_archivos = qs_archivos.all()
 
     qs_ejemplos = qs_ejemplos.order_by('nombre')[:page_size]
     qs_herramientas = qs_herramientas.order_by('nombre')[:page_size]
     qs_archivos = qs_archivos.order_by('nombre')[:page_size]
+    qs_tutoriales = qs_tutoriales.order_by('nombre')[:page_size]
 
     # ascending order
-    result_list = sorted(chain(qs_ejemplos, qs_herramientas, qs_archivos),key=attrgetter('nombre'))
+    result_list = sorted(chain(qs_ejemplos, qs_herramientas, qs_archivos,qs_tutoriales),key=attrgetter('nombre'))
 
     # https://docs.djangoproject.com/en/2.0/topics/pagination/
     paginator = Paginator(result_list,page_size)
     page = paginator.page(page_num)
-    print(page)
     return render(request,'pages/resultados.html', {"resultados":page,"disciplinas":Disciplina.objects.all(),"estrategias":Estrategia_Pedagogica.objects.all()})
 
 
