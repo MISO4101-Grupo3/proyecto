@@ -114,7 +114,8 @@ def tutoriales(request,slug_herramienta,slug_tutorial):
     tutorial = Tutorial.objects.filter(slug=slug_tutorial,herramienta__slug=slug_herramienta)
     if tutorial.count()==0:
         return HttpResponseNotFound()
-    context = {"tutorial":tutorial.first()}
+    tutoriales = Tutorial.objects.filter(herramienta__slug=slug_herramienta)
+    context = {"tutorial":tutorial.first(),"tutoriales":tutoriales,"slug_tutorial":slug_tutorial}
     return render(request,'pages/tutoriales.html', context)
 
 def is_number(s):

@@ -54,7 +54,7 @@
 
                             <div class="tagcloud tagcloud--style-1 clearfix">
                                 {% for tutorial in herramienta.tutoriales.all %}
-                                     <a href="#"><span>{{ tutorial.nombre }}</span></a>
+                                     <a href="{% url 'tutoriales' tutorial.herramienta.slug tutorial.slug %}"><span>{{ tutorial.nombre }}</span></a>
                                 {% endfor %}
                             </div>
                         </div>
