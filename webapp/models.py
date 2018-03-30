@@ -92,7 +92,12 @@ class Tutorial(models.Model):
         
     class Meta:
         verbose_name_plural = "Tutoriales"
-    nombre = models.CharField(null=True, blank=True, max_length=255)
+    nombre = models.CharField(null=True, blank=True, max_length=200)
     descripcion = models.TextField(null=True, blank=True)
     url_recurso = models.URLField(null=True, blank=True)
     herramienta = models.ForeignKey('Herramienta', related_name='tutoriales', null=True, on_delete=models.CASCADE)
+    slug = models.SlugField(max_length=250, null=False, blank=False)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.nombre)
+        super(Tutorial, self).save(*args, **kwargs)
