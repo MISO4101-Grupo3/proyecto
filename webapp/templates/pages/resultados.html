@@ -22,7 +22,7 @@
 
         <div class="feature feature--boxed-border feature--bg-1" style="background-color: rgba(255,255,255,0.8);">
             <form role="form" class="form-default" method="GET">
-                <input type="hidden" name="s" value="1">
+                <input type="hidden" name="s" value="8">
                 <div class="row cols-md-space cols-sm-space cols-xs-space">
                     <div class="col-lg-9 basic-search-input">
                         <div class="form-group mb-0">
@@ -84,9 +84,13 @@
                             </div>
 
                             <div class="checkbox">
-                                <input type="checkbox" id="tutoriales--category">
-                                <label class="text-sm" for="tutoriales--category">Tutoriales</label>
-                            </div>
+                                    <input type="checkbox" id="tutoriales--category">
+                                    <label class="text-sm" for="tutoriales--category">Tutoriales</label>
+                                </div>
+                                <div class="checkbox">
+                                        <input type="checkbox" id="archivos--category">
+                                        <label class="text-sm" for="archivos--category">Archivos</label>
+                                    </div>
                         </div>
                     </div>
 
@@ -153,7 +157,7 @@
                 <div class="row-wrapper">
                     <div class="row cols-xs-space cols-sm-space cols-md-space grid">
                         {% for res in resultados %} {% if res.class_name == 'Herramienta' %}
-                        <div class="col-lg-4 element-item herramientas--element">
+                        <div class="col-lg-4 element-item herramientas--element" style="margin-bottom: 15px">
                             <div class="card card-product" style="box-shadow: 0 2px 15px rgba(124, 201, 78, 0.8)">
                                 <div class="card card-product">
                                     <div class="card-body">
@@ -202,9 +206,11 @@
                                                     {% endif %}
                                                 </div>
                                                 <div class="col-8">
-                                                    <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left">
-                                                        <i class="ion-information-circled"></i> More Info
-                                                    </button>
+                                                    <a href="{% url 'herramientas' res.slug %}">
+                                                        <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left">
+                                                            <i class="ion-information-circled"></i> More Info
+                                                        </button>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -214,7 +220,7 @@
                         </div>
 
                         {% endif %} {% if res.class_name == 'Ejemplo_De_Uso' %}
-                        <div class="col-lg-4 element-item ejemplos-de-uso--element">
+                        <div class="col-lg-4 element-item ejemplos-de-uso--element" style="margin-bottom: 15px">
                             <div class="card card-product" style="box-shadow: 0 2px 15px rgb(230, 221, 43,0.8)">
                                 <div class="card-body">
                                     <h2 class="heading heading-6 strong-600 mt-2 mb-3">
@@ -274,7 +280,7 @@
                             </div>
                         </div>
                         {% endif %} {% if res.class_name == 'Tutorial' %}
-                        <div class="col-lg-4 element-item ejemplos-de-uso--element">
+                        <div class="col-lg-4 element-item tutoriales--element" style="margin-bottom: 15px">
                             <div class="card card-product" style="box-shadow: 0 2px 15px rgba(187, 224, 248, 0.8)">
                                 <div class="card-body">
                                     <h2 class="heading heading-6 strong-600 mt-2 mb-3">
@@ -309,8 +315,8 @@
                             </div>
                         </div>
                         {% endif %} {% if res.class_name == 'Archivo' %}
-                        <div class="col-lg-4 element-item ejemplos-de-uso--element">
-                            <div class="card card-product" style="box-shadow: 0 2px 15px rgba(255, 0, 0, 0.8)">
+                        <div class="col-lg-4 element-item archivos--element" style="margin-bottom: 15px">
+                            <div class="card card-product" style="box-shadow: 0 2px 15px rgba(116, 13, 76, 0.8)">
                                 <div class="card-body">
                                     <h2 class="heading heading-6 strong-600 mt-2 mb-3">
                                         {{ res.nombre }}
@@ -356,29 +362,25 @@
                                 <a class="page-link" id="firstPage">&laquo; Primera</a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link" id="previousPage" >Anterior</a>
+                                <a class="page-link" id="previousPage">Anterior</a>
                             </li>
-                            {% endif %}
-                                <li class="page-item">
-                                    <a class="page-link" href="#">1</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">2</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">3</a>
-                                </li>
-                            {% if resultados.has_next %}
+                            {% endif %} {% for i in resultados.paginator.page_range %}
+                            <li class="page-item {% if i == resultados.number %} active {% endif %}">
+                                <a class="page-link pagee" data-value="{{i}}">{{i}}</a>
+                            </li>
+                            {% endfor %} {% if resultados.has_next %}
                             <li class="page-item">
-                                <a class="page-link" id="nextPage" >Siguiente</a>
+                                <a class="page-link" id="nextPage">Siguiente</a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link" id="lastPage" >Ultima &raquo;</a>
+                                <a class="page-link" id="lastPage">Ultima &raquo;</a>
                             </li>
                             {% endif %}
                         </ul>
                     </nav>
                 </div>
+
+                <h1>{{resultados.paginator.num_pages}}</h1>
             </div>
         </div>
     </div>
@@ -394,7 +396,11 @@
             {% if resultados.has_previous %}
             $('#firstPage').attr('href', search.substr(0, inicio + 2) + "1")
             $('#previousPage').attr('href', search.substr(0, inicio + 2) + "{{resultados.previous_page_number}}")
-            {% endif %} {% if resultados.has_next %}
+            {% endif %}
+            $(".pagee").each(function () {
+                $(this).attr('href', search.substr(0, inicio + 2) + $(this).attr('data-value'))
+            })
+            {% if resultados.has_next %}
             $('#nextPage').attr('href', search.substr(0, inicio + 2) + "{{resultados.next_page_number}}")
             $('#lastPage').attr('href', search.substr(0, inicio + 2) + "{{resultados.paginator.num_pages}}")
             {% endif %}
@@ -403,7 +409,11 @@
             {% if resultados.has_previous %}
             $('#firstPage').attr('href', search.substr(0, inicio + 2) + "1" + search.substr(inicio + fin, search.length))
             $('#previousPage').attr('href', search.substr(0, inicio + 2) + "{{resultados.previous_page_number}}" + search.substr(inicio + fin, search.length))
-            {% endif %} {% if resultados.has_next %}
+            {% endif %}
+            $(".pagee").each(function () {
+                $(this).attr('href', search.substr(0, inicio + 2) + $(this).attr('data-value') + search.substr(inicio + fin, search.length))
+            })
+            {% if resultados.has_next %}
             $('#nextPage').attr('href', search.substr(0, inicio + 2) + "{{resultados.next_page_number}}" + search.substr(inicio + fin, search.length))
             $('#lastPage').attr('href', search.substr(0, inicio + 2) + "{{resultados.paginator.num_pages}}" + search.substr(inicio + fin, search.length))
             {% endif %}
@@ -412,7 +422,11 @@
         {% if resultados.has_previous %}
         $('#firstPage').attr('href', search + "&p=1")
         $('#previousPage').attr('href', search + "&p={{resultados.previous_page_number}}")
-        {% endif %} {% if resultados.has_next %}
+        {% endif %}
+        $(".pagee").each(function () {
+            $(this).attr('href', search + "&p=" + $(this).attr('data-value'))
+        })
+        {% if resultados.has_next %}
         $('#nextPage').attr('href', search + "&p={{resultados.next_page_number}}")
         $('#lastPage').attr('href', search + "&p={{resultados.paginator.num_pages}}")
         {% endif %}
