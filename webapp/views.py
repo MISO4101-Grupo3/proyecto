@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseNotFound
 
@@ -14,7 +14,8 @@ from django.core.paginator import Paginator
 
 def inicio(request):
     context = {}
-    return render(request, 'pages/inicio.html', context)
+    #return render(request, 'pages/inicio.html', context)
+    return  redirect('buscar')
 
 def buscar(request):
 
@@ -26,7 +27,7 @@ def buscar(request):
     if len(tipos) == 0:
         tipos = 't', 'e,h,a,t'.split(',')
 
-    page_size = request.GET.get('s',1)
+    page_size = request.GET.get('s',6)
     page_num = request.GET.get('p',1)
 
 
