@@ -1,155 +1,164 @@
 {% extends 'base.html' %} {% load static %} {% block body %}
-    <section class="slice border-top border-bottom" style="background-image: url('{% static 'assets/images/backgrounds/slider/img-58.jpg' %}'); background-size: cover; background-repeat: no-repeat;background-position: center;">
-        <div class="container mt-5">
-            <h3 class="heading heading-1 strong-400 mt-0 mb-4 text-normal text-center">
-                <span style="text-shadow: -1px 2px 2px #e0e0e0;">Toma el siguiente paso</span>
-            </h3>
+<style>
+    .product-description {
+        height: 4.6em;
+        overflow: hidden;
+    }
+</style>
+<section class="slice border-top border-bottom" style="background-image: url('{% static 'assets/images/backgrounds/slider/img-58.jpg' %}'); background-size: cover; background-repeat: no-repeat;background-position: center;">
+    <div class="container mt-5">
+        <h3 class="heading heading-1 strong-400 mt-0 mb-4 text-normal text-center">
+            <span style="text-shadow: -1px 2px 2px #e0e0e0;">Toma el siguiente paso</span>
+        </h3>
 
-            <span class="clearfix"></span>
+        <span class="clearfix"></span>
 
-            <div class="fluid-paragraph fluid-paragraph-sm c-gray-light strong-300 text-center" style="text-shadow: -1px 2px 2px #000;color:white !important">
-                Empieza a rediseñar tus clases, haciendo uso de todas las estrategias pedagogicas que tienes a tu alcance. Busca todas las herramientas, ejemplos de uso y tutoriales que hemos desarrollado y que podrán ser utiles para ti.
-            </div>
+        <div class="fluid-paragraph fluid-paragraph-sm c-gray-light strong-300 text-center" style="text-shadow: -1px 2px 2px #000;color:white !important">
+            Empieza a rediseñar tus clases, haciendo uso de todas las estrategias pedagogicas que tienes a tu alcance. Busca todas las
+            herramientas, ejemplos de uso y tutoriales que hemos desarrollado y que podrán ser utiles para ti.
+        </div>
 
-            <span class="space-xs-lg"></span>
+        <span class="space-xs-lg"></span>
 
-            <div class="feature feature--boxed-border feature--bg-1" style="background-color: rgba(255,255,255,0.8);">
-                <form role="form" class="form-default" method="GET">
-                    <div class="row cols-md-space cols-sm-space cols-xs-space">
-                        <div class="col-lg-9 basic-search-input">
-                            <div class="form-group mb-0">
-                                <input class="form-control form-control-lg " name="q" type="text" placeholder="¿Qu&eacute; est&aacute;s buscando?">
-                            </div>
+        <div class="feature feature--boxed-border feature--bg-1" style="background-color: rgba(255,255,255,0.8);">
+            <form role="form" class="form-default" method="GET">
+                <input type="hidden" name="s" value="1">
+                <div class="row cols-md-space cols-sm-space cols-xs-space">
+                    <div class="col-lg-9 basic-search-input">
+                        <div class="form-group mb-0">
+                            <input class="form-control form-control-lg " name="q" type="text" placeholder="¿Qu&eacute; est&aacute;s buscando?">
                         </div>
-                        <div class="col-lg-3 advanced-search-input" style="display: none;">
-                            <div class="form-group mb-0">
-                                <select class="form-control form-control-lg" name="e">
-                                    <option value="">Estrategia Pedagógica</option>
-                                    {% for estrategia in estrategias %}
-                                    <option value="{{ estrategia.id }}">{{ estrategia.nombre }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
+                    </div>
+                    <div class="col-lg-3 advanced-search-input" style="display: none;">
+                        <div class="form-group mb-0">
+                            <select class="form-control form-control-lg" name="e">
+                                <option value="">Estrategia Pedagógica</option>
+                                {% for estrategia in estrategias %}
+                                <option value="{{ estrategia.id }}">{{ estrategia.nombre }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
-                        <div class="col-lg-3 advanced-search-input" style="display: none;">
-                            <div class="form-group mb-0">
-                                <select class="form-control form-control-lg" name="d">
-                                    <option value="">Disciplina</option>
-                                    {% for disciplina in disciplinas %}
-                                    <option value="{{ disciplina.id }}">{{ disciplina.nombre }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
+                    </div>
+                    <div class="col-lg-3 advanced-search-input" style="display: none;">
+                        <div class="form-group mb-0">
+                            <select class="form-control form-control-lg" name="d">
+                                <option value="">Disciplina</option>
+                                {% for disciplina in disciplinas %}
+                                <option value="{{ disciplina.id }}">{{ disciplina.nombre }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
-                        <div class="col-lg-3">
-                            <button type="submit" class="btn btn-styled btn-block btn-base-1">
-                                Buscar
-                            </button>
-                            <div style="position:absolute;">
-                                <a href="#" onclick="mostrarBusquedaAvanzada()" class="advanced-search-button">Búsqueda avanzada</a>
-                                <a href="#" onclick="mostrarBusquedaBasica()" class="basic-search-button">Búsqueda básica</a>
+                    </div>
+                    <div class="col-lg-3">
+                        <button type="submit" class="btn btn-styled btn-block btn-base-1">
+                            Buscar
+                        </button>
+                        <div style="position:absolute;">
+                            <a href="#" onclick="mostrarBusquedaAvanzada()" class="advanced-search-button">Búsqueda avanzada</a>
+                            <a href="#" onclick="mostrarBusquedaBasica()" class="basic-search-button">Búsqueda básica</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<section class="slice sct-color-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="sidebar sidebar--style-4 z-depth-1-top">
+                    <div class="sidebar-object">
+                        <h5 class="heading heading-sm strong-600 mb-4">Resultado</h5>
+
+                        <div class="filter-checkbox">
+                            <div class="checkbox">
+                                <input type="checkbox" id="herramientas--category">
+                                <label class="text-sm" for="herramientas--category">Herramientas</label>
+                            </div>
+
+                            <div class="checkbox">
+                                <input type="checkbox" id="ejemplos-de-uso--category">
+                                <label class="text-sm" for="ejemplos-de-uso--category">Ejemplos de uso</label>
+                            </div>
+
+                            <div class="checkbox">
+                                <input type="checkbox" id="tutoriales--category">
+                                <label class="text-sm" for="tutoriales--category">Tutoriales</label>
                             </div>
                         </div>
                     </div>
-                </form>
-            </div>
-        </div>
-    </section>
 
-    <section class="slice sct-color-2">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="sidebar sidebar--style-4 z-depth-1-top">
-                        <div class="sidebar-object">
-                            <h5 class="heading heading-sm strong-600 mb-4">Resultado</h5>
+                    <div class="sidebar-object">
+                        <h5 class="heading heading-sm strong-600 mb-4">Disciplina</h5>
 
-                            <div class="filter-checkbox">
-                                <div class="checkbox">
-                                    <input type="checkbox" id="herramientas--category">
-                                    <label class="text-sm" for="herramientas--category">Herramientas</label>
-                                </div>
+                        <div class="filter-checkbox">
+                            <div class="checkbox">
+                                <input type="checkbox" id="economia--category">
+                                <label class="text-sm" for="economia--category">Economia</label>
+                            </div>
 
-                                <div class="checkbox">
-                                    <input type="checkbox" id="ejemplos-de-uso--category">
-                                    <label class="text-sm" for="ejemplos-de-uso--category">Ejemplos de uso</label>
-                                </div>
+                            <div class="checkbox">
+                                <input type="checkbox" id="ingenieria--category">
+                                <label class="text-sm" for="ingenieria--category">Ingeniería</label>
+                            </div>
 
-                                <div class="checkbox">
-                                    <input type="checkbox" id="tutoriales--category">
-                                    <label class="text-sm" for="tutoriales--category">Tutoriales</label>
-                                </div>
+                            <div class="checkbox">
+                                <input type="checkbox" id="derecho--category">
+                                <label class="text-sm" for="derecho--category">Derecho</label>
+                            </div>
+
+                            <div class="checkbox">
+                                <input type="checkbox" id="artes-y-humanidades--category">
+                                <label class="text-sm" for="artes-y-humanidades--category">Artes y Humanidades</label>
+                            </div>
+
+                            <div class="checkbox">
+                                <input type="checkbox" id="ciencias--category">
+                                <label class="text-sm" for="ciencias--category">Ciencias</label>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="sidebar-object">
-                            <h5 class="heading heading-sm strong-600 mb-4">Disciplina</h5>
+                    <div class="sidebar-object">
+                        <h5 class="heading heading-sm strong-600 mb-4">Estrategía Pedagogica</h5>
 
-                            <div class="filter-checkbox">
-                                <div class="checkbox">
-                                    <input type="checkbox" id="economia--category">
-                                    <label class="text-sm" for="economia--category">Economia</label>
-                                </div>
-
-                                <div class="checkbox">
-                                    <input type="checkbox" id="ingenieria--category">
-                                    <label class="text-sm" for="ingenieria--category">Ingeniería</label>
-                                </div>
-
-                                <div class="checkbox">
-                                    <input type="checkbox" id="derecho--category">
-                                    <label class="text-sm" for="derecho--category">Derecho</label>
-                                </div>
-
-                                <div class="checkbox">
-                                    <input type="checkbox" id="artes-y-humanidades--category">
-                                    <label class="text-sm" for="artes-y-humanidades--category">Artes y Humanidades</label>
-                                </div>
-
-                                <div class="checkbox">
-                                    <input type="checkbox" id="ciencias--category">
-                                    <label class="text-sm" for="ciencias--category">Ciencias</label>
-                                </div>
+                        <div class="filter-checkbox">
+                            <div class="checkbox">
+                                <input type="checkbox" id="estrategia-invertida--category">
+                                <label class="text-sm" for="estrategia-invertida--category">Educación Invertida</label>
                             </div>
-                        </div>
 
-                        <div class="sidebar-object">
-                            <h5 class="heading heading-sm strong-600 mb-4">Estrategía Pedagogica</h5>
+                            <div class="checkbox">
+                                <input type="checkbox" id="educacion-blended--category">
+                                <label class="text-sm" for="educacion-blended--category">Educación Blended</label>
+                            </div>
 
-                            <div class="filter-checkbox">
-                                <div class="checkbox">
-                                    <input type="checkbox" id="estrategia-invertida--category">
-                                    <label class="text-sm" for="estrategia-invertida--category">Educación Invertida</label>
-                                </div>
+                            <div class="checkbox">
+                                <input type="checkbox" id="educacion-semipresencial--category">
+                                <label class="text-sm" for="educacion-semipresencial--category">Educación Semipresencial</label>
+                            </div>
 
-                                <div class="checkbox">
-                                    <input type="checkbox" id="educacion-blended--category">
-                                    <label class="text-sm" for="educacion-blended--category">Educación Blended</label>
-                                </div>
-
-                                <div class="checkbox">
-                                    <input type="checkbox" id="educacion-semipresencial--category">
-                                    <label class="text-sm" for="educacion-semipresencial--category">Educación Semipresencial</label>
-                                </div>
-
-                                <div class="checkbox">
-                                    <input type="checkbox" id="chkCategory-4b">
-                                    <label class="text-sm" for="chkCategory-4b">Educación Virtual</label>
-                                </div>
+                            <div class="checkbox">
+                                <input type="checkbox" id="chkCategory-4b">
+                                <label class="text-sm" for="chkCategory-4b">Educación Virtual</label>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="col-lg-9">
-                    <div class="row-wrapper">
-                        <div class="row cols-xs-space cols-sm-space cols-md-space grid">
-                            {% for ejemplo in ejemplos %}
-                            <div class="col-lg-4 element-item ejemplos-de-uso--element">
-                                <div class="card card-product z-depth-1-top z-depth-2--hover">
+            <div class="col-lg-9">
+                <div class="row-wrapper">
+                    <div class="row cols-xs-space cols-sm-space cols-md-space grid">
+                        {% for res in resultados %} {% if res.class_name == 'Herramienta' %}
+                        <div class="col-lg-4 element-item herramientas--element">
+                            <div class="card card-product" style="box-shadow: 0 2px 15px rgba(124, 201, 78, 0.8)">
+                                <div class="card card-product">
                                     <div class="card-body">
                                         <h2 class="heading heading-6 strong-600 mt-2 mb-3">
-                                            <a href="#">{{ ejemplo.nombre }}</a>
+                                            {{ res.nombre }}
                                         </h2>
 
                                         <div class="card-image swiper-js-container">
@@ -157,10 +166,7 @@
                                                 <div class="swiper-container" data-swiper-items="1" data-swiper-space-between="0">
                                                     <div class="swiper-wrapper">
                                                         <div class="swiper-slide">
-                                                            <img src="{% static 'assets/images/sicua.jpg' %}" class="img-fluid img-center img-primary">
-                                                        </div>
-                                                        <div class="swiper-slide">
-                                                            <img src="{% static 'assets/images/sicua.jpg' %}" class="img-fluid img-center img-primary">
+                                                            <img src="{{res.imagen.url}}" class="img-fluid img-center img-primary" style="max-height: 60px">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -168,16 +174,9 @@
                                         </div>
 
                                         <div class="mt-3">
-                                            <div class="price-wrapper">
-                                            <span class="price price-sm c-gray-dark">
-                                                <span class="strong-300">$</span>
-                                                <span class="price-value strong-600">Free</span>
-                                            </span>
-                                                <span class="clearfix"></span>
-                                            </div>
-                                            <h6 class="heading heading-sm strong-400 c-red">Lic. MIT</h6>
+                                            <h6 class="heading heading-sm strong-400 c-green">Lic. {{res.tipo_de_licencia}}</h6>
                                             <p class="product-description mt-3 mb-0">
-                                                Administra y enriquece tus cursos haciendo uso de todo tipo de funcionalidades academicas.
+                                                {{res.descripcion}}
                                             </p>
                                         </div>
                                     </div>
@@ -185,14 +184,22 @@
                                         <div class="product-buttons">
                                             <div class="row align-items-center">
                                                 <div class="col-2">
-                                                    <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Visit">
-                                                        <i class="ion-android-open"></i>
-                                                    </button>
+
+                                                    <a href="{{res.sitio}}">
+                                                        <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Visit">
+                                                            <i class="ion-android-open"></i>
+                                                        </button>
+                                                    </a>
                                                 </div>
                                                 <div class="col-2">
-                                                    <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Download">
-                                                        <i class="ion-ios-cloud-download"></i>
-                                                    </button>
+                                                    <!-- <h1>{{res.descarga}}</h1> -->
+                                                    {% if res.descarga != '' and res.descarga is not None%}
+                                                    <a href="{{res.descarga}}">
+                                                        <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Download">
+                                                            <i class="ion-ios-cloud-download"></i>
+                                                        </button>
+                                                    </a>
+                                                    {% endif %}
                                                 </div>
                                                 <div class="col-8">
                                                     <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left">
@@ -204,77 +211,154 @@
                                     </div>
                                 </div>
                             </div>
-                            {% endfor %}
-                            {% for herramienta in herramientas %}
-                            <div class="col-lg-4 element-item herramientas--element">
-                                <div class="card card-product z-depth-1-top z-depth-2--hover">
-                                    <div class="card-body">
-                                        <h2 class="heading heading-6 strong-600 mt-2 mb-3">
-                                            <a href="#">{{ herramienta.nombre }}</a>
-                                        </h2>
-
-                                        <div class="card-image swiper-js-container">
-                                            <div class="">
-                                                <div class="swiper-container" data-swiper-items="1" data-swiper-space-between="0">
-                                                    <div class="swiper-wrapper">
-                                                        <div class="swiper-slide">
-                                                            <img src="{% static 'assets/images/sicua.jpg' %}" class="img-fluid img-center img-primary">
-                                                        </div>
-                                                        <div class="swiper-slide">
-                                                            <img src="{% static 'assets/images/sicua.jpg' %}" class="img-fluid img-center img-primary">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mt-3">
-                                            <div class="price-wrapper">
-                                            <span class="price price-sm c-gray-dark">
-                                                <span class="strong-300">$</span>
-                                                <span class="price-value strong-600">Free</span>
-                                            </span>
-                                                <span class="clearfix"></span>
-                                            </div>
-                                            <h6 class="heading heading-sm strong-400 c-red">Lic. MIT</h6>
-                                            <p class="product-description mt-3 mb-0">
-                                                Administra y enriquece tus cursos haciendo uso de todo tipo de funcionalidades academicas.
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer">
-                                        <div class="product-buttons">
-                                            <div class="row align-items-center">
-                                                <div class="col-2">
-                                                    <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Visit">
-                                                        <i class="ion-android-open"></i>
-                                                    </button>
-                                                </div>
-                                                <div class="col-2">
-                                                    <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Download">
-                                                        <i class="ion-ios-cloud-download"></i>
-                                                    </button>
-                                                </div>
-                                                <div class="col-8">
-                                                    <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left">
-                                                        <i class="ion-information-circled"></i> More Info
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {% endfor %}
                         </div>
-                    </div>
 
-                    <div class="pt-5">
-                        <nav aria-label="Product pagination">
-                            <ul class="pagination pagination--style-2 justify-content-end">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1">Anterior</a>
-                                </li>
+                        {% endif %} {% if res.class_name == 'Ejemplo_De_Uso' %}
+                        <div class="col-lg-4 element-item ejemplos-de-uso--element">
+                            <div class="card card-product" style="box-shadow: 0 2px 15px rgb(230, 221, 43,0.8)">
+                                <div class="card-body">
+                                    <h2 class="heading heading-6 strong-600 mt-2 mb-3">
+                                        {{ res.nombre }}
+                                    </h2>
+                                    <!-- 
+                                    <div class="card-image swiper-js-container">
+                                        <div class="">
+                                            <div class="swiper-container" data-swiper-items="1" data-swiper-space-between="0">
+                                                <div class="swiper-wrapper">
+                                                    <div class="swiper-slide">
+                                                        <img src="{% static 'assets/images/sicua.jpg' %}" class="img-fluid img-center img-primary">
+                                                    </div>
+                                                    <div class="swiper-slide">
+                                                        <img src="{% static 'assets/images/sicua.jpg' %}" class="img-fluid img-center img-primary">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+
+                                    <div class="mt-3">
+                                        <!-- <div class="price-wrapper">
+                                            <span class="price price-sm c-gray-dark">
+                                                <span class="strong-300">$</span>
+                                                <span class="price-value strong-600">Free</span>
+                                            </span>
+                                            <span class="clearfix"></span>
+                                        </div> -->
+                                        <h6 class="heading heading-sm strong-400 c-green">Estrategia: {{res.estrategia}}</h6>
+                                        <p class="product-description mt-3 mb-0">
+                                            {{res.descripcion}}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="product-buttons">
+                                        <div class="row align-items-center">
+                                            <!-- <div class="col-2">
+                                                <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Visit">
+                                                    <i class="ion-android-open"></i>
+                                                </button>
+                                            </div>
+                                            <div class="col-2">
+                                                <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Download">
+                                                    <i class="ion-ios-cloud-download"></i>
+                                                </button>
+                                            </div> -->
+                                            <div class="col-12">
+                                                <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left">
+                                                    <i class="ion-information-circled"></i> More Info
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %} {% if res.class_name == 'Tutorial' %}
+                        <div class="col-lg-4 element-item ejemplos-de-uso--element">
+                            <div class="card card-product" style="box-shadow: 0 2px 15px rgba(187, 224, 248, 0.8)">
+                                <div class="card-body">
+                                    <h2 class="heading heading-6 strong-600 mt-2 mb-3">
+                                        {{ res.nombre }}
+                                    </h2>
+
+                                    <div class="mt-3">
+                                        <h6 class="heading heading-sm strong-400 c-green">Herramienta: {{res.herramienta.nombre}}</h6>
+                                        <p class="product-description mt-3 mb-0">
+                                            {{res.descripcion}}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="product-buttons">
+                                        <div class="row align-items-center">
+                                            <div class="col-2">
+                                                <a href="{{res.url_recurso}}">
+                                                    <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Visit">
+                                                        <i class="ion-android-open"></i>
+                                                    </button>
+                                                </a>
+                                            </div>
+                                            <div class="col-10">
+                                                <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left">
+                                                    <i class="ion-information-circled"></i> More Info
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %} {% if res.class_name == 'Archivo' %}
+                        <div class="col-lg-4 element-item ejemplos-de-uso--element">
+                            <div class="card card-product" style="box-shadow: 0 2px 15px rgba(255, 0, 0, 0.8)">
+                                <div class="card-body">
+                                    <h2 class="heading heading-6 strong-600 mt-2 mb-3">
+                                        {{ res.nombre }}
+                                    </h2>
+
+                                    <div class="mt-3">
+                                        <!-- <h6 class="heading heading-sm strong-400 c-green">Herramienta: {{res.herramienta.nombre}}</h6> -->
+                                        <p class="product-description mt-3 mb-0">
+                                            {{res.descripcion}}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="product-buttons">
+                                        <div class="row align-items-center">
+                                            <!-- <div class="col-2">
+                                                <a href="{{res.url_recurso}}">
+                                                    <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Visit">
+                                                        <i class="ion-android-open"></i>
+                                                    </button>
+                                                </a>
+                                            </div> -->
+                                            <div class="col-12">
+                                                <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left">
+                                                    <i class="ion-information-circled"></i> More Info
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %} {% endfor %}
+
+                    </div>
+                </div>
+
+                <div class="pt-5">
+                    <nav aria-label="Product pagination">
+                        <ul class="pagination pagination--style-2 justify-content-end">
+                            {% if resultados.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" id="firstPage">&laquo; Primera</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" id="previousPage" >Anterior</a>
+                            </li>
+                            {% endif %}
                                 <li class="page-item">
                                     <a class="page-link" href="#">1</a>
                                 </li>
@@ -284,51 +368,60 @@
                                 <li class="page-item">
                                     <a class="page-link" href="#">3</a>
                                 </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Siguiente</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
+                            {% if resultados.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" id="nextPage" >Siguiente</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" id="lastPage" >Ultima &raquo;</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>
-    </section>
-
-
-    <div>
-
-        {% for res in resultados %}
-            <h1>{{ res.nombre }}</h1>
-            <p>{{ res.class_name }}</p>
-        {% endfor %}
-        <hr>
-    <div class="pagination">
-    <span class="step-links">
-        {% if resultados.has_previous %}
-            <a href="?p=1">&laquo; first</a>
-            <a href="?p={{ resultados.previous_page_number }}">previous</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ resultados.number }} of {{ resultados.paginator.num_pages }}.
-        </span>
-
-        {% if resultados.has_next %}
-            <a href="?p={{ resultados.next_page_number }}">next</a>
-            <a href="?p={{ resultados.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-    </span>
-</div>
     </div>
-{% endblock %}
-{% block custom_js %} 
+</section>
+{% endblock %} {% block custom_js %}
+
 <script type="text/javascript">
+    var search = $(location).attr('search');
+    if (search.includes('p=')) {
+        var inicio = search.indexOf('p=');
+        var fin = search.substr(inicio, search.length).indexOf('&')
+        if (fin == -1) {
+            {% if resultados.has_previous %}
+            $('#firstPage').attr('href', search.substr(0, inicio + 2) + "1")
+            $('#previousPage').attr('href', search.substr(0, inicio + 2) + "{{resultados.previous_page_number}}")
+            {% endif %} {% if resultados.has_next %}
+            $('#nextPage').attr('href', search.substr(0, inicio + 2) + "{{resultados.next_page_number}}")
+            $('#lastPage').attr('href', search.substr(0, inicio + 2) + "{{resultados.paginator.num_pages}}")
+            {% endif %}
+        } else {
+            console.log(inicio + " " + fin + " " + search.charAt(inicio + fin))
+            {% if resultados.has_previous %}
+            $('#firstPage').attr('href', search.substr(0, inicio + 2) + "1" + search.substr(inicio + fin, search.length))
+            $('#previousPage').attr('href', search.substr(0, inicio + 2) + "{{resultados.previous_page_number}}" + search.substr(inicio + fin, search.length))
+            {% endif %} {% if resultados.has_next %}
+            $('#nextPage').attr('href', search.substr(0, inicio + 2) + "{{resultados.next_page_number}}" + search.substr(inicio + fin, search.length))
+            $('#lastPage').attr('href', search.substr(0, inicio + 2) + "{{resultados.paginator.num_pages}}" + search.substr(inicio + fin, search.length))
+            {% endif %}
+        }
+    } else {
+        {% if resultados.has_previous %}
+        $('#firstPage').attr('href', search + "&p=1")
+        $('#previousPage').attr('href', search + "&p={{resultados.previous_page_number}}")
+        {% endif %} {% if resultados.has_next %}
+        $('#nextPage').attr('href', search + "&p={{resultados.next_page_number}}")
+        $('#lastPage').attr('href', search + "&p={{resultados.paginator.num_pages}}")
+        {% endif %}
+    }
 
     var $grid;
 
     function bajarSiHayResultados() {
-        if( window.location.search.indexOf("q=") >= 0 ) {
+        if (window.location.search.indexOf("q=") >= 0) {
             $('html, body').animate({
                 scrollTop: $(".sct-color-2").offset().top + 50
             }, 1500);
@@ -346,7 +439,7 @@
         $('.basic-search-button').hide();
         $('.advanced-search-button').show();
     }
-    
+
     function mostrarBusquedaAvanzada() {
         $('.basic-search-input').removeClass('col-lg-9');
         $('.basic-search-input').addClass('col-lg-3');
@@ -358,10 +451,10 @@
     }
 
     function configurarFiltros() {
-        $(".filter-checkbox>.checkbox>input[type=checkbox]").click(function( el ) {
+        $(".filter-checkbox>.checkbox>input[type=checkbox]").click(function (el) {
             var filters = [];
 
-            $("input:checked").each(function(index, el) {
+            $("input:checked").each(function (index, el) {
                 var id = $(el).attr('id');
                 var index = id.indexOf("--category");
                 var filtro = "." + id.substr(0, index) + "--element";
@@ -374,14 +467,13 @@
         });
     }
 
-$( document ).ready(function() {
-    mostrarBusquedaBasica();
-    bajarSiHayResultados();
-    $grid = $('.grid').isotope({
-        itemSelector: '.element-item',
-        layoutMode: 'fitRows'
+    $(document).ready(function () {
+        mostrarBusquedaBasica();
+        bajarSiHayResultados();
+        $grid = $('.grid').isotope({
+            itemSelector: '.element-item',
+            layoutMode: 'fitRows'
+        });
+        configurarFiltros();
     });
-    configurarFiltros();
-});
-</script>
-{% endblock %}
+</script> {% endblock %}
