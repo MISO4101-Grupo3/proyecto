@@ -67,7 +67,7 @@ background-size: cover; background-repeat: no-repeat;background-position: center
     </div>
 </section>
 
-<section class="slice sct-color-2">
+<section class="slice sct-color-2" id="resultados">
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-6">
@@ -404,7 +404,7 @@ background-size: cover; background-repeat: no-repeat;background-position: center
     })
     function filtrar(base, param, classs, claasss, ele) {
         search = $(location).attr('search');
-        search = (search == "") ? "?" + param + base : search;
+        search = (search == "") ? "?sc=0&" + param + base : search;
 
         var value = $(ele).attr('data-value')
         if (search.includes(param)) {
@@ -499,11 +499,30 @@ background-size: cover; background-repeat: no-repeat;background-position: center
 
     var $grid;
 
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
     function bajarSiHayResultados() {
-        if (window.location.search != "") {
-            $('html, body').animate({
+        if (window.location.search != "" ) {
+
+            if(getParameterByName('sc') === '0') {
+                var top = $('#resultados').position().top;
+                $('html').scrollTop(top);
+                //window.location.hash = 'resultados'
+            }
+            else{
+                $('html, body').animate({
                 scrollTop: $(".sct-color-2").offset().top + 50
             }, 1500);
+            }
+
         }
     }
 
