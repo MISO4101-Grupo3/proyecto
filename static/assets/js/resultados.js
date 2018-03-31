@@ -81,7 +81,7 @@ function setFiltersLink(base_arr, anchor_class,query_param, ele){
     }
     else arr.push(value);
     var param = arr.join(",");
-    var obj = {sc:0};
+    var obj = {sc:0,p:1};
     obj[query_param] = param;
     var href = getHref('',obj)
     $("#" + anchor_class + value).attr('href', href);
@@ -114,8 +114,8 @@ function bajarSiHayResultados() {
     if (window.location.search != "" ) {
 
         if(getParameterByName('sc') === '0') {
-            var top = $('#resultados').position().top;
-            $('html').scrollTop(top);
+            var top = $(".sct-color-2").offset().top + 50;
+            $('html, body').scrollTop(top);
             //window.location.hash = 'resultados'
         }
         else{
