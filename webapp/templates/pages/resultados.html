@@ -36,7 +36,7 @@ background-size: cover; background-repeat: no-repeat;background-position: center
                     <div class="col-lg-3 advanced-search-input" style="display: none;">
                         <div class="form-group mb-0">
                             <select class="form-control form-control-lg" name="e">
-                                <option value="1,2,3,4,5">Estrategia Pedagógica</option>
+                                <option selected="selected"> Pedagógica</option>
                                 {% for estrategia in estrategias %}
                                 <option value="{{ estrategia.id }}">{{ estrategia.nombre }}</option>
                                 {% endfor %}
@@ -46,7 +46,7 @@ background-size: cover; background-repeat: no-repeat;background-position: center
                     <div class="col-lg-3 advanced-search-input" style="display: none;">
                         <div class="form-group mb-0">
                             <select class="form-control form-control-lg" name="d">
-                                <option value="1,2,3,5">Disciplina</option>
+                                <option selected="selected">Disciplina</option>
                                 {% for disciplina in disciplinas %}
                                 <option value="{{ disciplina.id }}">{{ disciplina.nombre }}</option>
                                 {% endfor %}
@@ -58,8 +58,8 @@ background-size: cover; background-repeat: no-repeat;background-position: center
                             Buscar
                         </button>
                         <div style="position:absolute;">
-                            <a href="" onclick="mostrarBusquedaAvanzada()" class="advanced-search-button">Búsqueda avanzada</a>
-                            <a href="" onclick="mostrarBusquedaBasica()" class="basic-search-button">Búsqueda básica</a>
+                            <a href="#" onclick="mostrarBusquedaAvanzada()" class="advanced-search-button">Búsqueda avanzada</a>
+                            <a href="#" onclick="mostrarBusquedaBasica()" class="basic-search-button">Búsqueda básica</a>
                         </div>
                     </div>
                 </div>
@@ -503,7 +503,7 @@ background-size: cover; background-repeat: no-repeat;background-position: center
     var $grid;
 
     function bajarSiHayResultados() {
-        if (window.location.search.indexOf("q=") >= 0 || window.location.search.indexOf("p=") >= 0) {
+        if (window.location.search != "") {
             $('html, body').animate({
                 scrollTop: $(".sct-color-2").offset().top + 50
             }, 1500);
@@ -531,30 +531,4 @@ background-size: cover; background-repeat: no-repeat;background-position: center
         $('.advanced-search-button').hide();
         $('.basic-search-button').show();
     }
-
-    function configurarFiltros() {
-        $(".filter-checkbox>.checkbox>input[type=checkbox]").click(function (el) {
-            var filters = [];
-
-            $("input:checked").each(function (index, el) {
-                var id = $(el).attr('id');
-                var index = id.indexOf("--category");
-                var filtro = "." + id.substr(0, index) + "--element";
-                filters.push(filtro);
-            });
-
-            var filtro = filters.join(",");
-            $grid.isotope({ filter: filtro });
-        });
-    }
-
-    $(document).ready(function () {
-        mostrarBusquedaBasica();
-        bajarSiHayResultados();
-        $grid = $('.grid').isotope({
-            itemSelector: '.element-item',
-            layoutMode: 'fitRows'
-        });
-        configurarFiltros();
-    });
 </script> {% endblock %}
