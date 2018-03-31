@@ -25,7 +25,7 @@ def buscar(request):
     tipos = request.GET.get('t','u,h,a,l').split(',')
 
     if len(tipos) == 0:
-        tipos = 't', 'e,h,a,l'.split(',')
+        tipos = 't', 'u,h,a,l'.split(',')
 
     page_size = request.GET.get('s',6)
     page_num = request.GET.get('p',1)
@@ -95,9 +95,6 @@ def buscar(request):
     filtros_disciplinas += [getInt(x['ejemplo_de_uso__disciplinas']) for x in qs_archivos.values('ejemplo_de_uso__disciplinas').distinct()]
     filtros_disciplinas += [getInt(x['herramienta__ejemplos_de_uso__disciplinas']) for x in qs_tutoriales.values('herramienta__ejemplos_de_uso__disciplinas').distinct()]
 
-    filtros_disciplinas = list(set(filtros_disciplinas))
-    filtros_disciplinas = Disciplina.objects.filter(id__in = filtros_disciplinas)
-
     # /----------------------------------------------------
 
     # -----------------------------------------------------
@@ -109,8 +106,6 @@ def buscar(request):
     filtros_estrategias += [getInt(x['ejemplo_de_uso__estrategia']) for x in qs_archivos.values('ejemplo_de_uso__estrategia').distinct()]
     filtros_estrategias += [getInt(x['herramienta__ejemplos_de_uso__estrategia']) for x in qs_tutoriales.values('herramienta__ejemplos_de_uso__estrategia').distinct()]
 
-    filtros_estrategias = list(set(filtros_estrategias))
-    filtros_estrategias = Estrategia_Pedagogica.objects.filter(id__in = filtros_estrategias)
 
     # /----------------------------------------------------
 
@@ -134,6 +129,7 @@ def buscar(request):
     if len(d) > 0:
 
         d = [getInt(x) for x in d.split(",")]
+        filtros_disciplinas = chain(filtros_disciplinas,d);
 
         qs_ejemplos = qs_ejemplos.filter(disciplinas__in=d)
         qs_herramientas = qs_herramientas.filter(ejemplos_de_uso__disciplinas__in=d)
@@ -144,6 +140,8 @@ def buscar(request):
     if len(e) > 0:
 
         e = [getInt(x) for x in e.split(",")]
+        filtros_estrategias = chain(filtros_estrategias,e);
+
         qs_ejemplos= qs_ejemplos.filter(estrategia_id__in=e)
         qs_herramientas = qs_herramientas.filter(ejemplos_de_uso__estrategia_id__in=e)
         qs_archivos = qs_archivos.filter(ejemplo_de_uso__estrategia_id__in=e)
@@ -151,19 +149,19 @@ def buscar(request):
 
 
     if 'u' in tipos:
-        qs_ejemplos = qs_ejemplos.order_by('nombre')
+        qs_ejemplos = qs_ejemplos.distinct().order_by('nombre')
     else: qs_ejemplos = []
 
     if 'h' in tipos:
-        qs_herramientas = qs_herramientas.order_by('nombre')
+        qs_herramientas = qs_herramientas.distinct().order_by('nombre')
     else: qs_herramientas = []
 
     if 'a' in tipos:
-        qs_archivos = qs_archivos.order_by('nombre')
+        qs_archivos = qs_archivos.distinct().order_by('nombre')
     else: qs_archivos=[]
 
     if 'l' in tipos:
-        qs_tutoriales = qs_tutoriales.order_by('nombre')
+        qs_tutoriales = qs_tutoriales.distinct().order_by('nombre')
     else: qs_tutoriales=[]
 
     chained_list = list(chain(qs_ejemplos, qs_herramientas, qs_archivos,qs_tutoriales))
@@ -194,6 +192,12 @@ def buscar(request):
     page = paginator.page(page_num)
 
     context = {'range':range(start, end),"resultados":page,"disciplinas":Disciplina.objects.all(),"estrategias":Estrategia_Pedagogica.objects.all(),"filtros_resultados":filtros_resultados}
+
+    filtros_disciplinas = list(set(filtros_disciplinas))
+    filtros_estrategias = list(set(filtros_estrategias))
+
+    filtros_disciplinas = Disciplina.objects.filter(id__in = filtros_disciplinas)
+    filtros_estrategias = Estrategia_Pedagogica.objects.filter(id__in=filtros_estrategias)
 
     context['filtros_disciplinas'] = filtros_disciplinas
     context['filtros_estrategias'] = filtros_estrategias

@@ -140,19 +140,21 @@ MEDIA_ROOT = os.path.normpath(os.path.join(BASE_DIR, 'media'))
 MEDIA_URL = '/media/'
 # END MEDIA CONFIGURATION
 
+USE_S3 = config('USE_S3', default=False, cast=bool)
 
-# S3 Configuration
-# https://simpleisbetterthancomplex.com/tutorial/2017/08/01/how-to-setup-amazon-s3-in-a-django-project.html
-AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID',default='')
-AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY',default='')
-AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME',default='')
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
-AWS_LOCATION = 'static'
+if USE_S3:
+    # S3 Configuration
+    # https://simpleisbetterthancomplex.com/tutorial/2017/08/01/how-to-setup-amazon-s3-in-a-django-project.html
+    AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID',default='')
+    AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY',default='')
+    AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME',default='')
+    AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+    AWS_S3_OBJECT_PARAMETERS = {
+        'CacheControl': 'max-age=86400',
+    }
+    AWS_LOCATION = 'static'
 
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-MEDIAFILES_LOCATION = 'media'
-DEFAULT_FILE_STORAGE = 'conectate.storage_backends.MediaStorage'
+    MEDIAFILES_LOCATION = 'media'
+    DEFAULT_FILE_STORAGE = 'conectate.storage_backends.MediaStorage'

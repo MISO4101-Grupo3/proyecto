@@ -1,191 +1,191 @@
 {% extends 'base.html' %} {% load static %} {% load mathfilters %} {% block body %}
-<style>
-    .product-description {
-        height: 4.6em;
-        overflow: hidden;
-    }
-</style>
-<section class="slice border-top border-bottom"
-style="background-image: linear-gradient(to right bottom, rgba(192, 192, 192, 0.8), rgba(40, 45, 65, 0.8)), url('{% static 'assets/images/backgrounds/slider/img-58.jpg' %}');
-background-size: cover; background-repeat: no-repeat;background-position: center;">
-    <div class="container mt-5">
-        <h2 class="heading heading-1 strong-400 mt-0 mb-4 text-normal text-center">
-            <span style="text-shadow: 0px 2px 2px #0000;color:white">Toma el siguiente paso</span>
-        </h2>
+    <style>
+        .product-description {
+            height: 4.6em;
+            overflow: hidden;
+        }
+    </style>
+    <section class="slice border-top border-bottom"
+             style="background-image: linear-gradient(to right bottom, rgba(192, 192, 192, 0.8), rgba(40, 45, 65, 0.8)), url('{% static 'assets/images/backgrounds/slider/img-58.jpg' %}');
+                     background-size: cover; background-repeat: no-repeat;background-position: center;">
+        <div class="container mt-5">
+            <h2 class="heading heading-1 strong-400 mt-0 mb-4 text-normal text-center">
+                <span style="text-shadow: 0px 2px 2px #0000;color:white">Toma el siguiente paso</span>
+            </h2>
 
 
-        <span class="clearfix"></span>
+            <span class="clearfix"></span>
 
-        <div class="fluid-paragraph fluid-paragraph-sm c-gray-light strong-300 text-center" style="text-shadow: -0px 1px 1px #000;color:white !important">
-          <h5>  Empieza a rediseñar tus clases, haciendo uso de todas las estrategias pedagogicas que tienes a tu alcance. Busca todas las
-            herramientas, ejemplos de uso y tutoriales que hemos desarrollado y que podrán ser utiles para ti. </h5>
-        </div>
-
-        <span class="space-xs-lg"></span>
-
-        <div class="feature feature--boxed-border feature--bg-1" style="background-color: rgba(255,255,255,0.8);">
-            <form role="form" class="form-default" method="GET">
-                <input type="hidden" name="s" value="6">
-                <div class="row cols-md-space cols-sm-space cols-xs-space">
-                    <div class="col-lg-9 basic-search-input">
-                        <div class="form-group mb-0">
-                            <input class="form-control form-control-lg " name="q" type="text" placeholder="¿Qu&eacute; est&aacute;s buscando?">
-                        </div>
-                    </div>
-                    <div class="col-lg-3 advanced-search-input" style="display: none;">
-                        <div class="form-group mb-0">
-                            <select class="form-control form-control-lg" name="e">
-                                <option value=""> Pedagógica</option>
-                                {% for estrategia in estrategias %}
-                                <option value="{{ estrategia.id }}">{{ estrategia.nombre }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 advanced-search-input" style="display: none;">
-                        <div class="form-group mb-0">
-                            <select class="form-control form-control-lg" name="d">
-                                <option value="">Disciplina</option>
-                                {% for disciplina in disciplinas %}
-                                <option value="{{ disciplina.id }}">{{ disciplina.nombre }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <button type="submit" class="btn btn-styled btn-block btn-base-1">
-                            Buscar
-                        </button>
-                        <div style="position:absolute;">
-                            <a href="#" onclick="mostrarBusquedaAvanzada()" class="advanced-search-button">Búsqueda avanzada</a>
-                            <a href="#" onclick="mostrarBusquedaBasica()" class="basic-search-button">Búsqueda básica</a>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</section>
-
-<section class="slice sct-color-2" id="resultados">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-md-6">
-                <div class="sidebar sidebar--style-4 z-depth-1-top" style="height: 100%">
-
-                    <div class="sidebar-object">
-                        <h5 class="heading heading-sm strong-600 mb-4">Resultado</h5>
-
-                        <div class="filter-checkbox">
-                            {% for filtro_resultado in filtros_resultados %}
-                            <a id="res{{filtro_resultado.id}}" onclick="this.click()">
-                                <div class="checkbox">
-                                    <input type="checkbox" class="resultado" data-value="{{filtro_resultado.id}}" id="resu{{filtro_resultado.id}}">
-                                    <label class="text-sm" for="{{filtro_resultado.id}}">{{filtro_resultado.nombre}}</label>
-                                </div>
-                            </a>
-                            {% endfor %}
-                        </div>
-                    </div>
-
-
-                    <div class="sidebar-object">
-                        <h5 class="heading heading-sm strong-600 mb-4">Disciplina</h5>
-
-                        <div class="filter-checkbox">
-                            {% for filtro_disciplina in filtros_disciplinas %}
-                            <a id="disc{{filtro_disciplina.id}}" onclick="this.click()">
-                                <div class="checkbox">
-                                    <input type="checkbox" class="disciplina" data-value="{{filtro_disciplina.id}}" id="disci{{filtro_disciplina.id}}">
-                                    <label class="text-sm" for="{{filtro_disciplina.id}}">{{filtro_disciplina.nombre}}</label>
-                                </div>
-                            </a>
-                            {% endfor %}
-                        </div>
-                    </div>
-
-                    <div class="sidebar-object">
-                        <h5 class="heading heading-sm strong-600 mb-4">Estrategía Pedagogica</h5>
-
-                        <div class="filter-checkbox">
-                            {% for filtro_estrategia in filtros_estrategias %}
-                            <a id="estr{{filtro_estrategia.id}}" onclick="this.click()">
-                                <div class="checkbox">
-                                    <input  type="checkbox" class="estrategia" data-value="{{filtro_estrategia.id}}" id="estra{{filtro_estrategia.id}}">
-                                    <label class="text-sm" for="{{filtro_estrategia.id}}">{{filtro_estrategia.nombre}}</label>
-                                </div>
-                            </a>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
+            <div class="fluid-paragraph fluid-paragraph-sm c-gray-light strong-300 text-center" style="text-shadow: -0px 1px 1px #000;color:white !important">
+                <h5>  Empieza a rediseñar tus clases, haciendo uso de todas las estrategias pedagogicas que tienes a tu alcance. Busca todas las
+                    herramientas, ejemplos de uso y tutoriales que hemos desarrollado y que podrán ser utiles para ti. </h5>
             </div>
-            <div class="col-lg-9 col-md-6">
-                <div class="row-wrapper masonry-container">
-                    <div class="row masonry cols-xs-space cols-sm-space cols-md-space grid">
-                        {% if resultados.paginator.count == 0 %}
-                        <div class="col-lg-12 element-item herramientas--element" style="margin-bottom: 15px">
-                            <div class="card card-product" style="box-shadow: 0 2px 15px rgba(0, 0, 0, 0.8)">
-                                <div class="card card-product">
-                                    <div class="card-body">
-                                        <h1>No se encuentran resultados para tu busqueda</h1>
-                                    </div>
-                                </div>
+
+            <span class="space-xs-lg"></span>
+
+            <div class="feature feature--boxed-border feature--bg-1" style="background-color: rgba(255,255,255,0.8);">
+                <form role="form" class="form-default" method="GET">
+                    <input type="hidden" name="s" value="6">
+                    <div class="row cols-md-space cols-sm-space cols-xs-space">
+                        <div class="col-lg-9 basic-search-input">
+                            <div class="form-group mb-0">
+                                <input class="form-control form-control-lg " name="q" type="text" placeholder="¿Qu&eacute; est&aacute;s buscando?">
                             </div>
                         </div>
-                        {% endif %} {% for res in resultados %} {% if res.class_name == 'Herramienta' %}
-                        <div class="masonry-item col-lg-4 element-item herramientas--element" style="margin-bottom: 15px">
-                            <div class="card card-product" style="box-shadow: 0 2px 15px rgba(124, 201, 78, 0.8)">
-                                <div class="card card-product">
-                                    <div class="card-body">
-                                        <h2 class="heading heading-6 strong-600 mt-2 mb-3">
-                                            {{ res.nombre }}
-                                        </h2>
+                        <div class="col-lg-3 advanced-search-input" style="display: none;">
+                            <div class="form-group mb-0">
+                                <select class="form-control form-control-lg" name="e">
+                                    <option value=""> Pedagógica</option>
+                                    {% for estrategia in estrategias %}
+                                        <option value="{{ estrategia.id }}">{{ estrategia.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 advanced-search-input" style="display: none;">
+                            <div class="form-group mb-0">
+                                <select class="form-control form-control-lg" name="d">
+                                    <option value="">Disciplina</option>
+                                    {% for disciplina in disciplinas %}
+                                        <option value="{{ disciplina.id }}">{{ disciplina.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <button type="submit" class="btn btn-styled btn-block btn-base-1">
+                                Buscar
+                            </button>
+                            <div style="position:absolute;">
+                                <a href="#" onclick="mostrarBusquedaAvanzada()" class="advanced-search-button">Búsqueda avanzada</a>
+                                <a href="#" onclick="mostrarBusquedaBasica()" class="basic-search-button">Búsqueda básica</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
 
-                                        <div class="card-image swiper-js-container">
-                                            <div class="">
-                                                <div class="swiper-container" data-swiper-items="1" data-swiper-space-between="0">
-                                                    <div class="swiper-wrapper">
-                                                        <div class="swiper-slide">
-                                                            <img src="{{res.imagen.url}}" class="img-fluid img-center img-primary" style="max-height: 60px">
+    <section class="slice sct-color-2" id="resultados">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="sidebar sidebar--style-4 z-depth-1-top" style="height: 100%" >
+
+                        <div class="sidebar-object">
+                            <h5 class="heading heading-sm strong-600 mb-4">Resultado</h5>
+
+                            <div class="filter-checkbox">
+                                {% for filtro_resultado in filtros_resultados %}
+                                    <a id="res{{filtro_resultado.id}}" onclick="this.click()">
+                                        <div class="checkbox">
+                                            <input type="checkbox" class="resultado" data-value="{{filtro_resultado.id}}" id="resu{{filtro_resultado.id}}">
+                                            <label class="text-sm" for="{{filtro_resultado.id}}">{{filtro_resultado.nombre}}</label>
+                                        </div>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+
+                        <div class="sidebar-object">
+                            <h5 class="heading heading-sm strong-600 mb-4">Disciplina</h5>
+
+                            <div class="filter-checkbox">
+                                {% for filtro_disciplina in filtros_disciplinas %}
+                                    <a id="disc{{filtro_disciplina.id}}" onclick="this.click()">
+                                        <div class="checkbox">
+                                            <input type="checkbox" class="disciplina" data-value="{{filtro_disciplina.id}}" id="disci{{filtro_disciplina.id}}">
+                                            <label class="text-sm" for="{{filtro_disciplina.id}}">{{filtro_disciplina.nombre}}</label>
+                                        </div>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="sidebar-object">
+                            <h5 class="heading heading-sm strong-600 mb-4">Estrategía Pedagogica</h5>
+
+                            <div class="filter-checkbox">
+                                {% for filtro_estrategia in filtros_estrategias %}
+                                    <a id="estr{{filtro_estrategia.id}}" onclick="this.click()">
+                                        <div class="checkbox">
+                                            <input  type="checkbox" class="estrategia" data-value="{{filtro_estrategia.id}}" id="estra{{filtro_estrategia.id}}">
+                                            <label class="text-sm" for="{{filtro_estrategia.id}}">{{filtro_estrategia.nombre}}</label>
+                                        </div>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-6">
+                    <div class="row-wrapper ">
+                        <div class="row  cols-xs-space cols-sm-space cols-md-space grid">
+                            {% if resultados.paginator.count == 0 %}
+                                <div class="col-lg-12 element-item herramientas--element" style="margin-bottom: 15px">
+                                    <div class="card card-product" style="box-shadow: 0 2px 15px rgba(0, 0, 0, 0.8)">
+                                        <div class="card card-product">
+                                            <div class="card-body">
+                                                <h1>No se encuentran resultados para tu busqueda</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %} {% for res in resultados %} {% if res.class_name == 'Herramienta' %}
+                            <div class="col-lg-4 element-item herramientas--element" style="margin-bottom: 15px">
+                                <div class="card card-product" style="box-shadow: 0 2px 15px rgba(124, 201, 78, 0.8)">
+                                    <div class="card card-product">
+                                        <div class="card-body">
+                                            <h2 class="heading heading-6 strong-600 mt-2 mb-3">
+                                                {{ res.nombre }}
+                                            </h2>
+
+                                            <div class="card-image swiper-js-container">
+                                                <div class="">
+                                                    <div class="swiper-container" data-swiper-items="1" data-swiper-space-between="0">
+                                                        <div class="swiper-wrapper">
+                                                            <div class="swiper-slide">
+                                                                <img src="{{res.imagen.url}}" class="img-fluid img-center img-primary" style="max-height: 60px">
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div class="mt-3">
-                                            <h6 class="heading heading-sm strong-400 c-green">Lic. {{res.tipo_de_licencia}}</h6>
-                                            <p class="product-description mt-3 mb-0">
-                                                {{res.descripcion}}
-                                            </p>
+                                            <div class="mt-3">
+                                                <h6 class="heading heading-sm strong-400 c-green">Lic. {{res.tipo_de_licencia}}</h6>
+                                                <p class="product-description mt-3 mb-0">
+                                                    {{res.descripcion}}
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="card-footer">
-                                        <div class="product-buttons">
-                                            <div class="row align-items-center">
-                                                <div class="col-12">
-                                                    <a href="{% url 'herramientas' res.slug %}">
-                                                        <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left">
-                                                            <i class="ion-information-circled"></i> More Info
-                                                        </button>
-                                                    </a>
+                                        <div class="card-footer">
+                                            <div class="product-buttons">
+                                                <div class="row align-items-center">
+                                                    <div class="col-12">
+                                                        <a href="{% url 'herramientas' res.slug %}">
+                                                            <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left">
+                                                                <i class="ion-information-circled"></i> More Info
+                                                            </button>
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
                         {% endif %} {% if res.class_name == 'Ejemplo_De_Uso' %}
-                        <div class="masonry-item col-lg-4 element-item ejemplos-de-uso--element" style="margin-bottom: 15px">
-                            <div class="card card-product" style="box-shadow: 0 2px 15px rgba(230, 221, 43, 0.8)">
-                                <div class="card-body">
-                                    <h2 class="heading heading-6 strong-600 mt-2 mb-3">
-                                        {{ res.nombre }}
-                                    </h2>
-                                    <!--
+                            <div class="col-lg-4 element-item ejemplos-de-uso--element" style="margin-bottom: 15px">
+                                <div class="card card-product" style="box-shadow: 0 2px 15px rgba(230, 221, 43, 0.8)">
+                                    <div class="card-body">
+                                        <h2 class="heading heading-6 strong-600 mt-2 mb-3">
+                                            {{ res.nombre }}
+                                        </h2>
+                                        <!--
                                     <div class="card-image swiper-js-container">
                                         <div class="">
                                             <div class="swiper-container" data-swiper-items="1" data-swiper-space-between="0">
@@ -201,357 +201,181 @@ background-size: cover; background-repeat: no-repeat;background-position: center
                                         </div>
                                     </div> -->
 
-                                    <div class="mt-3">
-                                        <!-- <div class="price-wrapper">
-                                            <span class="price price-sm c-gray-dark">
-                                                <span class="strong-300">$</span>
-                                                <span class="price-value strong-600">Free</span>
-                                            </span>
-                                            <span class="clearfix"></span>
-                                        </div> -->
-                                        <h6 class="heading heading-sm strong-400 c-green">Estrategia: {{res.estrategia}}</h6>
-                                        <p class="product-description mt-3 mb-0">
-                                            {{res.descripcion}}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="product-buttons">
-                                        <div class="row align-items-center">
-                                            <!-- <div class="col-2">
-                                                <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Visit">
-                                                    <i class="ion-android-open"></i>
-                                                </button>
-                                            </div>
-                                            <div class="col-2">
-                                                <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Download">
-                                                    <i class="ion-ios-cloud-download"></i>
-                                                </button>
+                                        <div class="mt-3">
+                                            <!-- <div class="price-wrapper">
+                                                <span class="price price-sm c-gray-dark">
+                                                    <span class="strong-300">$</span>
+                                                    <span class="price-value strong-600">Free</span>
+                                                </span>
+                                                <span class="clearfix"></span>
                                             </div> -->
-                                            <div class="col-12">
-                                                <a href="{% url 'ejemplos' res.slug%}">
-                                                    <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left">
-                                                        <i class="ion-information-circled"></i> More Info
+                                            <h6 class="heading heading-sm strong-400 c-green">Estrategia: {{res.estrategia}}</h6>
+                                            <p class="product-description mt-3 mb-0">
+                                                {{res.descripcion}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="product-buttons">
+                                            <div class="row align-items-center">
+                                                <!-- <div class="col-2">
+                                                    <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Visit">
+                                                        <i class="ion-android-open"></i>
                                                     </button>
-                                                </a>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Download">
+                                                        <i class="ion-ios-cloud-download"></i>
+                                                    </button>
+                                                </div> -->
+                                                <div class="col-12">
+                                                    <a href="{% url 'ejemplos' res.slug%}">
+                                                        <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left">
+                                                            <i class="ion-information-circled"></i> More Info
+                                                        </button>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         {% endif %} {% if res.class_name == 'Tutorial' %}
-                        <div class="masonry-item col-lg-4 element-item tutoriales--element" style="margin-bottom: 15px">
-                            <div class="card card-product" style="box-shadow: 0 2px 15px rgba(187, 224, 248, 0.8)">
-                                <div class="card-body">
-                                    <h2 class="heading heading-6 strong-600 mt-2 mb-3">
-                                        {{ res.nombre }}
-                                    </h2>
+                            <div class="col-lg-4 element-item tutoriales--element" style="margin-bottom: 15px">
+                                <div class="card card-product" style="box-shadow: 0 2px 15px rgba(187, 224, 248, 0.8)">
+                                    <div class="card-body">
+                                        <h2 class="heading heading-6 strong-600 mt-2 mb-3">
+                                            {{ res.nombre }}
+                                        </h2>
 
-                                    <div class="mt-3">
-                                        <h6 class="heading heading-sm strong-400 c-green">Herramienta: {{res.herramienta.nombre}}</h6>
-                                        <p class="product-description mt-3 mb-0">
-                                            {{res.descripcion}}
-                                        </p>
+                                        <div class="mt-3">
+                                            <h6 class="heading heading-sm strong-400 c-green">Herramienta: {{res.herramienta.nombre}}</h6>
+                                            <p class="product-description mt-3 mb-0">
+                                                {{res.descripcion}}
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="product-buttons">
-                                        <div class="row align-items-center">
-                                            <div class="col-12">
-                                                <a href="{% url 'tutoriales' res.herramienta.slug res.slug %}">
-                                                    <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left">
-                                                        <i class="ion-information-circled"></i> More Info
-                                                    </button>
-                                                </a>
+                                    <div class="card-footer">
+                                        <div class="product-buttons">
+                                            <div class="row align-items-center">
+                                                <div class="col-12">
+                                                    <a href="{% url 'tutoriales' res.herramienta.slug res.slug %}">
+                                                        <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left">
+                                                            <i class="ion-information-circled"></i> More Info
+                                                        </button>
+                                                    </a>
 
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         {% endif %} {% if res.class_name == 'Archivo' %}
-                        <div class="masonry-item col-lg-4 element-item archivos--element" style="margin-bottom: 15px">
-                            <div class="card card-product" style="box-shadow: 0 2px 15px rgba(116, 13, 76, 0.8)">
-                                <div class="card-body">
-                                    <h2 class="heading heading-6 strong-600 mt-2 mb-3">
-                                        {{ res.nombre }}
-                                    </h2>
+                            <div class="col-lg-4 element-item archivos--element" style="margin-bottom: 15px">
+                                <div class="card card-product" style="box-shadow: 0 2px 15px rgba(116, 13, 76, 0.8)">
+                                    <div class="card-body">
+                                        <h2 class="heading heading-6 strong-600 mt-2 mb-3">
+                                            {{ res.nombre }}
+                                        </h2>
 
-                                    <div class="mt-3">
-                                        <!-- <h6 class="heading heading-sm strong-400 c-green">Herramienta: {{res.herramienta.nombre}}</h6> -->
-                                        <p class="product-description mt-3 mb-0">
-                                            {{res.descripcion}}
-                                        </p>
+                                        <div class="mt-3">
+                                            <!-- <h6 class="heading heading-sm strong-400 c-green">Herramienta: {{res.herramienta.nombre}}</h6> -->
+                                            <p class="product-description mt-3 mb-0">
+                                                {{res.descripcion}}
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="product-buttons">
-                                        <div class="row align-items-center">
-                                            <!-- <div class="col-2">
+                                    <div class="card-footer">
+                                        <div class="product-buttons">
+                                            <div class="row align-items-center">
+                                                <!-- <div class="col-2">
                                                 <a href="{{res.url_recurso}}">
                                                     <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Visit">
                                                         <i class="ion-android-open"></i>
                                                     </button>
                                                 </a>
                                             </div> -->
-                                            <div class="col-12">
-                                                <a href="{% url 'ejemplos' res.ejemplo_de_uso.slug %}#{{ res.slug }}">
-                                                    <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left">
-                                                        <i class="ion-information-circled"></i> More Info
-                                                    </button>
-                                                </a>
+                                                <div class="col-12">
+                                                    <a href="{% url 'ejemplos' res.ejemplo_de_uso.slug %}#{{ res.slug }}">
+                                                        <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left">
+                                                            <i class="ion-information-circled"></i> More Info
+                                                        </button>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         {% endif %} {% endfor %}
 
+                        </div>
                     </div>
+
+
+                    {% if resultados.paginator.count != 0 %}
+                        <div class="pt-5">
+                            <nav aria-label="Product pagination">
+                                <ul class="pagination pagination--style-1 justify-content-center">
+                                    {% if resultados.has_previous %}
+                                        <li class="page-item">
+                                            <a class="page-link" id="firstPage">&laquo; Primera</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" id="previousPage">Anterior</a>
+                                        </li>
+                                    {% endif %} {% for i in range %}
+
+                                    <li class="page-item {% if i == resultados.number %} active {% endif %}">
+                                        <a class="page-link pagee" data-value="{{i}}">{{i}}</a>
+                                    </li>
+                                {% endfor %} {% if resultados.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" id="nextPage">Siguiente</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" id="lastPage">Ultima &raquo;</a>
+                                    </li>
+                                {% endif %}
+                                </ul>
+                            </nav>
+                        </div>
+                    {% endif %}
                 </div>
-
-
-                {% if resultados.paginator.count != 0 %}
-                <div class="pt-5">
-                    <nav aria-label="Product pagination">
-                        <ul class="pagination pagination--style-1 justify-content-center">
-                            {% if resultados.has_previous %}
-                            <li class="page-item">
-                                <a class="page-link" id="firstPage">&laquo; Primera</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" id="previousPage">Anterior</a>
-                            </li>
-                            {% endif %} {% for i in range %}
-
-                            <li class="page-item {% if i == resultados.number %} active {% endif %}">
-                                <a class="page-link pagee" data-value="{{i}}">{{i}}</a>
-                            </li>
-                            {% endfor %} {% if resultados.has_next %}
-                            <li class="page-item">
-                                <a class="page-link" id="nextPage">Siguiente</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" id="lastPage">Ultima &raquo;</a>
-                            </li>
-                            {% endif %}
-                        </ul>
-                    </nav>
-                </div>
-                {% endif %}
             </div>
         </div>
-    </div>
-</section>
-{% endblock %} {% block custom_js %}
-<script>
+    </section>
+{% endblock %}
 
-    var search = $(location).attr('search');
-    search = (search == "") ? "?p={{resultados.number}}" : search;
-    if (search.includes('p=')) {
-        var inicio = search.indexOf('p=');
-        var fin = search.substr(inicio, search.length).indexOf('&')
-        if (fin == -1) {
+
+{% block custom_js %}
+
+    <script src="{% static 'assets/js/resultados.js' %}"></script>
+    <script>
+
+        $(document).ready(function () {
+            // Paginación
             {% if resultados.has_previous %}
-            $('#firstPage').attr('href', search.substr(0, inicio + 2) + "1")
-            $('#previousPage').attr('href', search.substr(0, inicio + 2) + "{{resultados.previous_page_number}}")
+                $('#firstPage').attr('href', getHref('',{p:1,sc:0}))
+                $('#previousPage').attr('href', getHref('',{p:{{resultados.previous_page_number}},sc:0}))
             {% endif %}
             $(".pagee").each(function () {
-                $(this).attr('href', search.substr(0, inicio + 2) + $(this).attr('data-value'))
+                $(this).attr('href', getHref('',{p:$(this).attr('data-value'),sc:0}) )
             })
             {% if resultados.has_next %}
-            $('#nextPage').attr('href', search.substr(0, inicio + 2) + "{{resultados.next_page_number}}")
-            $('#lastPage').attr('href', search.substr(0, inicio + 2) + "{{resultados.paginator.num_pages}}")
+                $('#nextPage').attr('href', getHref('',{p:{{resultados.next_page_number}},sc:0}))
+                $('#lastPage').attr('href', getHref('',{p:{{resultados.paginator.num_pages}},sc:0}))
             {% endif %}
-        } else {
-            {% if resultados.has_previous %}
-            $('#firstPage').attr('href', search.substr(0, inicio + 2) + "1" + search.substr(inicio + fin, search.length))
-            $('#previousPage').attr('href', search.substr(0, inicio + 2) + "{{resultados.previous_page_number}}" + search.substr(inicio + fin, search.length))
-            {% endif %}
-            $(".pagee").each(function () {
-                $(this).attr('href', search.substr(0, inicio + 2) + $(this).attr('data-value') + search.substr(inicio + fin, search.length))
-            })
-            {% if resultados.has_next %}
-            $('#nextPage').attr('href', search.substr(0, inicio + 2) + "{{resultados.next_page_number}}" + search.substr(inicio + fin, search.length))
-            $('#lastPage').attr('href', search.substr(0, inicio + 2) + "{{resultados.paginator.num_pages}}" + search.substr(inicio + fin, search.length))
-            {% endif %}
-        }
-    } else {
-        {% if resultados.has_previous %}
-        $('#firstPage').attr('href', search + "&p=1")
-        $('#previousPage').attr('href', search + "&p={{resultados.previous_page_number}}")
-        {% endif %}
-        $(".pagee").each(function () {
-            $(this).attr('href', search + "&p=" + $(this).attr('data-value'))
-        })
-        {% if resultados.has_next %}
-        $('#nextPage').attr('href', search + "&p={{resultados.next_page_number}}")
-        $('#lastPage').attr('href', search + "&p={{resultados.paginator.num_pages}}")
-        {% endif %}
-    }
+            // fin paginación
 
-    $(".resultado").each(function (index, ele) {
-        filtrar("u,a,l,h", "t=", "res", "resu", ele)
-    })
-    $(".disciplina").each(function (index, ele) {
-        filtrar("1,2,3,5", "d=", "disc", "disci", ele)
-    })
-    $(".estrategia").each(function (index, ele) {
-        filtrar("1,2,3,4,5", "e=", "estr", "estra", ele)
-    })
-    function filtrar(base, param, classs, claasss, ele) {
-        search = $(location).attr('search');
-        search = (search == "") ? "?sc=0&" + param + base : search;
+            mostrarBusquedaBasica();
+            bajarSiHayResultados();
+            $('.element-item .card').css("height", "100%")
+            $('.element-item').matchHeight();
+            init();
+        });
+    </script>
 
-        var value = $(ele).attr('data-value')
-        if (search.includes(param)) {
-            var inicioo = search.indexOf(param);
-            var finn = search.substr(inicioo, search.length).indexOf('&')
-            var params = "";
-            if (finn == -1) {
-                params = search.substr(inicioo + 2, search.length)
-                console.log(params,value)
-                console.log(params.includes(value))
-                if (params.includes(value)) {
-                    var paraams = params.split(",")
-                    var ind = paraams.indexOf(value)
-                    paraams.splice(ind, 1)
-                    var paarams = paraams.join(",")
-                    search = search.replace(param+params, param+paarams)
-                    $("#" + classs + value).attr('href', search)
-                    $("#" + claasss + value).prop('checked', true)
-                } else if (params == "") {
-                    search = search.replace(param, param + value)
-                    $("#" + classs + value).attr('href', search)
-                    $("#" + claasss + value).prop('checked', false)
-                } else {
-                    search = search.replace(param+params, param+params + "," + value)
-                    console.log(search)
-                    $("#" + classs + value).attr('href', search)
-                    $("#" + claasss + value).prop('checked', false)
-                }
-            } else {
-                params = search.substr(inicioo + 2, finn - 2)
-                if (params.includes(value)) {
-                    var paraams = params.split(",")
-                    var ind = paraams.indexOf(value)
-                    paraams.splice(ind, 1)
-                    var paarams = paraams.join(",")
-                    search = search.replace(param+params, param+paarams)
-                    $("#" + classs + value).attr('href', search)
-                    $("#" + claasss + value).prop('checked', true)
-                } else if (params == "") {
-                    search = search.replace(param, param + value)
-                    $("#" + classs + value).attr('href', search)
-                    $("#" + claasss + value).prop('checked', false)
-                } else {
-                    search = search.replace(param+params, param+params + "," + value)
-                    $("#" + classs + value).attr('href', search)
-                    $("#" + claasss + value).prop('checked', false)
-                }
-            }
-        } else {
-            params = base
-            paramms = base.split(",")
-            var paraams = params.split(",")
-            var ind = paraams.indexOf(value)
-            paraams.splice(ind, 1)
-            var paarams = paraams.join(",")
-            params = params.replace(params, paarams)
-            $("#" + classs + value).attr('href', search + "&"+param+ params)
-            paramms.forEach(element => {
-                $("#" + claasss + element).prop('checked', true)
-            });
-            $("#" + claasss + value).prop('checked', false)
-        }
+{% endblock %}
 
-    }
-
-    if (!search.includes("t=")) {
-        $("#resua").prop('checked', true)
-        $("#resul").prop('checked', true)
-        $("#resuh").prop('checked', true)
-        $("#resuu").prop('checked', true)
-    }
-    var inicioo = search.indexOf("d=");
-    var finn = search.substr(inicioo, search.length).indexOf('&')
-    console.log("d="+" "+inicioo+" "+finn)
-    if (!search.includes("d=") || (search.includes("d=") && ((search.substr(inicioo + 2, finn - 2) == "" && finn != -1) || finn == 3))) {
-        $("#disci1").prop('checked', true)
-        $("#disci2").prop('checked', true)
-        $("#disci3").prop('checked', true)
-        $("#disci5").prop('checked', true)
-    }
-    inicioo = search.indexOf("e=");
-    finn = search.substr(inicioo, search.length).indexOf('&')
-    console.log("e="+" "+inicioo+" "+finn)
-    if (!search.includes("e=") || (search.includes("e=") && ((search.substr(inicioo + 2, finn - 2) == "" && finn != -1) || finn == 3))) {
-        $("#estra1").prop('checked', true)
-        $("#estra2").prop('checked', true)
-        $("#estra3").prop('checked', true)
-        $("#estra4").prop('checked', true)
-        $("#estra5").prop('checked', true)
-    }
-
-
-    var $grid;
-
-    function getParameterByName(name, url) {
-        if (!url) url = window.location.href;
-        name = name.replace(/[\[\]]/g, "\\$&");
-        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-            results = regex.exec(url);
-        if (!results) return null;
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, " "));
-    }
-
-    function bajarSiHayResultados() {
-        if (window.location.search != "" ) {
-
-            if(getParameterByName('sc') === '0') {
-                var top = $('#resultados').position().top;
-                $('html').scrollTop(top);
-                //window.location.hash = 'resultados'
-            }
-            else{
-                $('html, body').animate({
-                scrollTop: $(".sct-color-2").offset().top + 50
-            }, 1500);
-            }
-
-        }
-    }
-
-    function mostrarBusquedaBasica() {
-        $('.basic-search-input').removeClass('col-lg-3');
-        $('.basic-search-input').addClass('col-lg-9');
-
-        $("select[name='d']").val("");
-        $("select[name='e']").val("");
-        $('.advanced-search-input').hide();
-
-        $('.basic-search-button').hide();
-        $('.advanced-search-button').show();
-    }
-
-    function mostrarBusquedaAvanzada() {
-        $('.basic-search-input').removeClass('col-lg-9');
-        $('.basic-search-input').addClass('col-lg-3');
-
-        $('.advanced-search-input').show();
-
-        $('.advanced-search-button').hide();
-        $('.basic-search-button').show();
-    }
-
-    $(document).ready(function () {
-        mostrarBusquedaBasica();
-        bajarSiHayResultados();
-        $('.element-item .card').css("height", "100%")
-        $('.element-item').matchHeight();
-    });
-</script> {% endblock %}
