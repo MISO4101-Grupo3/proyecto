@@ -156,6 +156,9 @@
             <div class="col-lg-9">
                 <div class="row-wrapper">
                     <div class="row cols-xs-space cols-sm-space cols-md-space grid">
+                    {% if resultados.paginator.count == 0 %}
+                        <h1>No se encuentran resultados para tu busqueda</h1>
+                    {% endif %}
                         {% for res in resultados %} {% if res.class_name == 'Herramienta' %}
                         <div class="col-lg-4 element-item herramientas--element" style="margin-bottom: 15px">
                             <div class="card card-product" style="box-shadow: 0 2px 15px rgba(124, 201, 78, 0.8)">
@@ -221,7 +224,7 @@
 
                         {% endif %} {% if res.class_name == 'Ejemplo_De_Uso' %}
                         <div class="col-lg-4 element-item ejemplos-de-uso--element" style="margin-bottom: 15px">
-                            <div class="card card-product" style="box-shadow: 0 2px 15px rgb(230, 221, 43,0.8)">
+                            <div class="card card-product" style="box-shadow: 0 2px 15px rgba(230, 221, 43, 0.8)">
                                 <div class="card-body">
                                     <h2 class="heading heading-6 strong-600 mt-2 mb-3">
                                         {{ res.nombre }}
@@ -361,6 +364,8 @@
                     </div>
                 </div>
 
+
+            {% if resultados.paginator.count != 0 %}
                 <div class="pt-5">
                     <nav aria-label="Product pagination">
                         <ul class="pagination pagination--style-2 justify-content-end">
@@ -386,8 +391,7 @@
                         </ul>
                     </nav>
                 </div>
-
-                <h1>{{resultados.paginator.num_pages}}</h1>
+            {% endif %}
             </div>
         </div>
     </div>
