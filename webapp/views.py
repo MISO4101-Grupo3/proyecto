@@ -22,7 +22,7 @@ def buscar(request):
     q = request.GET.get('q','')
     e = request.GET.get('e','')
     d = request.GET.get('d','')
-    tipos = request.GET.get('t','e,h,a,l').split(',')
+    tipos = request.GET.get('t','u,h,a,l').split(',')
 
     if len(tipos) == 0:
         tipos = 't', 'e,h,a,l'.split(',')
@@ -141,7 +141,7 @@ def buscar(request):
 
     filtros_resultados = []
     if qs_ejemplos.count()>0:
-        filtros_resultados+=(IdNombre('e','Ejemplos de uso'),)
+        filtros_resultados+=(IdNombre('u','Ejemplos de uso'),)
     if qs_herramientas.count()>0:
         filtros_resultados+=(IdNombre('h','Herramientas'),)
     if qs_archivos.count()>0:
@@ -151,7 +151,7 @@ def buscar(request):
 
     # /----------------------------------------------------
 
-    if 'e' in tipos:
+    if 'u' in tipos:
         qs_ejemplos = qs_ejemplos.order_by('nombre')
     else: qs_ejemplos = []
 
@@ -178,6 +178,7 @@ def buscar(request):
     if page_num > paginator.num_pages:
         page_num = paginator.num_pages
 
+    # Calcular paginas que serán visibles en el paginador
     start = page_num - 3
     if start<= 0:
         start = 1
