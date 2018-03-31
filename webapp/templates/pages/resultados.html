@@ -5,17 +5,21 @@
         overflow: hidden;
     }
 </style>
-<section class="slice border-top border-bottom" style="background-image: url('{% static 'assets/images/backgrounds/slider/img-58.jpg' %}'); background-size: cover; background-repeat: no-repeat;background-position: center;">
+<section class="slice border-top border-bottom"
+style="background-image: linear-gradient(to right bottom, rgba(192, 192, 192, 0.8), rgba(40, 45, 65, 0.8)), url('{% static 'assets/images/backgrounds/slider/img-58.jpg' %}');
+clip-path: polygon(18% 0%, 75% 0%, 100% 50%, 75% 100%, 18% 100%);
+background-size: cover; background-repeat: no-repeat;background-position: center;">
     <div class="container mt-5">
-        <h3 class="heading heading-1 strong-400 mt-0 mb-4 text-normal text-center">
-            <span style="text-shadow: -1px 2px 2px #e0e0e0;">Toma el siguiente paso</span>
-        </h3>
+        <h2 class="heading heading-1 strong-400 mt-0 mb-4 text-normal text-center">
+            <span style="text-shadow: 0px 2px 2px #0000;color:white">Toma el siguiente paso</span>
+        </h2>
+
 
         <span class="clearfix"></span>
 
-        <div class="fluid-paragraph fluid-paragraph-sm c-gray-light strong-300 text-center" style="text-shadow: -1px 2px 2px #000;color:white !important">
-            Empieza a rediseñar tus clases, haciendo uso de todas las estrategias pedagogicas que tienes a tu alcance. Busca todas las
-            herramientas, ejemplos de uso y tutoriales que hemos desarrollado y que podrán ser utiles para ti.
+        <div class="fluid-paragraph fluid-paragraph-sm c-gray-light strong-300 text-center" style="text-shadow: -0px 1px 1px #000;color:white !important">
+          <h5>  Empieza a rediseñar tus clases, haciendo uso de todas las estrategias pedagogicas que tienes a tu alcance. Busca todas las
+            herramientas, ejemplos de uso y tutoriales que hemos desarrollado y que podrán ser utiles para ti. </h5>
         </div>
 
         <span class="space-xs-lg"></span>
@@ -182,7 +186,7 @@
                                     <h2 class="heading heading-6 strong-600 mt-2 mb-3">
                                         {{ res.nombre }}
                                     </h2>
-                                    <!-- 
+                                    <!--
                                     <div class="card-image swiper-js-container">
                                         <div class="">
                                             <div class="swiper-container" data-swiper-items="1" data-swiper-space-between="0">
