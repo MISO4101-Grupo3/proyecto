@@ -7,6 +7,7 @@
 </style>
 <section class="slice border-top border-bottom"
 style="background-image: linear-gradient(to right bottom, rgba(192, 192, 192, 0.8), rgba(40, 45, 65, 0.8)), url('{% static 'assets/images/backgrounds/slider/img-58.jpg' %}');
+clip-path: polygon(18% 0%, 75% 0%, 100% 50%, 75% 100%, 18% 100%);
 background-size: cover; background-repeat: no-repeat;background-position: center;">
     <div class="container mt-5">
         <h2 class="heading heading-1 strong-400 mt-0 mb-4 text-normal text-center">
@@ -35,7 +36,7 @@ background-size: cover; background-repeat: no-repeat;background-position: center
                     <div class="col-lg-3 advanced-search-input" style="display: none;">
                         <div class="form-group mb-0">
                             <select class="form-control form-control-lg" name="e">
-                                <option selected="selected"> Pedagógica</option>
+                                <option value=""> Pedagógica</option>
                                 {% for estrategia in estrategias %}
                                 <option value="{{ estrategia.id }}">{{ estrategia.nombre }}</option>
                                 {% endfor %}
@@ -45,7 +46,7 @@ background-size: cover; background-repeat: no-repeat;background-position: center
                     <div class="col-lg-3 advanced-search-input" style="display: none;">
                         <div class="form-group mb-0">
                             <select class="form-control form-control-lg" name="d">
-                                <option selected="selected">Disciplina</option>
+                                <option value="">Disciplina</option>
                                 {% for disciplina in disciplinas %}
                                 <option value="{{ disciplina.id }}">{{ disciplina.nombre }}</option>
                                 {% endfor %}
