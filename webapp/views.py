@@ -86,27 +86,6 @@ def buscar(request):
         else:
             return -1
 
-    # Filtro por estrategía
-    if len(e) > 0:
-
-        e = [getInt(x) for x in e.split(",")]
-        qs_ejemplos= qs_ejemplos.filter(estrategia_id__in=e)
-        qs_herramientas = qs_herramientas.filter(ejemplos_de_uso__estrategia_id__in=e)
-        qs_archivos = qs_archivos.filter(ejemplo_de_uso__estrategia_id__in=e)
-        qs_tutoriales = qs_tutoriales.filter(herramienta__ejemplos_de_uso__estrategia_id__in=e)
-
-
-    # Filtro por disciplina
-
-    if len(d) > 0:
-
-        d = [getInt(x) for x in d.split(",")]
-
-        qs_ejemplos = qs_ejemplos.filter(disciplinas__in=d)
-        qs_herramientas = qs_herramientas.filter(ejemplos_de_uso__disciplinas__in=d)
-        qs_archivos = qs_archivos.filter(ejemplo_de_uso__disciplinas__in=d)
-        qs_tutoriales = qs_tutoriales.filter(herramienta__ejemplos_de_uso__disciplinas__in=d)
-
     # -----------------------------------------------------
     # Filtros disciplinas
     # -----------------------------------------------------
@@ -150,6 +129,26 @@ def buscar(request):
         filtros_resultados+=(IdNombre('l','Tutoriales'),)
 
     # /----------------------------------------------------
+
+
+    if len(d) > 0:
+
+        d = [getInt(x) for x in d.split(",")]
+
+        qs_ejemplos = qs_ejemplos.filter(disciplinas__in=d)
+        qs_herramientas = qs_herramientas.filter(ejemplos_de_uso__disciplinas__in=d)
+        qs_archivos = qs_archivos.filter(ejemplo_de_uso__disciplinas__in=d)
+        qs_tutoriales = qs_tutoriales.filter(herramienta__ejemplos_de_uso__disciplinas__in=d)
+
+
+    if len(e) > 0:
+
+        e = [getInt(x) for x in e.split(",")]
+        qs_ejemplos= qs_ejemplos.filter(estrategia_id__in=e)
+        qs_herramientas = qs_herramientas.filter(ejemplos_de_uso__estrategia_id__in=e)
+        qs_archivos = qs_archivos.filter(ejemplo_de_uso__estrategia_id__in=e)
+        qs_tutoriales = qs_tutoriales.filter(herramienta__ejemplos_de_uso__estrategia_id__in=e)
+
 
     if 'u' in tipos:
         qs_ejemplos = qs_ejemplos.order_by('nombre')
