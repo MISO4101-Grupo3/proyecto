@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseNotFound
 
@@ -22,10 +22,10 @@ def buscar(request):
     q = request.GET.get('q','')
     e = request.GET.get('e','')
     d = request.GET.get('d','')
-    tipos = request.GET.get('t','e,h,a,t').split(',')
+    tipos = request.GET.get('t','e,h,a,l').split(',')
 
     if len(tipos) == 0:
-        tipos = 't', 'e,h,a,t'.split(',')
+        tipos = 't', 'e,h,a,l'.split(',')
 
     page_size = request.GET.get('s',6)
     page_num = request.GET.get('p',1)
@@ -80,31 +80,41 @@ def buscar(request):
         qs_archivos = Archivo.objects
         qs_tutoriales = Tutorial.objects
 
+    def getInt(val):
+        if is_number(val):
+            return int(val)
+        else:
+            return -1
+
     # Filtro por estrategía
-
     if len(e) > 0:
-        if is_number(e):
-            e = int(e)
-        else: e = -1
 
-        qs_ejemplos= qs_ejemplos.filter(estrategia_id=e)
-        qs_herramientas = qs_herramientas.filter(ejemplos_de_uso__estrategia_id=e)
-        qs_archivos = qs_archivos.filter(ejemplo_de_uso__estrategia_id=e)
-        qs_tutoriales = qs_tutoriales.filter(herramienta__ejemplos_de_uso__estrategia_id=e)
-
+        e = [getInt(x) for x in e.split(",")]
+        qs_ejemplos= qs_ejemplos.filter(estrategia_id__in=e)
+        qs_herramientas = qs_herramientas.filter(ejemplos_de_uso__estrategia_id__in=e)
+        qs_archivos = qs_archivos.filter(ejemplo_de_uso__estrategia_id__in=e)
+        qs_tutoriales = qs_tutoriales.filter(herramienta__ejemplos_de_uso__estrategia_id__in=e)
 
 
     # Filtro por disciplina
 
     if len(d) > 0:
-        if is_number(d):
-            d = int(d)
-        else: d = -1
 
-        qs_ejemplos = qs_ejemplos.filter(disciplinas__in=[d,])
-        qs_herramientas = qs_herramientas.filter(ejemplos_de_uso__disciplinas__in=[d,])
-        qs_archivos = qs_archivos.filter(ejemplo_de_uso__disciplinas__in=[d,])
-        qs_tutoriales = qs_tutoriales.filter(herramienta__ejemplos_de_uso__disciplinas__in=[d,])
+        d = [getInt(x) for x in d.split(",")]
+
+        qs_ejemplos = qs_ejemplos.filter(disciplinas__in=d)
+        qs_herramientas = qs_herramientas.filter(ejemplos_de_uso__disciplinas__in=d)
+        qs_archivos = qs_archivos.filter(ejemplo_de_uso__disciplinas__in=d)
+        qs_tutoriales = qs_tutoriales.filter(herramienta__ejemplos_de_uso__disciplinas__in=d)
+
+    # Filtros disciplinas
+    filtros_disciplinas = [getInt(x['disciplinas']) for x in qs_ejemplos.values('disciplinas').distinct()]
+    filtros_disciplinas += [getInt(x['ejemplos_de_uso__disciplinas']) for x in qs_herramientas.values('ejemplos_de_uso__disciplinas').distinct()]
+    filtros_disciplinas += [getInt(x['ejemplo_de_uso__disciplinas']) for x in qs_archivos.values('ejemplo_de_uso__disciplinas').distinct()]
+    filtros_disciplinas += [getInt(x['herramienta__ejemplos_de_uso__disciplinas']) for x in qs_tutoriales.values('herramienta__ejemplos_de_uso__disciplinas').distinct()]
+
+    filtros_disciplinas = list(set(filtros_disciplinas))
+    filtros_disciplinas = Disciplina.objects.filter(id__in = filtros_disciplinas)
 
     # Filtros Resultados
     filtros_resultados = []
@@ -115,7 +125,7 @@ def buscar(request):
     if qs_archivos.count()>0:
         filtros_resultados+=(IdNombre('a','Archivos'),)
     if qs_tutoriales.count()>0:
-        filtros_resultados+=(IdNombre('t','Tutoriales'),)
+        filtros_resultados+=(IdNombre('l','Tutoriales'),)
 
     if 'e' in tipos:
         qs_ejemplos = qs_ejemplos.order_by('nombre')
@@ -129,7 +139,7 @@ def buscar(request):
         qs_archivos = qs_archivos.order_by('nombre')
     else: qs_archivos=[]
 
-    if 't' in tipos:
+    if 'l' in tipos:
         qs_tutoriales = qs_tutoriales.order_by('nombre')
     else: qs_tutoriales=[]
 
@@ -159,8 +169,11 @@ def buscar(request):
 
     page = paginator.page(page_num)
 
+    context = {'range':range(start, end),"resultados":page,"disciplinas":Disciplina.objects.all(),"estrategias":Estrategia_Pedagogica.objects.all(),"filtros_resultados":filtros_resultados}
 
-    return render(request,'pages/resultados.html', {'range':range(start, end),"resultados":page,"disciplinas":Disciplina.objects.all(),"estrategias":Estrategia_Pedagogica.objects.all(),"filtros_resultados":filtros_resultados})
+    context['filtros_disciplinas'] = filtros_disciplinas
+
+    return render(request,'pages/resultados.html', context)
 
 def info_herramienta(request,slug):
     herramienta = get_object_or_404(Herramienta,slug=slug)
