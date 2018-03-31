@@ -349,8 +349,6 @@ background-size: cover; background-repeat: no-repeat;background-position: center
 {% endblock %} {% block custom_js %}
 <script>
 
-    $('.element-item .card').css("height", "100%")
-    $('.element-item').matchHeight();
     var search = $(location).attr('search');
     search = (search == "") ? "?p={{resultados.number}}" : search;
     if (search.includes('p=')) {
@@ -533,5 +531,8 @@ background-size: cover; background-repeat: no-repeat;background-position: center
 
     $(document).ready(function () {
         mostrarBusquedaBasica();
+        bajarSiHayResultados();
+        $('.element-item .card').css("height", "100%")
+        $('.element-item').matchHeight();
     });
 </script> {% endblock %}
