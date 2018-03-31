@@ -32,7 +32,7 @@
                     <div class="col-lg-3 advanced-search-input" style="display: none;">
                         <div class="form-group mb-0">
                             <select class="form-control form-control-lg" name="e">
-                                <option value="">Estrategia Pedagógica</option>
+                                <option value="1,2,3,4,5">Estrategia Pedagógica</option>
                                 {% for estrategia in estrategias %}
                                 <option value="{{ estrategia.id }}">{{ estrategia.nombre }}</option>
                                 {% endfor %}
@@ -42,7 +42,7 @@
                     <div class="col-lg-3 advanced-search-input" style="display: none;">
                         <div class="form-group mb-0">
                             <select class="form-control form-control-lg" name="d">
-                                <option value="">Disciplina</option>
+                                <option value="1,2,3,5">Disciplina</option>
                                 {% for disciplina in disciplinas %}
                                 <option value="{{ disciplina.id }}">{{ disciplina.nombre }}</option>
                                 {% endfor %}
@@ -77,7 +77,7 @@
                             {% for filtro_resultado in filtros_resultados %}
                             <a id="res{{filtro_resultado.id}}">
                                 <div class="checkbox">
-                                    <input type="checkbox" class="resultado" data-value="{{filtro_resultado.id}}" id="resu{{filtro_resultado.id}}">
+                                    <input onchange="this.parent.parent.click()" type="checkbox" class="resultado" data-value="{{filtro_resultado.id}}" id="resu{{filtro_resultado.id}}">
                                     <label class="text-sm" for="{{filtro_resultado.id}}">{{filtro_resultado.nombre}}</label>
                                 </div>
                             </a>
@@ -93,7 +93,7 @@
                             {% for filtro_disciplina in filtros_disciplinas %}
                             <a id="disc{{filtro_disciplina.id}}">
                                 <div class="checkbox">
-                                    <input type="checkbox" class="disciplina" data-value="{{filtro_disciplina.id}}" id="disci{{filtro_disciplina.id}}">
+                                    <input onchange="this.parent.parent.click()" type="checkbox" class="disciplina" data-value="{{filtro_disciplina.id}}" id="disci{{filtro_disciplina.id}}">
                                     <label class="text-sm" for="{{filtro_disciplina.id}}">{{filtro_disciplina.nombre}}</label>
                                 </div>
                             </a>
@@ -108,7 +108,7 @@
                             {% for filtro_estrategia in filtros_estrategias %}
                             <a id="estr{{filtro_estrategia.id}}">
                                 <div class="checkbox">
-                                    <input type="checkbox" class="estrategia" data-value="{{filtro_estrategia.id}}" id="estra{{filtro_estrategia.id}}">
+                                    <input onchange="this.parent.parent.click()" type="checkbox" class="estrategia" data-value="{{filtro_estrategia.id}}" id="estra{{filtro_estrategia.id}}">
                                     <label class="text-sm" for="{{filtro_estrategia.id}}">{{filtro_estrategia.nombre}}</label>
                                 </div>
                             </a>
@@ -412,12 +412,14 @@
             var params = "";
             if (finn == -1) {
                 params = search.substr(inicioo + 2, search.length)
+                console.log(params,value)
+                console.log(params.includes(value))
                 if (params.includes(value)) {
                     var paraams = params.split(",")
                     var ind = paraams.indexOf(value)
                     paraams.splice(ind, 1)
                     var paarams = paraams.join(",")
-                    search = search.replace(params, paarams)
+                    search = search.replace(param+params, param+paarams)
                     $("#" + classs + value).attr('href', search)
                     $("#" + claasss + value).prop('checked', true)
                 } else if (params == "") {
@@ -425,7 +427,8 @@
                     $("#" + classs + value).attr('href', search)
                     $("#" + claasss + value).prop('checked', false)
                 } else {
-                    search = search.replace(params, params + "," + value)
+                    search = search.replace(param+params, param+params + "," + value)
+                    console.log(search)
                     $("#" + classs + value).attr('href', search)
                     $("#" + claasss + value).prop('checked', false)
                 }
@@ -436,7 +439,7 @@
                     var ind = paraams.indexOf(value)
                     paraams.splice(ind, 1)
                     var paarams = paraams.join(",")
-                    search = search.replace(params, paarams)
+                    search = search.replace(param+params, param+paarams)
                     $("#" + classs + value).attr('href', search)
                     $("#" + claasss + value).prop('checked', true)
                 } else if (params == "") {
@@ -444,20 +447,20 @@
                     $("#" + classs + value).attr('href', search)
                     $("#" + claasss + value).prop('checked', false)
                 } else {
-                    search = search.replace(params, params + "," + value)
+                    search = search.replace(param+params, param+params + "," + value)
                     $("#" + classs + value).attr('href', search)
                     $("#" + claasss + value).prop('checked', false)
                 }
             }
         } else {
             params = base
-            paramms = params.split(",")
+            paramms = base.split(",")
             var paraams = params.split(",")
             var ind = paraams.indexOf(value)
             paraams.splice(ind, 1)
             var paarams = paraams.join(",")
             params = params.replace(params, paarams)
-            $("#" + classs + value).attr('href', search + "&t=" + params)
+            $("#" + classs + value).attr('href', search + "&"+param+ params)
             paramms.forEach(element => {
                 $("#" + claasss + element).prop('checked', true)
             });
@@ -472,22 +475,24 @@
         $("#resuh").prop('checked', true)
         $("#resuu").prop('checked', true)
     }
-    var inicioo = search.indexOf("e=");
+    var inicioo = search.indexOf("d=");
     var finn = search.substr(inicioo, search.length).indexOf('&')
-    if (search.includes("e=") && (search.substr(inicioo + 2, finn - 2) == "" || finn == 3)) {
+    console.log("d="+" "+inicioo+" "+finn)
+    if (!search.includes("d=") || (search.includes("d=") && ((search.substr(inicioo + 2, finn - 2) == "" && finn != -1) || finn == 3))) {
+        $("#disci1").prop('checked', true)
+        $("#disci2").prop('checked', true)
+        $("#disci3").prop('checked', true)
+        $("#disci5").prop('checked', true)
+    }
+    inicioo = search.indexOf("e=");
+    finn = search.substr(inicioo, search.length).indexOf('&')
+    console.log("e="+" "+inicioo+" "+finn)
+    if (!search.includes("e=") || (search.includes("e=") && ((search.substr(inicioo + 2, finn - 2) == "" && finn != -1) || finn == 3))) {
         $("#estra1").prop('checked', true)
         $("#estra2").prop('checked', true)
         $("#estra3").prop('checked', true)
         $("#estra4").prop('checked', true)
         $("#estra5").prop('checked', true)
-    }
-    inicioo = search.indexOf("d=");
-    finn = search.substr(inicioo, search.length).indexOf('&')
-    if (search.includes("e=") && (search.substr(inicioo + 2, finn - 2) == "" || finn == 3)) {
-        $("#disci1").prop('checked', true)
-        $("#disci2").prop('checked', true)
-        $("#disci3").prop('checked', true)
-        $("#disci5").prop('checked', true)
     }
 
 
