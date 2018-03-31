@@ -1,0 +1,21 @@
+{
+  "name": "conectate",
+  "homepage": "https://github.com/MISO4101-Grupo3/proyecto",
+  "authors": [
+    "Samuel Salazar <ss.salazar10@uniandes.edu.co>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "matchHeight": "matchheight#^0.7.2"
+  }
+}

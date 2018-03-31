@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseNotFound
 
@@ -35,6 +35,12 @@ def buscar(request):
         page_size = int(page_size)
     else:
         page_size = 10
+
+    if is_number(page_num):
+        page_num = int(page_num)
+    else:
+        page_num = 1
+
     keywords = q.split()
 
 
@@ -83,8 +89,10 @@ def buscar(request):
 
         qs_ejemplos= qs_ejemplos.filter(estrategia_id=e)
         qs_herramientas = qs_herramientas.filter(ejemplos_de_uso__estrategia_id=e)
-        qs_archivos = qs_archivos.filter(ejemplos_de_uso__estrategia_id=e)
+        qs_archivos = qs_archivos.filter(ejemplo_de_uso__estrategia_id=e)
         qs_tutoriales = qs_tutoriales.filter(herramienta__ejemplos_de_uso__estrategia_id=e)
+
+
 
     # Filtro por disciplina
 
@@ -95,7 +103,7 @@ def buscar(request):
 
         qs_ejemplos = qs_ejemplos.filter(disciplinas__in=[d,])
         qs_herramientas = qs_herramientas.filter(ejemplos_de_uso__disciplinas__in=[d,])
-        qs_archivos = qs_archivos.filter(ejemplos_de_uso__disciplinas__in=[d,])
+        qs_archivos = qs_archivos.filter(ejemplo_de_uso__disciplinas__in=[d,])
         qs_tutoriales = qs_tutoriales.filter(herramienta__ejemplos_de_uso__disciplinas__in=[d,])
 
     # Filtros Resultados
@@ -132,8 +140,27 @@ def buscar(request):
 
     # https://docs.djangoproject.com/en/2.0/topics/pagination/
     paginator = Paginator(result_list,page_size)
+
+    if page_num > paginator.num_pages:
+        page_num = paginator.num_pages
+
+    start = page_num - 3
+    if start<= 0:
+        start = 1
+
+    end = start+7
+    if end > paginator.num_pages:
+        end = paginator.num_pages+1
+
+    if end-start <7:
+        start= end -7
+        if start <= 0:
+            start = 1
+
     page = paginator.page(page_num)
-    return render(request,'pages/resultados.html', {"resultados":page,"disciplinas":Disciplina.objects.all(),"estrategias":Estrategia_Pedagogica.objects.all(),"filtros_resultados":filtros_resultados})
+
+
+    return render(request,'pages/resultados.html', {'range':range(start, end),"resultados":page,"disciplinas":Disciplina.objects.all(),"estrategias":Estrategia_Pedagogica.objects.all(),"filtros_resultados":filtros_resultados})
 
 def info_herramienta(request,slug):
     herramienta = get_object_or_404(Herramienta,slug=slug)

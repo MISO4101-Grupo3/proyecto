@@ -1,4 +1,9 @@
-{% extends 'base.html' %} {% load static %} {% block body %}
+{% extends 'base.html' %}
+
+{% load static %}
+{% load mathfilters %}
+
+{% block body %}
 <style>
     .product-description {
         height: 4.6em;
@@ -187,25 +192,7 @@
                                     <div class="card-footer">
                                         <div class="product-buttons">
                                             <div class="row align-items-center">
-                                                <div class="col-2">
-
-                                                    <a href="{{res.sitio}}">
-                                                        <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Visit">
-                                                            <i class="ion-android-open"></i>
-                                                        </button>
-                                                    </a>
-                                                </div>
-                                                <div class="col-2">
-                                                    <!-- <h1>{{res.descarga}}</h1> -->
-                                                    {% if res.descarga != '' and res.descarga is not None%}
-                                                    <a href="{{res.descarga}}">
-                                                        <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Download">
-                                                            <i class="ion-ios-cloud-download"></i>
-                                                        </button>
-                                                    </a>
-                                                    {% endif %}
-                                                </div>
-                                                <div class="col-8">
+                                                <div class="col-12">
                                                     <a href="{% url 'herramientas' res.slug %}">
                                                         <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left">
                                                             <i class="ion-information-circled"></i> More Info
@@ -363,7 +350,7 @@
 
                 <div class="pt-5">
                     <nav aria-label="Product pagination">
-                        <ul class="pagination pagination--style-2 justify-content-end">
+                        <ul class="pagination pagination--style-1 justify-content-center">
                             {% if resultados.has_previous %}
                             <li class="page-item">
                                 <a class="page-link" id="firstPage">&laquo; Primera</a>
@@ -371,11 +358,14 @@
                             <li class="page-item">
                                 <a class="page-link" id="previousPage">Anterior</a>
                             </li>
-                            {% endif %} {% for i in resultados.paginator.page_range %}
-                            <li class="page-item {% if i == resultados.number %} active {% endif %}">
-                                <a class="page-link pagee" data-value="{{i}}">{{i}}</a>
-                            </li>
-                            {% endfor %} {% if resultados.has_next %}
+                            {% endif %}
+                            {% for i in range %}
+
+                                <li class="page-item {% if i == resultados.number %} active {% endif %}">
+                                    <a class="page-link pagee" data-value="{{i}}">{{i}}</a>
+                                </li>
+                            {% endfor %}
+                            {% if resultados.has_next %}
                             <li class="page-item">
                                 <a class="page-link" id="nextPage">Siguiente</a>
                             </li>
@@ -393,7 +383,14 @@
     </div>
 </section>
 {% endblock %} {% block custom_js %}
+<script>
+$(function() {
+    $('.element-item .card').css("height", "100%")
+	$('.element-item').matchHeight();
 
+});
+
+</script>
 <script type="text/javascript">
     var search = $(location).attr('search');
     if (search.includes('p=')) {

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'webapp.apps.WebappConfig',
     'widget_tweaks',
     'storages',
+    'mathfilters',
 ]
 
 MIDDLEWARE = [
