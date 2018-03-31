@@ -25,7 +25,7 @@ class Estrategia_Pedagogica(models.Model):
 
 class Archivo(models.Model):
     def __str__(self):
-        return 'id:'+ str(self.id)
+        return  str(self.ejemplo_de_uso)+" : " + str(self.nombre)
 
     def class_name(self):
         return self.__class__.__name__
@@ -33,8 +33,13 @@ class Archivo(models.Model):
     descripcion = models.TextField(null=True, blank=True)
     tipo = models.CharField(null=True, blank=True, max_length=10)
     file = models.FileField(upload_to=UploadToPathAndRename('uploads/archivos'))
-    nombre = models.CharField(null=True, blank=True, max_length=255)
+    nombre = models.CharField(null=True, blank=True, max_length=200)
     ejemplo_de_uso = models.ForeignKey('Ejemplo_De_Uso', related_name='archivos', null=True, on_delete=models.CASCADE)
+    slug = models.SlugField(max_length=250, unique=True, null=False, blank=False)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.nombre)
+        super(Archivo, self).save(*args, **kwargs)
 
 # Herramienta
 
@@ -80,6 +85,11 @@ class Ejemplo_De_Uso(models.Model):
     disciplinas = models.ManyToManyField('Disciplina', related_name='ejemplos_de_uso', blank=True)
     herramientas = models.ManyToManyField('Herramienta', related_name='ejemplos_de_uso', blank=True)
     estrategia = models.ForeignKey('Estrategia_Pedagogica', related_name='ejemplos_de_uso', on_delete=models.CASCADE)
+    slug = models.SlugField(max_length=250, default="")
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.nombre)
+        super(Ejemplo_De_Uso, self).save(*args, **kwargs)
 
 # Tutorial
 
@@ -89,7 +99,7 @@ class Tutorial(models.Model):
 
     def class_name(self):
         return self.__class__.__name__
-        
+
     class Meta:
         verbose_name_plural = "Tutoriales"
     nombre = models.CharField(null=True, blank=True, max_length=200)

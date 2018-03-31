@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseNotFound
 
@@ -14,7 +14,8 @@ from django.core.paginator import Paginator
 
 def inicio(request):
     context = {}
-    return render(request, 'pages/inicio.html', context)
+    #return render(request, 'pages/inicio.html', context)
+    return  redirect('buscar')
 
 def buscar(request):
 
@@ -23,7 +24,10 @@ def buscar(request):
     d = request.GET.get('d','')
     tipos = request.GET.get('t','e,h,a,t').split(',')
 
-    page_size = request.GET.get('s',1)
+    if len(tipos) == 0:
+        tipos = 't', 'e,h,a,t'.split(',')
+
+    page_size = request.GET.get('s',6)
     page_num = request.GET.get('p',1)
 
 
@@ -135,6 +139,12 @@ def info_herramienta(request,slug):
     herramienta = get_object_or_404(Herramienta,slug=slug)
     context = {"herramienta":herramienta}
     return render(request,'pages/info_herramienta.html', context)
+
+def info_ejemplo_de_uso(request,slug):
+    ejemplo_de_uso = get_object_or_404(Ejemplo_De_Uso,slug=slug)
+    context = {"ejemplo_de_uso":ejemplo_de_uso}
+    return render(request,'pages/info_ejemplo_de_uso.html', context)
+
 
 def tutoriales(request,slug_herramienta,slug_tutorial):
     tutorial = Tutorial.objects.filter(slug=slug_tutorial,herramienta__slug=slug_herramienta)
