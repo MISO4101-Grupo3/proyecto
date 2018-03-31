@@ -78,9 +78,9 @@ background-size: cover; background-repeat: no-repeat;background-position: center
 
                         <div class="filter-checkbox">
                             {% for filtro_resultado in filtros_resultados %}
-                            <a id="res{{filtro_resultado.id}}">
+                            <a id="res{{filtro_resultado.id}}" onclick="this.click()">
                                 <div class="checkbox">
-                                    <input onchange="this.parent.parent.click()" type="checkbox" class="resultado" data-value="{{filtro_resultado.id}}" id="resu{{filtro_resultado.id}}">
+                                    <input type="checkbox" class="resultado" data-value="{{filtro_resultado.id}}" id="resu{{filtro_resultado.id}}">
                                     <label class="text-sm" for="{{filtro_resultado.id}}">{{filtro_resultado.nombre}}</label>
                                 </div>
                             </a>
@@ -94,9 +94,9 @@ background-size: cover; background-repeat: no-repeat;background-position: center
 
                         <div class="filter-checkbox">
                             {% for filtro_disciplina in filtros_disciplinas %}
-                            <a id="disc{{filtro_disciplina.id}}">
+                            <a id="disc{{filtro_disciplina.id}}" onclick="this.click()">
                                 <div class="checkbox">
-                                    <input onchange="this.parent.parent.click()" type="checkbox" class="disciplina" data-value="{{filtro_disciplina.id}}" id="disci{{filtro_disciplina.id}}">
+                                    <input type="checkbox" class="disciplina" data-value="{{filtro_disciplina.id}}" id="disci{{filtro_disciplina.id}}">
                                     <label class="text-sm" for="{{filtro_disciplina.id}}">{{filtro_disciplina.nombre}}</label>
                                 </div>
                             </a>
@@ -109,9 +109,9 @@ background-size: cover; background-repeat: no-repeat;background-position: center
 
                         <div class="filter-checkbox">
                             {% for filtro_estrategia in filtros_estrategias %}
-                            <a id="estr{{filtro_estrategia.id}}">
+                            <a id="estr{{filtro_estrategia.id}}" onclick="this.click()">
                                 <div class="checkbox">
-                                    <input onchange="this.parent.parent.click()" type="checkbox" class="estrategia" data-value="{{filtro_estrategia.id}}" id="estra{{filtro_estrategia.id}}">
+                                    <input  type="checkbox" class="estrategia" data-value="{{filtro_estrategia.id}}" id="estra{{filtro_estrategia.id}}">
                                     <label class="text-sm" for="{{filtro_estrategia.id}}">{{filtro_estrategia.nombre}}</label>
                                 </div>
                             </a>
@@ -530,4 +530,8 @@ background-size: cover; background-repeat: no-repeat;background-position: center
         $('.advanced-search-button').hide();
         $('.basic-search-button').show();
     }
+
+    $(document).ready(function () {
+        mostrarBusquedaBasica();
+    });
 </script> {% endblock %}
