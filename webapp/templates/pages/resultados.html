@@ -1,9 +1,4 @@
-{% extends 'base.html' %}
-
-{% load static %}
-{% load mathfilters %}
-
-{% block body %}
+{% extends 'base.html' %} {% load static %} {% load mathfilters %} {% block body %}
 <style>
     .product-description {
         height: 4.6em;
@@ -27,7 +22,7 @@
 
         <div class="feature feature--boxed-border feature--bg-1" style="background-color: rgba(255,255,255,0.8);">
             <form role="form" class="form-default" method="GET">
-                <input type="hidden" name="s" value="8">
+                <input type="hidden" name="s" value="6">
                 <div class="row cols-md-space cols-sm-space cols-xs-space">
                     <div class="col-lg-9 basic-search-input">
                         <div class="form-group mb-0">
@@ -59,8 +54,8 @@
                             Buscar
                         </button>
                         <div style="position:absolute;">
-                            <a href="#" onclick="mostrarBusquedaAvanzada()" class="advanced-search-button">Búsqueda avanzada</a>
-                            <a href="#" onclick="mostrarBusquedaBasica()" class="basic-search-button">Búsqueda básica</a>
+                            <a href="" onclick="mostrarBusquedaAvanzada()" class="advanced-search-button">Búsqueda avanzada</a>
+                            <a href="" onclick="mostrarBusquedaBasica()" class="basic-search-button">Búsqueda básica</a>
                         </div>
                     </div>
                 </div>
@@ -72,61 +67,37 @@
 <section class="slice sct-color-2">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-6">
                 <div class="sidebar sidebar--style-4 z-depth-1-top">
+
                     <div class="sidebar-object">
                         <h5 class="heading heading-sm strong-600 mb-4">Resultado</h5>
 
                         <div class="filter-checkbox">
-                            <div class="checkbox">
-                                <input type="checkbox" id="herramientas--category">
-                                <label class="text-sm" for="herramientas--category">Herramientas</label>
-                            </div>
-
-                            <div class="checkbox">
-                                <input type="checkbox" id="ejemplos-de-uso--category">
-                                <label class="text-sm" for="ejemplos-de-uso--category">Ejemplos de uso</label>
-                            </div>
-
-                            <div class="checkbox">
-                                    <input type="checkbox" id="tutoriales--category">
-                                    <label class="text-sm" for="tutoriales--category">Tutoriales</label>
-                                </div>
+                            {% for filtro_resultado in filtros_resultados %}
+                            <a id="res{{filtro_resultado.id}}">
                                 <div class="checkbox">
-                                        <input type="checkbox" id="archivos--category">
-                                        <label class="text-sm" for="archivos--category">Archivos</label>
-                                    </div>
+                                    <input type="checkbox" class="resultado" data-value="{{filtro_resultado.id}}" id="resu{{filtro_resultado.id}}">
+                                    <label class="text-sm" for="{{filtro_resultado.id}}">{{filtro_resultado.nombre}}</label>
+                                </div>
+                            </a>
+                            {% endfor %}
                         </div>
                     </div>
+
 
                     <div class="sidebar-object">
                         <h5 class="heading heading-sm strong-600 mb-4">Disciplina</h5>
 
                         <div class="filter-checkbox">
-                            <div class="checkbox">
-                                <input type="checkbox" id="economia--category">
-                                <label class="text-sm" for="economia--category">Economia</label>
-                            </div>
-
-                            <div class="checkbox">
-                                <input type="checkbox" id="ingenieria--category">
-                                <label class="text-sm" for="ingenieria--category">Ingeniería</label>
-                            </div>
-
-                            <div class="checkbox">
-                                <input type="checkbox" id="derecho--category">
-                                <label class="text-sm" for="derecho--category">Derecho</label>
-                            </div>
-
-                            <div class="checkbox">
-                                <input type="checkbox" id="artes-y-humanidades--category">
-                                <label class="text-sm" for="artes-y-humanidades--category">Artes y Humanidades</label>
-                            </div>
-
-                            <div class="checkbox">
-                                <input type="checkbox" id="ciencias--category">
-                                <label class="text-sm" for="ciencias--category">Ciencias</label>
-                            </div>
+                            {% for filtro_disciplina in filtros_disciplinas %}
+                            <a id="disc{{filtro_disciplina.id}}">
+                                <div class="checkbox">
+                                    <input type="checkbox" class="disciplina" data-value="{{filtro_disciplina.id}}" id="disci{{filtro_disciplina.id}}">
+                                    <label class="text-sm" for="{{filtro_disciplina.id}}">{{filtro_disciplina.nombre}}</label>
+                                </div>
+                            </a>
+                            {% endfor %}
                         </div>
                     </div>
 
@@ -134,38 +105,33 @@
                         <h5 class="heading heading-sm strong-600 mb-4">Estrategía Pedagogica</h5>
 
                         <div class="filter-checkbox">
-                            <div class="checkbox">
-                                <input type="checkbox" id="estrategia-invertida--category">
-                                <label class="text-sm" for="estrategia-invertida--category">Educación Invertida</label>
-                            </div>
-
-                            <div class="checkbox">
-                                <input type="checkbox" id="educacion-blended--category">
-                                <label class="text-sm" for="educacion-blended--category">Educación Blended</label>
-                            </div>
-
-                            <div class="checkbox">
-                                <input type="checkbox" id="educacion-semipresencial--category">
-                                <label class="text-sm" for="educacion-semipresencial--category">Educación Semipresencial</label>
-                            </div>
-
-                            <div class="checkbox">
-                                <input type="checkbox" id="chkCategory-4b">
-                                <label class="text-sm" for="chkCategory-4b">Educación Virtual</label>
-                            </div>
+                            {% for filtro_estrategia in filtros_estrategias %}
+                            <a id="estr{{filtro_estrategia.id}}">
+                                <div class="checkbox">
+                                    <input type="checkbox" class="estrategia" data-value="{{filtro_estrategia.id}}" id="estra{{filtro_estrategia.id}}">
+                                    <label class="text-sm" for="{{filtro_estrategia.id}}">{{filtro_estrategia.nombre}}</label>
+                                </div>
+                            </a>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="col-lg-9">
-                <div class="row-wrapper">
-                    <div class="row cols-xs-space cols-sm-space cols-md-space grid">
-                    {% if resultados.paginator.count == 0 %}
-                        <h1>No se encuentran resultados para tu busqueda</h1>
-                    {% endif %}
-                        {% for res in resultados %} {% if res.class_name == 'Herramienta' %}
-                        <div class="col-lg-4 element-item herramientas--element" style="margin-bottom: 15px">
+            <div class="col-lg-9 col-md-6">
+                <div class="row-wrapper masonry-container">
+                    <div class="row masonry cols-xs-space cols-sm-space cols-md-space grid">
+                        {% if resultados.paginator.count == 0 %}
+                        <div class="col-lg-12 element-item herramientas--element" style="margin-bottom: 15px">
+                            <div class="card card-product" style="box-shadow: 0 2px 15px rgba(0, 0, 0, 0.8)">
+                                <div class="card card-product">
+                                    <div class="card-body">
+                                        <h1>No se encuentran resultados para tu busqueda</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %} {% for res in resultados %} {% if res.class_name == 'Herramienta' %}
+                        <div class="masonry-item col-lg-4 element-item herramientas--element" style="margin-bottom: 15px">
                             <div class="card card-product" style="box-shadow: 0 2px 15px rgba(124, 201, 78, 0.8)">
                                 <div class="card card-product">
                                     <div class="card-body">
@@ -210,7 +176,7 @@
                         </div>
 
                         {% endif %} {% if res.class_name == 'Ejemplo_De_Uso' %}
-                        <div class="col-lg-4 element-item ejemplos-de-uso--element" style="margin-bottom: 15px">
+                        <div class="masonry-item col-lg-4 element-item ejemplos-de-uso--element" style="margin-bottom: 15px">
                             <div class="card card-product" style="box-shadow: 0 2px 15px rgba(230, 221, 43, 0.8)">
                                 <div class="card-body">
                                     <h2 class="heading heading-6 strong-600 mt-2 mb-3">
@@ -272,7 +238,7 @@
                             </div>
                         </div>
                         {% endif %} {% if res.class_name == 'Tutorial' %}
-                        <div class="col-lg-4 element-item tutoriales--element" style="margin-bottom: 15px">
+                        <div class="masonry-item col-lg-4 element-item tutoriales--element" style="margin-bottom: 15px">
                             <div class="card card-product" style="box-shadow: 0 2px 15px rgba(187, 224, 248, 0.8)">
                                 <div class="card-body">
                                     <h2 class="heading heading-6 strong-600 mt-2 mb-3">
@@ -289,17 +255,10 @@
                                 <div class="card-footer">
                                     <div class="product-buttons">
                                         <div class="row align-items-center">
-                                            <div class="col-2">
-                                                <a href="{{res.url_recurso}}">
-                                                    <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Visit">
-                                                        <i class="ion-android-open"></i>
-                                                    </button>
-                                                </a>
-                                            </div>
-                                            <div class="col-10">
+                                            <div class="col-12">
                                                 <a href="{% url 'tutoriales' res.herramienta.slug res.slug %}">
-                                                     <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left">
-                                                    <i class="ion-information-circled"></i> More Info
+                                                    <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left">
+                                                        <i class="ion-information-circled"></i> More Info
                                                     </button>
                                                 </a>
 
@@ -310,7 +269,7 @@
                             </div>
                         </div>
                         {% endif %} {% if res.class_name == 'Archivo' %}
-                        <div class="col-lg-4 element-item archivos--element" style="margin-bottom: 15px">
+                        <div class="masonry-item col-lg-4 element-item archivos--element" style="margin-bottom: 15px">
                             <div class="card card-product" style="box-shadow: 0 2px 15px rgba(116, 13, 76, 0.8)">
                                 <div class="card-body">
                                     <h2 class="heading heading-6 strong-600 mt-2 mb-3">
@@ -352,7 +311,7 @@
                 </div>
 
 
-            {% if resultados.paginator.count != 0 %}
+                {% if resultados.paginator.count != 0 %}
                 <div class="pt-5">
                     <nav aria-label="Product pagination">
                         <ul class="pagination pagination--style-1 justify-content-center">
@@ -363,14 +322,12 @@
                             <li class="page-item">
                                 <a class="page-link" id="previousPage">Anterior</a>
                             </li>
-                            {% endif %}
-                            {% for i in range %}
+                            {% endif %} {% for i in range %}
 
-                                <li class="page-item {% if i == resultados.number %} active {% endif %}">
-                                    <a class="page-link pagee" data-value="{{i}}">{{i}}</a>
-                                </li>
-                            {% endfor %}
-                            {% if resultados.has_next %}
+                            <li class="page-item {% if i == resultados.number %} active {% endif %}">
+                                <a class="page-link pagee" data-value="{{i}}">{{i}}</a>
+                            </li>
+                            {% endfor %} {% if resultados.has_next %}
                             <li class="page-item">
                                 <a class="page-link" id="nextPage">Siguiente</a>
                             </li>
@@ -381,22 +338,18 @@
                         </ul>
                     </nav>
                 </div>
-            {% endif %}
+                {% endif %}
             </div>
         </div>
     </div>
 </section>
 {% endblock %} {% block custom_js %}
 <script>
-$(function() {
+
     $('.element-item .card').css("height", "100%")
-	$('.element-item').matchHeight();
-
-});
-
-</script>
-<script type="text/javascript">
+    $('.element-item').matchHeight();
     var search = $(location).attr('search');
+    search = (search == "") ? "?p={{resultados.number}}" : search;
     if (search.includes('p=')) {
         var inicio = search.indexOf('p=');
         var fin = search.substr(inicio, search.length).indexOf('&')
@@ -413,7 +366,6 @@ $(function() {
             $('#lastPage').attr('href', search.substr(0, inicio + 2) + "{{resultados.paginator.num_pages}}")
             {% endif %}
         } else {
-            console.log(inicio + " " + fin + " " + search.charAt(inicio + fin))
             {% if resultados.has_previous %}
             $('#firstPage').attr('href', search.substr(0, inicio + 2) + "1" + search.substr(inicio + fin, search.length))
             $('#previousPage').attr('href', search.substr(0, inicio + 2) + "{{resultados.previous_page_number}}" + search.substr(inicio + fin, search.length))
@@ -440,10 +392,109 @@ $(function() {
         {% endif %}
     }
 
+    $(".resultado").each(function (index, ele) {
+        filtrar("u,a,l,h", "t=", "res", "resu", ele)
+    })
+    $(".disciplina").each(function (index, ele) {
+        filtrar("1,2,3,5", "d=", "disc", "disci", ele)
+    })
+    $(".estrategia").each(function (index, ele) {
+        filtrar("1,2,3,4,5", "e=", "estr", "estra", ele)
+    })
+    function filtrar(base, param, classs, claasss, ele) {
+        search = $(location).attr('search');
+        search = (search == "") ? "?" + param + base : search;
+
+        var value = $(ele).attr('data-value')
+        if (search.includes(param)) {
+            var inicioo = search.indexOf(param);
+            var finn = search.substr(inicioo, search.length).indexOf('&')
+            var params = "";
+            if (finn == -1) {
+                params = search.substr(inicioo + 2, search.length)
+                if (params.includes(value)) {
+                    var paraams = params.split(",")
+                    var ind = paraams.indexOf(value)
+                    paraams.splice(ind, 1)
+                    var paarams = paraams.join(",")
+                    search = search.replace(params, paarams)
+                    $("#" + classs + value).attr('href', search)
+                    $("#" + claasss + value).prop('checked', true)
+                } else if (params == "") {
+                    search = search.replace(param, param + value)
+                    $("#" + classs + value).attr('href', search)
+                    $("#" + claasss + value).prop('checked', false)
+                } else {
+                    search = search.replace(params, params + "," + value)
+                    $("#" + classs + value).attr('href', search)
+                    $("#" + claasss + value).prop('checked', false)
+                }
+            } else {
+                params = search.substr(inicioo + 2, finn - 2)
+                if (params.includes(value)) {
+                    var paraams = params.split(",")
+                    var ind = paraams.indexOf(value)
+                    paraams.splice(ind, 1)
+                    var paarams = paraams.join(",")
+                    search = search.replace(params, paarams)
+                    $("#" + classs + value).attr('href', search)
+                    $("#" + claasss + value).prop('checked', true)
+                } else if (params == "") {
+                    search = search.replace(param, param + value)
+                    $("#" + classs + value).attr('href', search)
+                    $("#" + claasss + value).prop('checked', false)
+                } else {
+                    search = search.replace(params, params + "," + value)
+                    $("#" + classs + value).attr('href', search)
+                    $("#" + claasss + value).prop('checked', false)
+                }
+            }
+        } else {
+            params = base
+            paramms = params.split(",")
+            var paraams = params.split(",")
+            var ind = paraams.indexOf(value)
+            paraams.splice(ind, 1)
+            var paarams = paraams.join(",")
+            params = params.replace(params, paarams)
+            $("#" + classs + value).attr('href', search + "&t=" + params)
+            paramms.forEach(element => {
+                $("#" + claasss + element).prop('checked', true)
+            });
+            $("#" + claasss + value).prop('checked', false)
+        }
+
+    }
+
+    if (!search.includes("t=")) {
+        $("#resua").prop('checked', true)
+        $("#resul").prop('checked', true)
+        $("#resuh").prop('checked', true)
+        $("#resuu").prop('checked', true)
+    }
+    var inicioo = search.indexOf("e=");
+    var finn = search.substr(inicioo, search.length).indexOf('&')
+    if (search.includes("e=") && (search.substr(inicioo + 2, finn - 2) == "" || finn == 3)) {
+        $("#estra1").prop('checked', true)
+        $("#estra2").prop('checked', true)
+        $("#estra3").prop('checked', true)
+        $("#estra4").prop('checked', true)
+        $("#estra5").prop('checked', true)
+    }
+    inicioo = search.indexOf("d=");
+    finn = search.substr(inicioo, search.length).indexOf('&')
+    if (search.includes("e=") && (search.substr(inicioo + 2, finn - 2) == "" || finn == 3)) {
+        $("#disci1").prop('checked', true)
+        $("#disci2").prop('checked', true)
+        $("#disci3").prop('checked', true)
+        $("#disci5").prop('checked', true)
+    }
+
+
     var $grid;
 
     function bajarSiHayResultados() {
-        if (window.location.search.indexOf("q=") >= 0) {
+        if (window.location.search.indexOf("q=") >= 0 || window.location.search.indexOf("p=") >= 0) {
             $('html, body').animate({
                 scrollTop: $(".sct-color-2").offset().top + 50
             }, 1500);
@@ -484,7 +535,6 @@ $(function() {
             });
 
             var filtro = filters.join(",");
-            console.log(filtro);
             $grid.isotope({ filter: filtro });
         });
     }
