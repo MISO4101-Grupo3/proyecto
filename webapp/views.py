@@ -1,7 +1,8 @@
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponseNotFound
-
+from django.http import HttpResponseNotFound, JsonResponse
+from django.views.decorators.http import require_http_methods
 from .forms import *
 from .models import *
 from django.db.models import Q
@@ -223,6 +224,27 @@ def tutoriales(request,slug_herramienta,slug_tutorial):
     context = {"tutorial":tutorial.first(),"tutoriales":tutoriales,"slug_tutorial":slug_tutorial}
     return render(request,'pages/tutoriales.html', context)
 
+@require_http_methods(["POST"])
+def rest_login(request):
+    usuario = request.POST.get('usuario','')
+    password = request.POST.get('password','')
+    user = authenticate(request, username=usuario, password=password)
+    status = 400
+    message = ""
+    if user is not None:
+        login(request, user)
+        status = 200
+        message = user.email
+
+    else:
+        message = "Credenciales invalidas."
+    return JsonResponse({'status': status, 'message': message})
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('inicio')
+
 def is_number(s):
     try:
         float(s)
@@ -242,3 +264,4 @@ class IdNombre:
     def __init__(self, id, nombre):
         self.id = id
         self.nombre = nombre
+
