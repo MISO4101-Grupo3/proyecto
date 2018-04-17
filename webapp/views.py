@@ -215,6 +215,11 @@ def info_ejemplo_de_uso(request,slug):
     context = {"ejemplo_de_uso":ejemplo_de_uso}
     return render(request,'pages/info_ejemplo_de_uso.html', context)
 
+def info_persona_de_conectate(request,slug):
+    persona_de_conectate = get_object_or_404(Persona_De_Conectate,slug=slug)
+    context = {"persona_de_conectate":persona_de_conectate}
+    return render(request,'pages/info_persona_de_conectate.html', context)
+
 
 def tutoriales(request,slug_herramienta,slug_tutorial):
     tutorial = Tutorial.objects.filter(slug=slug_tutorial,herramienta__slug=slug_herramienta)
