@@ -21,6 +21,15 @@ class Estrategia_Pedagogica(models.Model):
         verbose_name_plural = "estrategías"
     nombre = models.CharField(null=True, blank=True, max_length=255)
 
+
+#Areas de experiencia
+class Area_De_Experiencia(models.Model):
+    def __str__(self):
+        return self.nombre
+    class Meta:
+        verbose_name_plural = "areas"
+    nombre = models.CharField(null=True, blank=True, max_length=255)
+
 # Archivo
 
 class Archivo(models.Model):
@@ -90,6 +99,30 @@ class Ejemplo_De_Uso(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.nombre)
         super(Ejemplo_De_Uso, self).save(*args, **kwargs)
+
+# Personal_de_conectate
+
+class Persona_De_Conectate(models.Model):
+    def __str__(self):
+        return self.nombre
+
+    def class_name(self):
+        return self.__class__.__name__
+
+    class Meta:
+        verbose_name_plural = "Personal de conectate"
+    nombre = models.CharField(null=True, blank=True, max_length=255)
+    perfil = models.TextField(null=True, blank=True)
+    herramientas = models.ManyToManyField('Herramienta', related_name='personal_de_conectate', blank=True)
+    areas_de_experiencia = models.ManyToManyField('Area_De_Experiencia', related_name='personal_de_conectate', blank=True)
+    contacto = models.CharField(null=True, blank=True, max_length=255)
+    ejemplos_de_uso = models.ManyToManyField('Ejemplo_De_Uso', related_name='ejemplos_de_uso', blank=True)
+    imagen = models.ImageField(upload_to=UploadToPathAndRename('uploads/imagenes'), null=True)
+    slug = models.SlugField(max_length=250, default="")
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.nombre)
+        super(Persona_De_Conectate, self).save(*args, **kwargs)
 
 # Tutorial
 
