@@ -8,6 +8,8 @@ import random
 from selenium.webdriver.support import expected_conditions as EC
 import string
 
+from django.test import TestCase
+
 from selenium.webdriver.support.wait import WebDriverWait
 
 
@@ -107,3 +109,63 @@ class FunctionalTest(TestCase):
         assert not self.is_element_present(By.ID, 'link-historial', 1)
         assert not self.is_element_present(By.ID, 'link-perfil', 1)
         assert not self.is_element_present(By.ID, 'link-logout', 1)
+
+    # Verificar la edicion de un usuario
+    # Casos de prueba:
+    # 1. Se ingresa un usuario y contraseña validos.
+    # 2. Se da ingresa a las opciones del usuario y se da clic en Editar Perfil
+    # 3. Se Editan algunos campos del usuario y se da guardar
+    # 4. Se ingresa nuevamente a la edicion del perfil y se verifica que los campos modificados hallan sido guardados
+    def test_editar_usuario(self):
+        self.browser.get(base_url)
+        self.browser.find_element_by_id("btn-login").click()
+        self.browser.implicitly_wait(5)
+
+        self.iniciar_sesion("admin", "Colombia.2018")
+        self.browser.implicitly_wait(5)
+
+        assert self.is_element_present(By.CSS_SELECTOR, '.toast-success', 5)
+        self.browser.find_element_by_css_selector(".toast-close-button").click()
+        assert not self.is_element_present(By.ID, 'error-alert', 5)
+        assert self.is_element_present(By.ID, 'btn-user', 5)
+
+        btn_user = self.browser.find_element_by_css_selector('#btn-user ')
+        assert btn_user.text == 'admin@conectate.co'
+        btn_user.click()
+
+        link_edit = self.browser.find_element_by_id("link-perfil")
+        link_edit.click()
+
+        txt_nombre = self.browser.find_element_by_id("nombre")
+        txt_nombre.clear()
+        txt_nombre.send_keys("admin")
+
+        txt_areas_experiencia = self.browser.find_element_by_id("areas-experiencia")
+        txt_areas_experiencia.clear()
+        txt_areas_experiencia.send_keys("Ingenieria")
+
+        txt_contacto = self.browser.find_element_by_id("contacto")
+        txt_contacto.clear()
+        txt_contacto.send_keys("6574")
+
+        txt_herramientas = self.browser.find_element_by_id("herramientas")
+        txt_herramientas.send_keys("Moodle")
+
+        btn_editar = self.browser.find_element_by_id("editar")
+        btn_editar.click()
+
+        assert self.is_element_present(By.CSS_SELECTOR, '.toast-success', 5)
+
+        btn_user = self.browser.find_element_by_css_selector('#btn-user ')
+        assert btn_user.text == 'admin@conectate.co'
+        btn_user.click()
+
+        link_edit = self.browser.find_element_by_id("link-perfil")
+        link_edit.click()
+
+        assert txt_nombre == 'admin'
+        assert txt_areas_experiencia == 'Ingenieria'
+        assert self.assertContains(txt_herramientas.txt, 'Moodle')
+
+
+
