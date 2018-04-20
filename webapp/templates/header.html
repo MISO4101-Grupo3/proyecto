@@ -23,128 +23,7 @@
                 <div class="col-md-6">
                     <nav class="top-navbar-menu">
                         <ul class="top-menu">
-                            <li>
-                                <a href="#">Iniciar sesión</a>
-                            </li>
-                            <!-- <li>
-                                <a href="#">Create account</a>
-                            </li> -->
-                            <!-- <li>
-                                <a href="#" data-toggle="global-search">
-                                    <i class="fa fa-search"></i>
-                                </a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#">
-                                    <i class="fa fa-shopping-cart"></i>
-                                </a>
-                                <ul class="sub-menu">
-                                    <li>
-                                        <div class="dropdown-cart px-0">
-                                            <div class="dc-header">
-                                                <h3 class="heading heading-6 strong-600">Cart</h3>
-                                            </div>
-                                            <div class="dc-item">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="dc-image">
-                                                        <a href="#">
-                                                            <img src="{% static 'assets/images/prv/shop/accessories/img-1a.png' %}" class="img-fluid" alt="">
-                                                        </a>
-                                                    </div>
-                                                    <div class="dc-content">
-                                                        <span class="d-block dc-product-name text-capitalize strong-600 mb-1">
-                                                            <a href="#">
-                                                                Wood phone case
-                                                            </a>
-                                                        </span>
 
-                                                        <span class="dc-quantity">x2</span>
-                                                        <span class="dc-price">$50.00</span>
-                                                    </div>
-                                                    <div class="dc-actions">
-                                                        <button>
-                                                            <i class="ion-close"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="dc-item">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="dc-image">
-                                                        <a href="#">
-                                                            <img src="{% static 'assets/images/prv/shop/accessories/img-2a.png' %}" class="img-fluid" alt="">
-                                                        </a>
-                                                    </div>
-                                                    <div class="dc-content">
-                                                        <span class="d-block dc-product-name text-capitalize strong-600 mb-1">
-                                                            <a href="#">
-                                                                Leather bag
-                                                            </a>
-                                                        </span>
-
-                                                        <span class="dc-quantity">x1</span>
-                                                        <span class="dc-price">$250.00</span>
-                                                    </div>
-                                                    <div class="dc-actions">
-                                                        <button>
-                                                            <i class="ion-close"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="dc-item">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="dc-image">
-                                                        <a href="#">
-                                                            <img src="{% static 'assets/images/prv/shop/accessories/img-3a.png' %}" class="img-fluid" alt="">
-                                                        </a>
-                                                    </div>
-                                                    <div class="dc-content">
-                                                        <span class="d-block dc-product-name text-capitalize strong-600 mb-1">
-                                                            <a href="#">
-                                                                Brown leather wallet
-                                                            </a>
-                                                        </span>
-
-                                                        <span class="dc-quantity">x1</span>
-                                                        <span class="dc-price">$99.00</span>
-                                                    </div>
-                                                    <div class="dc-actions">
-                                                        <button>
-                                                            <i class="ion-close"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="dc-item py-4">
-                                                <span class="subtotal-text">Subtotal</span>
-                                                <span class="subtotal-amount">$450.00</span>
-                                            </div>
-                                            <div class="py-4 text-center">
-                                                <ul class="inline-links inline-links--style-3">
-                                                    <li class="pr-3">
-                                                        <a href="#" class="link link--style-2 text-capitalize">
-                                                            <i class="ion-person"></i> My account
-                                                        </a>
-                                                    </li>
-                                                    <li class="pr-3">
-                                                        <a href="#" class="link link--style-1 text-capitalize">
-                                                            <i class="ion-bag"></i> View cart
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" class="link link--style-1 text-capitalize">
-                                                            <i class="ion-forward"></i> Checkout
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li> -->
                             <li class="aux-languages dropdown">
                                 <a href="#">
                                     <img src="{% static 'assets/images/icons/flags/co.png' %}">
@@ -160,11 +39,13 @@
                                     </li>
                                 </ul>
                             </li>
-                            <!-- <li>
-                                <a href="#" class="btn-st-trigger" data-effect="st-effect-1">
-                                    <i class="fa fa-ellipsis-h"></i>
-                                </a>
-                            </li> -->
+                            <li class="pull-right">
+                                {% if user.is_authenticated %}
+                                    <a href="#" class="btn-st-trigger" data-effect="st-effect-1" id="btn-user"><i class="icon-user"></i>{{ user.email }}</a>
+                                {% else %}
+                                    <a href="#" class="btn-st-trigger" data-effect="st-effect-1" id="btn-login"><i class="icon-user"></i>Iniciar sesión</a>
+                                {% endif %}
+                            </li>
                         </ul>
                     </nav>
                 </div>
@@ -202,7 +83,7 @@
             <div class="d-inline-block">
                 <!-- Navbar toggler  -->
                 <button class="navbar-toggler hamburger hamburger-js hamburger--spring" type="button" data-toggle="collapse" data-target="#navbar_main"
-                    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                        aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="hamburger-box">
                         <span class="hamburger-inner"></span>
                     </span>
