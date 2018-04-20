@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseNotFound, JsonResponse
 from django.views.decorators.http import require_http_methods
@@ -220,6 +220,10 @@ def info_persona_de_conectate(request,slug):
     context = {"persona_de_conectate":persona_de_conectate}
     return render(request,'pages/info_persona_de_conectate.html', context)
 
+def personal(request):
+    personas_de_conectate = get_list_or_404(Persona_De_Conectate)
+    context = {"personas_de_conectate":personas_de_conectate}
+    return render(request,'pages/personal.html', context)
 
 def tutoriales(request,slug_herramienta,slug_tutorial):
     tutorial = Tutorial.objects.filter(slug=slug_tutorial,herramienta__slug=slug_herramienta)
