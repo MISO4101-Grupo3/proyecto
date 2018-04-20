@@ -1,0 +1,7 @@
+<ul>
+{% for persona in personas_de_conectate %}
+<li>
+    <a href="/personal/{{persona|lower}}">{{persona}}</a>
+</li>
+{% endfor %}
+</ul>
