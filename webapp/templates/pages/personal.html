@@ -1,18 +1,83 @@
 {% extends 'base.html' %} {% load static %} {% load mathfilters %} {% block body %}
-<ul>
-    {% for persona in personas_de_conectate %}
-    <li>
-        <a href="/personal/{{persona|lower}}">{{persona}}</a>
-    </li>
-    {% endfor %}
-    </ul>
+    <section class="slice-lg has-bg-cover bg-size-contain" style="background: center no-repeat; background-image: url('/media/uploads/imagenes/personal.jpg');">
+        <!-- Mask overlay -->
+        <div class="mask mask-dark--style-2"></div>
+    
+        <!-- Container -->
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="fluid-paragraph paragraph-md">
+                        <h2 class="heading heading-1 strong-400 c-white">
+                            Personal Conecta-TE
+                        </h2>
+                        <p class="lead c-white mt-4">
+                            El equipo de profresionales que construyen servicios de vanguardia para la educación.
+                        </p>
+    
+                        <div class="btn-container mt-5">
+                            <a href="#" class="btn btn-styled btn-lg btn-base-5" id="conocelos">Conócelos!</a>
+    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="slice sct-color-2" id="personal">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div class="row-wrapper ">
+                        <div class="row cols-md-space cols-sm-space cols-xs-space">
+                            {% if personas_de_conectate.count == 0 %}
+                            <div class="col-lg-12 element-item herramientas--element" style="margin-bottom: 15px">
+                                <div class="card card-product" style="box-shadow: 0 2px 15px rgba(0, 0, 0, 0.8)">
+                                    <div class="card card-product">
+                                        <div class="card-body">
+                                            <h1>No hay personal registrado aún :(</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% for persona in personas_de_conectate %}
+                            <div class="col-lg-4">
+                                <div class="block block--style-3">
+                                    <div class="profile-picture profile-picture--style-2">
+                                        <img src="{{persona.imagen.url}}">
+                                    </div>
+                    
+                                    <div class="block-body text-center">
+                                        <h3 class="heading heading-6 strong-600 mb-0">{{persona}}</h3>
+                                        <h3 class="heading heading-light heading-sm strong-300">{{persona.contacto}}</h3>
+                                        <p style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; height: 1.5em;">{{persona.perfil}}</p>
+                                        <a href="/personal/{{persona|lower}}" class="btn btn-base-1 btn-shadow btn-circle px-4 mt-2">Más información</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}
 
 {% block custom_js %}
 
     <script>
         $(document).ready(function () {
+            $("#conocelos").click(function () {
+                $('html, body').animate({
+                    scrollTop: $("#personal").offset().top + 50
+                }, 1500);
+            });
         });
     </script>
 
 {% endblock %}
+
+
+
