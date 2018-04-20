@@ -222,7 +222,8 @@ def info_persona_de_conectate(request,slug):
 
 def personal(request):
     personas_de_conectate = get_list_or_404(Persona_De_Conectate)
-    context = {"personas_de_conectate":personas_de_conectate}
+    herramientas = get_list_or_404(Herramienta)
+    context = {"personas_de_conectate":personas_de_conectate, "herramientas": herramientas}
     return render(request,'pages/personal.html', context)
 
 def tutoriales(request,slug_herramienta,slug_tutorial):
