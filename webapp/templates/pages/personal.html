@@ -27,9 +27,26 @@
     <section class="slice sct-color-2" id="personal">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12 col-md-12">
+                <div class="col-lg-3 col-md-12">
+                    <div class="sidebar sidebar--style-4 z-depth-1-top" style="height: 100%" >
+                        <div class="sidebar-object" id="filters">
+                            <h5 class="heading heading-sm strong-600 mb-4">Herramientas</h5>
+                            <div class="filter-checkbox">
+                            {% for herramienta in herramientas %}
+                            <a id="h{{herramienta.id}}" data-filter=".herramienta{{herramienta.id}}">
+                                <div class="checkbox">
+                                    <input type="checkbox" class="disciplina" id="checkbox_herramienta{{herramienta.id}}" data-filter=".herramienta{{herramienta.id}}">
+                                    <label class="text-sm" for="checkbox_herramienta{{herramienta.id}}">{{herramienta}}</label>
+                                </div>
+                            </a>
+                            {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-12">
                     <div class="row-wrapper ">
-                        <div class="row cols-md-space cols-sm-space cols-xs-space">
+                        <div class="row cols-md-space cols-sm-space cols-xs-space grid">
                             {% if personas_de_conectate.count == 0 %}
                             <div class="col-lg-12 element-item herramientas--element" style="margin-bottom: 15px">
                                 <div class="card card-product" style="box-shadow: 0 2px 15px rgba(0, 0, 0, 0.8)">
@@ -41,8 +58,14 @@
                                 </div>
                             </div>
                             {% endif %}
+                            <div id="cargando">
+                                <img src="http://localhost:8000/media/uploads/imagenes/spinner.svg" />
+                            </div>
+                            <div id="mynoresults" style="display: none;">
+                                <h1>No hay resultados para este conjunto de herramientas! :(</h1>
+                            </div>
                             {% for persona in personas_de_conectate %}
-                            <div class="col-lg-4">
+                            <div class="col-lg-4 persona_conectate {% for h in persona.herramientas.all %}herramienta{{h.id}} {% endfor %}">
                                 <div class="block block--style-3">
                                     <div class="profile-picture profile-picture--style-2">
                                         <img src="{{persona.imagen.url}}">
@@ -69,10 +92,36 @@
 
     <script>
         $(document).ready(function () {
+
             $("#conocelos").click(function () {
                 $('html, body').animate({
                     scrollTop: $("#personal").offset().top + 50
                 }, 1500);
+            });
+
+            var $grid = $('.grid').isotope({
+                itemSelector: '.persona_conectate',
+                layoutMode: 'fitRows'
+            });
+
+                        // bind event listener
+            $grid.on( 'arrangeComplete', function(){
+                $("#cargando").hide();
+                if( $(".persona_conectate:hidden").length == $(".persona_conectate").length ) {
+                    $("#mynoresults").show();
+                }
+                else{
+                    $("#mynoresults").hide();
+                }
+            } );
+
+            $('#filters').on( 'click', 'a', function() {
+                $("#cargando").show();
+                var filterValue = [];
+                $.each( $('#filters a .checkbox input[type=checkbox]:checked') , function(i, el) {                    
+                    filterValue.push(el.dataset['filter']);
+                });
+                $grid.isotope({ filter: filterValue.join(',') });
             });
         });
     </script>
