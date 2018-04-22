@@ -23,6 +23,11 @@ def buscar(request):
     q = request.GET.get('q','')
     e = request.GET.get('e','')
     d = request.GET.get('d','')
+
+    if request.user.is_authenticated:
+        hist = Historial(busqueda=q+"&d="+d+"&e="+e, user=request.user)
+        hist.save()
+
     tipos = request.GET.get('t','u,h,a,l').split(',')
 
     if len(tipos) == 0:
@@ -269,6 +274,34 @@ def is_number(s):
         pass
 
     return False
+
+def historial(request):
+    if request.user.is_authenticated:
+        user_history = Historial.objects.filter(user=request.user).order_by("-fecha")
+        for historia in user_history:
+            newBusqueda = ""
+            params = historia.busqueda.split("&")
+            # print("a-"+params[0]+"-b")
+            if len(params[0])>0:
+                newBusqueda = params[0]
+            if len(params[1])>2:
+                disc = Disciplina.objects.get(id=params[1][2:]).nombre
+                if len(newBusqueda)>1 :
+                    newBusqueda = newBusqueda + ", Disciplina: "+ disc
+                else :
+                    newBusqueda = "Disciplina: "+disc
+            if len(params[2])>2:
+                estr = Estrategia_Pedagogica.objects.get(id=params[2][2:]).nombre
+                if len(newBusqueda)>1 :
+                    newBusqueda = newBusqueda + ", Estrategía Pedagógica: "+ estr
+                else :
+                    newBusqueda = "Estrategía Pedagógica: "+ estr
+            if newBusqueda == "":
+                newBusqueda = "Busqueda realizada sin filtros"
+            historia.newBusqued = newBusqueda
+            # disc = params[1]
+        context = {"historias":user_history}
+        return render(request,'pages/historial.html', context)
 
 class IdNombre:
     def __init__(self, id, nombre):

@@ -11,5 +11,6 @@ urlpatterns = [
     path('personal', views.personal , name='personal_dashboard'),
     path('herramientas/<slug:slug_herramienta>/tutoriales/<slug:slug_tutorial>', views.tutoriales , name='tutoriales'),
     path('auth/login', views.rest_login, name='login'),
-    path('auth/logout', views.logout_view, name='logout')
+    path('auth/logout', views.logout_view, name='logout'),
+    path('historial', views.historial, name="historial"),
 ]
