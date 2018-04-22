@@ -111,3 +111,18 @@ class Tutorial(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.nombre)
         super(Tutorial, self).save(*args, **kwargs)
+
+class Historial(models.Model):
+
+    def __str__(self):
+        return self.busqueda
+    
+    def class_name(self):
+        return self.__class__.__name__
+
+    fecha = models.DateTimeField(auto_now_add=True)
+    busqueda = models.TextField(null=True, blank=True)
+    user = models.ForeignKey(User, related_name='usuario', null=True, on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        super(Historial, self).save(*args, **kwargs)
