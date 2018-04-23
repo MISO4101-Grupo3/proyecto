@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+
+
+<section class="slice sct-color-2 border-bottom">
+    <div class="container">
+        <div class="section-title section-title--style-1 text-center mb-3">
+            <h2 class="section-title-inner heading-1 strong-300 text-normal">
+                Historial de Busquedas
+            </h2>
+        </div>
+        <span class="clearfix"></span>
+    </div>
+</section>
+<section class="slice sct-color-1">
+    <div class="container">
+        <table class="table table-bordered table-striped">
+            <thead class="text-center">
+                <tr>
+                    <th scope="col" class="col-sm-3"><span  style="font-size: 1.25rem">Fecha</span></th>
+                    <th scope="col" class="col-sm-7"><span  style="font-size: 1.25rem">Busqueda</span></th>
+                    <th scope="col" class="col-sm-2"><span  style="font-size: 1.25rem">Acción</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for historia in historias %}
+                <tr>
+                    <td class="text-center">{{historia.fecha}}</td>
+                    <td>
+                        <span style="font-size: 1.15rem">{{historia.newBusqued}}</span>
+                    </td>
+                    <td>
+                        <a href="{% url 'buscar'%}?s=6&q={{historia.busqueda}}" class="btn btn-block btn-styled btn-base-1 btn-circle">Abrir</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+{% endblock %}
+

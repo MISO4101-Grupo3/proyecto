@@ -1,0 +1,111 @@
+{% load static %}
+
+<nav class="st-menu st-effect-1" id="menu-1">
+
+    {% if user.is_authenticated %}
+        <div class="st-profile">
+            <div class="st-profile-user-wrapper">
+                <div class="profile-user-image">
+                    <img src="{% static  'assets/images/prv/people/person-1.jpg' %}" class="img-circle" />
+                </div>
+                <div class="profile-user-info">
+                    <span class="profile-user-name">{{ user.get_full_name }}</span>
+                    <span class="profile-user-email">{{ user.username }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="st-menu-list mt-2">
+            <ul>
+                <li>
+                    <a href="{% url 'historial' %}" id="link-historial">
+                        <i class="fa fa-history"></i> Historial de busqueda
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+        <h3 class="st-menu-title">Cuenta</h3>
+        <div class="st-menu-list">
+            <ul>
+                <li>
+                    <a href="#" id="link-perfil">
+                        <i class="ion-ios-person-outline"></i> Perfil
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'logout' %}" id="link-logout">
+                        <i class="ion-log-out"></i> Cerrar sesión
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    {% else %}
+        <div class="pt-md-5 login-sb">
+            <h2> Iniciar sesión</h2>
+            <form class="form" id="login-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <div class="alert alert-danger" role="alert" id="error-alert" style="display: none">
+
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <!-- <label for="txt-usuario">Usuario</label> -->
+                    <input type="text" class="form-control" id="id_user" placeholder="Usuario" required>
+                </div>
+
+                <div class="form-group">
+                    <!-- <label for="txt-usuario">Contraseña</label> -->
+                    <input type="password" class="form-control" id="id_password" placeholder="Contraseña" required>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-primary" id="btn-ingresar" type="submit"   data-loading-html="<i class='fa fa-spinner fa-spin '></i>"> Ingresar </button>
+
+                </div>
+            </form>
+        </div>
+    {% endif %}
+</nav>
+
+
+<script>
+    function iniciarSesion() {
+        var csrf = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+        var usuario = document.getElementById('id_user');
+        var password = document.getElementById('id_password');
+        $(usuario).prop('disabled', true);
+        $(password).prop('disabled', true);
+
+        var url = "{% url 'login' %}"
+
+        var alert = document.getElementById("error-alert");
+        alert = $(alert);
+        alert.hide();
+        var btnIngresar = $(document.getElementById('btn-ingresar'));
+
+        btnIngresar.html(btnIngresar.data('loadingHtml'));
+
+        $.post(url,{usuario:usuario.value,csrfmiddlewaretoken:csrf,password: password.value}, function (response) {
+            $(usuario).prop('disabled', false);
+            $(password).prop('disabled', false);
+            var status = response.status;
+            if(status == 200){
+                localStorage.setItem("message","success;:;Bienvenido,;:;"+response.message);
+                window.location.reload();
+            }
+            else{
+                //toastr.error(response.message, 'Error');
+                alert.html(response.message)
+                alert.show();
+                btnIngresar.html("Ingresar");
+            }
+        })
+
+    }
+
+</script>

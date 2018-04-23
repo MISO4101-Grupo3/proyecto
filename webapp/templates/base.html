@@ -38,15 +38,14 @@
     <link rel="stylesheet" href="{% static  'assets/fonts/linea/basic/linea-icons.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static  'assets/fonts/linea/ecommerce/linea-icons.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static  'assets/fonts/linea/software/linea-icons.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static  'assets/bower_components/toastr/toastr.min.css' %}" type="text/css">
 
     <!-- Global style (main) -->
-    <link id="stylesheet" type="text/css" href="{% static  'assets/css/boomerang.min.css' %}" rel="stylesheet" media="screen">
-
-    <!-- Custom style - Remove if not necessary -->
-    <link type="text/css" href="{% static  'assets/css/custom-style.css' %}" rel="stylesheet">
+    <link id="stylesheet" type="text/css" href="{% static  'assets/css/boomerang.css' %}" rel="stylesheet" media="screen">
 
     <!-- Favicon -->
     <link href="{% static  'assets/images/favicon.png' %}" rel="icon" type="image/png">
+    <link id="stylesheet" type="text/css" href="{% static  'assets/css/conectate.css' %}" rel="stylesheet" media="screen">
 
     {% block custom_css %} {% endblock %}
 
@@ -59,81 +58,7 @@
 <div class="body-wrap">
     <div id="st-container" class="st-container">
 
-        <nav class="st-menu st-effect-1" id="menu-1">
-            <div class="st-profile">
-                <div class="st-profile-user-wrapper">
-                    <div class="profile-user-image">
-                        <img src="{% static  'assets/images/prv/people/person-1.jpg' %}" class="img-circle" />
-                    </div>
-                    <div class="profile-user-info">
-                        <span class="profile-user-name">Bertram Ozzie</span>
-                        <span class="profile-user-email">username@example.com</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="st-menu-list mt-2">
-                <ul>
-                    <li>
-                        <a href="#">
-                            <i class="ion-ios-bookmarks-outline"></i> Theme documentation
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="ion-ios-cart-outline"></i> Purchase Tribus
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <h3 class="st-menu-title">Account</h3>
-            <div class="st-menu-list">
-                <ul>
-                    <li>
-                        <a href="#">
-                            <i class="ion-ios-person-outline"></i> User profile
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="ion-ios-location-outline"></i> My addresses
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="ion-card"></i> My cards
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="ion-ios-unlocked-outline"></i> Password update
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <h3 class="st-menu-title">Support center</h3>
-            <div class="st-menu-list">
-                <ul>
-                    <li>
-                        <a href="#">
-                            <i class="ion-ios-information-outline"></i> About Tribus
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="ion-ios-email-outline"></i> Contact &amp; support
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-camera"></i> Getting started
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+        {% include 'sidebar.html' %}
 
         <div class="st-pusher">
             <div class="st-content">
@@ -198,8 +123,42 @@
 
     <!-- App JS -->
     <script src="{% static  'assets/js/boomerang.min.js' %}"></script>
-    <script src="{% static  'bower_components/matchHeight/dist/jquery.matchHeight-min.js' %}"></script>
+    <script src="{% static  'assets/bower_components/matchHeight/dist/jquery.matchHeight-min.js' %}"></script>
 
+    <script src="{% static  'assets/bower_components/toastr/toastr.min.js' %}"></script>
+
+    <script>
+        $(document).ready(function(){
+            //get it if Status key found
+            var message = localStorage.getItem("message");
+            if(message)
+            {
+                var data = message.split(";:;");
+                toastr.options = {
+                    "closeButton": true,
+                    "newestOnTop": true,
+                    "progressBar": true,
+                    "preventDuplicates": true,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                toastr[data[0]](data[2], data[1]);
+
+                localStorage.clear();
+            }
+        });
+
+        $("#login-form").submit(function(e){
+            e.preventDefault();
+            iniciarSesion();
+        });
+    </script>
 {% endblock %}
 
 {% block custom_js %} {% endblock %}

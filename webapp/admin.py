@@ -9,6 +9,9 @@ class HerramientaAdmin(admin.ModelAdmin):
 class Ejemplo_De_UsoAdmin(admin.ModelAdmin):
     form = Ejemplo_De_UsoForm
 
+class Persona_De_ConectateAdmin(admin.ModelAdmin):
+    form = Persona_De_ConectateForm
+
 class TutorialAdmin(admin.ModelAdmin):
     form = TutorialForm
 
@@ -21,3 +24,6 @@ admin.site.register(Archivo, ArchivoAdmin)
 admin.site.register(Herramienta, HerramientaAdmin)
 admin.site.register(Ejemplo_De_Uso, Ejemplo_De_UsoAdmin )
 admin.site.register(Tutorial, TutorialAdmin)
+admin.site.register(Historial)
+admin.site.register(Persona_De_Conectate, Persona_De_ConectateAdmin)
+admin.site.register(Area_De_Experiencia)

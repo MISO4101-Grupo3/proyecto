@@ -1,7 +1,8 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponseNotFound
-
+from django.http import HttpResponseNotFound, JsonResponse
+from django.views.decorators.http import require_http_methods
 from .forms import *
 from .models import *
 from django.db.models import Q
@@ -22,6 +23,11 @@ def buscar(request):
     q = request.GET.get('q','')
     e = request.GET.get('e','')
     d = request.GET.get('d','')
+
+    if request.user.is_authenticated:
+        hist = Historial(busqueda=q+"&d="+d+"&e="+e, user=request.user)
+        hist.save()
+
     tipos = request.GET.get('t','u,h,a,l').split(',')
 
     if len(tipos) == 0:
@@ -214,6 +220,16 @@ def info_ejemplo_de_uso(request,slug):
     context = {"ejemplo_de_uso":ejemplo_de_uso}
     return render(request,'pages/info_ejemplo_de_uso.html', context)
 
+def info_persona_de_conectate(request,slug):
+    persona_de_conectate = get_object_or_404(Persona_De_Conectate,slug=slug)
+    context = {"persona_de_conectate":persona_de_conectate}
+    return render(request,'pages/info_persona_de_conectate.html', context)
+
+def personal(request):
+    personas_de_conectate = get_list_or_404(Persona_De_Conectate)
+    herramientas = get_list_or_404(Herramienta)
+    context = {"personas_de_conectate":personas_de_conectate, "herramientas": herramientas}
+    return render(request,'pages/personal.html', context)
 
 def tutoriales(request,slug_herramienta,slug_tutorial):
     tutorial = Tutorial.objects.filter(slug=slug_tutorial,herramienta__slug=slug_herramienta)
@@ -222,6 +238,27 @@ def tutoriales(request,slug_herramienta,slug_tutorial):
     tutoriales = Tutorial.objects.filter(herramienta__slug=slug_herramienta)
     context = {"tutorial":tutorial.first(),"tutoriales":tutoriales,"slug_tutorial":slug_tutorial}
     return render(request,'pages/tutoriales.html', context)
+
+@require_http_methods(["POST"])
+def rest_login(request):
+    usuario = request.POST.get('usuario','')
+    password = request.POST.get('password','')
+    user = authenticate(request, username=usuario, password=password)
+    status = 400
+    message = ""
+    if user is not None:
+        login(request, user)
+        status = 200
+        message = user.email
+
+    else:
+        message = "Credenciales invalidas."
+    return JsonResponse({'status': status, 'message': message})
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('inicio')
 
 def is_number(s):
     try:
@@ -238,7 +275,36 @@ def is_number(s):
 
     return False
 
+def historial(request):
+    if request.user.is_authenticated:
+        user_history = Historial.objects.filter(user=request.user).order_by("-fecha")
+        for historia in user_history:
+            newBusqueda = ""
+            params = historia.busqueda.split("&")
+            # print("a-"+params[0]+"-b")
+            if len(params[0])>0:
+                newBusqueda = params[0]
+            if len(params[1])>2:
+                disc = Disciplina.objects.get(id=params[1][2:]).nombre
+                if len(newBusqueda)>1 :
+                    newBusqueda = newBusqueda + ", Disciplina: "+ disc
+                else :
+                    newBusqueda = "Disciplina: "+disc
+            if len(params[2])>2:
+                estr = Estrategia_Pedagogica.objects.get(id=params[2][2:]).nombre
+                if len(newBusqueda)>1 :
+                    newBusqueda = newBusqueda + ", Estrategía Pedagógica: "+ estr
+                else :
+                    newBusqueda = "Estrategía Pedagógica: "+ estr
+            if newBusqueda == "":
+                newBusqueda = "Busqueda realizada sin filtros"
+            historia.newBusqued = newBusqueda
+            # disc = params[1]
+        context = {"historias":user_history}
+        return render(request,'pages/historial.html', context)
+
 class IdNombre:
     def __init__(self, id, nombre):
         self.id = id
         self.nombre = nombre
+
