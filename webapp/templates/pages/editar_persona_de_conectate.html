@@ -2,326 +2,331 @@
 {% load static %}
 {% block body %}
 
-                    <section class="slice-sm sct-color-1">
-                        <div class="profile">
-                            <div class="container">
-                                <div class="row cols-xs-space cols-sm-space cols-md-space">
-                                    <div class="col-lg-4">
-                                        <div class="sidebar sidebar--style-2 no-border">
-                                                <div class="widget">
-        <!-- Profile picture -->
-        <div class="profile-picture profile-picture--style-2">
-            <img src="{{ user.personal.imagen.url }}" class="img-center">
-        </div>
+    <section class="slice-sm sct-color-1">
+        <div class="profile">
+            <div class="container">
+                <div class="row cols-xs-space cols-sm-space cols-md-space">
+                    <div class="col-lg-4">
+                        <div class="sidebar sidebar--style-2 no-border">
+                            <div class="widget">
+                                <!-- Profile picture -->
+                                <div class="profile-picture profile-picture--style-2">
+                                    <img src="{{ user.personal.imagen.url }}" class="img-center">
+                                </div>
 
-        <!-- Profile details -->
-        <div class="profile-details">
-            <h2 class="heading heading-4 strong-500 profile-name">{{ user.personal.nombre }}</h2>
-            <h3 class="heading heading-6 strong-400 profile-occupation mt-3">{{ user.personal.perfil }}</h3>
-            <h3 class="heading heading-light heading-6 strong-400 profile-location">Extensión: {{ user.personal.contacto }}</h3>
-        </div>
+                                <!-- Profile details -->
+                                <div class="profile-details">
+                                    <h2 class="heading heading-4 strong-500 profile-name">{{ user.personal.nombre }}</h2>
+                                    <h3 class="heading heading-6 strong-400 profile-occupation mt-3">{{ user.personal.perfil }}</h3>
+                                    <h3 class="heading heading-light heading-6 strong-400 profile-location">Extensión: {{ user.personal.contacto }}</h3>
+                                </div>
 
-        <!-- Profile connect -->
-        <!--<div class="profile-connect mt-4">
-            <a href="#" class="btn btn-styled btn-block btn-rounded btn-base-1">Follow</a>
-            <a href="#" class="btn btn-styled btn-block btn-rounded btn-base-2">Send message</a>
-        </div> -->
+                                <!-- Profile connect -->
+                                <!--<div class="profile-connect mt-4">
+                                    <a href="#" class="btn btn-styled btn-block btn-rounded btn-base-1">Follow</a>
+                                    <a href="#" class="btn btn-styled btn-block btn-rounded btn-base-2">Send message</a>
+                                </div> -->
 
-        <!-- Profile stats -->
-        <!--<div class="profile-stats clearfix">
-            <div class="stats-entry">
-                <span class="stats-count">180</span>
-                <span class="stats-label text-uppercase">Projects</span>
-            </div>
-            <div class="stats-entry">
-                <span class="stats-count">1.3K</span>
-                <span class="stats-label text-uppercase">Followers</span>
-            </div>
-        </div>-->
+                                <!-- Profile stats -->
+                                <!--<div class="profile-stats clearfix">
+                                    <div class="stats-entry">
+                                        <span class="stats-count">180</span>
+                                        <span class="stats-label text-uppercase">Projects</span>
+                                    </div>
+                                    <div class="stats-entry">
+                                        <span class="stats-count">1.3K</span>
+                                        <span class="stats-label text-uppercase">Followers</span>
+                                    </div>
+                                </div>-->
 
-        <!-- Profile connected accounts -->
-        <!--<div class="profile-useful-links clearfix">
-            <div class="useful-links">
-                <a href="#" class="link link--style-1">
-                    <i class="icon ion-social-instagram-outline"></i>
-                    instagram.com/webpixels_io
-                </a>
-                <a href="#" class="link link--style-1">
-                    <i class="icon ion-social-dribbble"></i>
-                    dribbble.com/webpixels
-                </a>
+                                <!-- Profile connected accounts -->
+                                <!--<div class="profile-useful-links clearfix">
+                                    <div class="useful-links">
+                                        <a href="#" class="link link--style-1">
+                                            <i class="icon ion-social-instagram-outline"></i>
+                                            instagram.com/webpixels_io
+                                        </a>
+                                        <a href="#" class="link link--style-1">
+                                            <i class="icon ion-social-dribbble"></i>
+                                            dribbble.com/webpixels
+                                        </a>
 
-                <a href="#" class="link link--style-1">
-                    <i class="icon ion-earth"></i>
-                    webpixels.io
-                </a>
-            </div>
-        </div>
+                                        <a href="#" class="link link--style-1">
+                                            <i class="icon ion-earth"></i>
+                                            webpixels.io
+                                        </a>
+                                    </div>
+                                </div>
 
-        <div class="profile-useful-links clearfix">
-            <div class="useful-links">
-                <a href="#" class="link link--style-1">
-                    <i class="icon ion-code-download"></i>
-                    Export page as PDF
-                </a>
-            </div>
-        </div>-->
-    </div>
+                                <div class="profile-useful-links clearfix">
+                                    <div class="useful-links">
+                                        <a href="#" class="link link--style-1">
+                                            <i class="icon ion-code-download"></i>
+                                            Export page as PDF
+                                        </a>
+                                    </div>
+                                </div>-->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8">
+                        <div class="main-content">
+                            <!-- Page title -->
+                            <div class="page-title">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-6 col-12">
+                                        <h2 class="heading heading-5 text-capitalize strong-500 mb-0">
+                                            <a>
+                                                <i class="ion-ios-arrow-back"></i> Mi perfil
+                                            </a>
+                                        </h2>
+                                    </div>
+                                    <div class="col-lg-6 col-12">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="link-menu link-menu--style-3 py-4 border-bottom">
+                                <a href="../../pages/profile/account-settings.html" class="active">Perfil</a>
+                            </div>
+
+                            <!-- Account settings -->
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <form class="form-default" data-toggle="validator" role="form">
+                                        <!-- General information -->
+                                        <div class="card no-border">
+                                            <div class="card-title px-0 pb-0 no-border">
+                                                <h3 class="heading heading-6 strong-600">
+                                                    Informacion de tu cuenta
+                                                </h3>
+                                                <p class="mt-1 mb-0">
+                                                    Puedes editar cualquiera de los siguientes campos
+                                                </p>
+                                            </div>
+                                            <div class="card-body px-0">
+                                                <div class="row">
+                                                    <div class="col-md-6 col-lg-4">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Nombres</label>
+                                                            <input type="text" class="form-control form-control-lg" placeholder="{{ user.first_name }}">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-lg-4">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Apellidos</label>
+                                                            <input type="text" class="form-control form-control-lg" placeholder="{{ user.last_name }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 col-lg-4">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Correo Electrónico</label>
+                                                            <input type="text" class="form-control form-control-lg" placeholder="{{ user.email }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 col-lg-8">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Perfil Profesional</label>
+                                                            <input type="text" class="form-control form-control-lg" placeholder="{{ user.personal.perfil }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <hr class="mt-0 mb-0">
+
+                                        <!-- Account info -->
+                                        <div class="card no-border">
+                                            <div class="card-title px-0 pb-0 no-border">
+                                                <h3 class="heading heading-6 strong-600">
+                                                    Account info
+                                                </h3>
+                                                <p class="mt-1 mb-0">
+                                                    Edit your email and also, your newsletter subscriptions.
+                                                </p>
+                                            </div>
+                                            <div class="card-body px-0">
+                                                <div class="row align-items-center">
+                                                    <div class="col-md-6 col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Herramientas</label>
+                                                            <div class="bootstrap-tagsinput w-100" >
+                                                                <input type="text" name="herramientas" class="form-control" id="herramientas" style="display: none">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- <div class="row">
+                                                     <div class="col-md-6 col-lg-4">
+                                                         <div class="form-group">
+                                                             <label class="control-label">Email frequency</label>
+                                                             <select class="form-control form-control-lg">
+                                                                 <option value="">Daily</option>
+                                                                 <option value="">Weekly</option>
+                                                                 <option value="">Monthly</option>
+                                                             </select>
+                                                         </div>
+                                                     </div>
+                                                 </div>-->
+                                            </div>
+                                        </div>
+
+                                        <hr class="mt-0 mb-0">
+
+                                        <!-- Change password -->
+                                        <div class="card no-border">
+                                            <div class="card-title px-0 pb-0 no-border">
+                                                <h3 class="heading heading-6 strong-600">
+                                                    Change password
+                                                </h3>
+                                            </div>
+                                            <div class="card-body px-0">
+                                                <div class="row">
+                                                    <div class="col-md-6 col-lg-4">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Current password</label>
+                                                            <input type="text" class="form-control form-control-lg">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-lg-4">
+                                                        <div class="form-group">
+                                                            <label class="control-label">New password</label>
+                                                            <input type="text" class="form-control form-control-lg">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-lg-4">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Confirm password</label>
+                                                            <input type="text" class="form-control form-control-lg">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="text-right">
+                                                    <a href="#" class="btn btn-base-1">Change password</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <hr class="mt-0 mb-0">
+
+                            <!-- Addresses -->
+                            <div class="py-4">
+                                <h3 class="heading heading-6 strong-600">My addresses</h3>
+                            </div>
+
+                            <div class="row cols-md-space cols-sm-space cols-xs-space">
+                                <div class="col-lg-6">
+                                    <div class="card">
+                                        <div class="px-4 py-4">
+                                            <p class="c-gray-light">
+                                                Desiree Jinny
+                                                <br>
+                                                1333 Deerfield, State College
+                                                <br>
+                                                PA, 16803
+                                            </p>
+
+                                            <p class="c-gray-light mt-3">
+                                                E: desiree@example.com
+                                                <br>
+                                                T: 555 965 452
+                                            </p>
+
+                                            <span class="clearfix"></span>
+
+                                            <ul class="inline-links inline-links--style-2">
+                                                <li class="d-none d-lg-inline-block">
+                                                    <a href="#" class="link link--style-2 strong-600">Edit address</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="link link--style-2 strong-600">Add new</a>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </div>
+                                </div>
 
-                                    <div class="col-lg-8">
-                                        <div class="main-content">
-                                            <!-- Page title -->
-                                            <div class="page-title">
-                                                <div class="row align-items-center">
-                                                    <div class="col-lg-6 col-12">
-                                                        <h2 class="heading heading-5 text-capitalize strong-500 mb-0">
-                                                            <a>
-                                                                <i class="ion-ios-arrow-back"></i> Mi perfil
-                                                            </a>
-                                                        </h2>
-                                                    </div>
-                                                    <div class="col-lg-6 col-12">
+                                <div class="col-lg-6">
+                                    <div class="card">
+                                        <div class="px-4 py-4">
+                                            <p class="c-gray-light">
+                                                Desiree Jinny
+                                                <br>
+                                                1333 Deerfield, State College
+                                                <br>
+                                                PA, 16803
+                                            </p>
 
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <p class="c-gray-light mt-3">
+                                                E: desiree@example.com
+                                                <br>
+                                                T: 555 965 452
+                                            </p>
 
-                                            <div class="link-menu link-menu--style-3 py-4 border-bottom">
-                                                <a href="../../pages/profile/account-settings.html" class="active">Perfil</a>
-                                            </div>
+                                            <span class="clearfix"></span>
 
-                                            <!-- Account settings -->
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <form class="form-default" data-toggle="validator" role="form">
-                                                        <!-- General information -->
-                                                        <div class="card no-border">
-                                                            <div class="card-title px-0 pb-0 no-border">
-                                                                <h3 class="heading heading-6 strong-600">
-                                                                    Informacion de tu cuenta
-                                                                </h3>
-                                                                <p class="mt-1 mb-0">
-                                                                    Puedes editar cualquiera de los siguientes campos
-                                                                </p>
-                                                            </div>
-                                                            <div class="card-body px-0">
-                                                                <div class="row">
-                                                                    <div class="col-md-6 col-lg-4">
-                                                                        <div class="form-group">
-                                                                            <label class="control-label">Nombres</label>
-                                                                            <input type="text" class="form-control form-control-lg" placeholder="{{ user.first_name }}">
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-md-6 col-lg-4">
-                                                                        <div class="form-group">
-                                                                            <label class="control-label">Apellidos</label>
-                                                                            <input type="text" class="form-control form-control-lg" placeholder="{{ user.last_name }}">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-md-6 col-lg-4">
-                                                                        <div class="form-group">
-                                                                            <label class="control-label">Correo Electrónico</label>
-                                                                            <input type="text" class="form-control form-control-lg" placeholder="{{ user.email }}">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-md-6 col-lg-8">
-                                                                        <div class="form-group">
-                                                                            <label class="control-label">Perfil Profesional</label>
-                                                                            <input type="text" class="form-control form-control-lg" placeholder="{{ user.personal.perfil }}">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <hr class="mt-0 mb-0">
-
-                                                        <!-- Account info -->
-                                                        <div class="card no-border">
-                                                            <div class="card-title px-0 pb-0 no-border">
-                                                                <h3 class="heading heading-6 strong-600">
-                                                                    Account info
-                                                                </h3>
-                                                                <p class="mt-1 mb-0">
-                                                                    Edit your email and also, your newsletter subscriptions.
-                                                                </p>
-                                                            </div>
-                                                            <div class="card-body px-0">
-                                                                <div class="row align-items-center">
-                                                                    <div class="col-md-6 col-lg-4">
-                                                                        <div class="form-group">
-                                                                            <label class="control-label">Herramientas</label>
-                                                                            <input type="text" name="herramientas" class="form-control">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                               <!-- <div class="row">
-                                                                    <div class="col-md-6 col-lg-4">
-                                                                        <div class="form-group">
-                                                                            <label class="control-label">Email frequency</label>
-                                                                            <select class="form-control form-control-lg">
-                                                                                <option value="">Daily</option>
-                                                                                <option value="">Weekly</option>
-                                                                                <option value="">Monthly</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>-->
-                                                            </div>
-                                                        </div>
-
-                                                        <hr class="mt-0 mb-0">
-
-                                                        <!-- Change password -->
-                                                        <div class="card no-border">
-                                                            <div class="card-title px-0 pb-0 no-border">
-                                                                <h3 class="heading heading-6 strong-600">
-                                                                    Change password
-                                                                </h3>
-                                                            </div>
-                                                            <div class="card-body px-0">
-                                                                <div class="row">
-                                                                    <div class="col-md-6 col-lg-4">
-                                                                        <div class="form-group">
-                                                                            <label class="control-label">Current password</label>
-                                                                            <input type="text" class="form-control form-control-lg">
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-md-6 col-lg-4">
-                                                                        <div class="form-group">
-                                                                            <label class="control-label">New password</label>
-                                                                            <input type="text" class="form-control form-control-lg">
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-md-6 col-lg-4">
-                                                                        <div class="form-group">
-                                                                            <label class="control-label">Confirm password</label>
-                                                                            <input type="text" class="form-control form-control-lg">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="text-right">
-                                                                    <a href="#" class="btn btn-base-1">Change password</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-
-                                            <hr class="mt-0 mb-0">
-
-                                            <!-- Addresses -->
-                                            <div class="py-4">
-                                                <h3 class="heading heading-6 strong-600">My addresses</h3>
-                                            </div>
-
-                                            <div class="row cols-md-space cols-sm-space cols-xs-space">
-                                                <div class="col-lg-6">
-                                                    <div class="card">
-                                                        <div class="px-4 py-4">
-                                                            <p class="c-gray-light">
-                                                                Desiree Jinny
-                                                                <br>
-                                                                1333 Deerfield, State College
-                                                                <br>
-                                                                PA, 16803
-                                                            </p>
-
-                                                            <p class="c-gray-light mt-3">
-                                                                E: desiree@example.com
-                                                                <br>
-                                                                T: 555 965 452
-                                                            </p>
-
-                                                            <span class="clearfix"></span>
-
-                                                            <ul class="inline-links inline-links--style-2">
-                                                                <li class="d-none d-lg-inline-block">
-                                        							<a href="#" class="link link--style-2 strong-600">Edit address</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#" class="link link--style-2 strong-600">Add new</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-6">
-                                                    <div class="card">
-                                                        <div class="px-4 py-4">
-                                                            <p class="c-gray-light">
-                                                                Desiree Jinny
-                                                                <br>
-                                                                1333 Deerfield, State College
-                                                                <br>
-                                                                PA, 16803
-                                                            </p>
-
-                                                            <p class="c-gray-light mt-3">
-                                                                E: desiree@example.com
-                                                                <br>
-                                                                T: 555 965 452
-                                                            </p>
-
-                                                            <span class="clearfix"></span>
-
-                                                            <ul class="inline-links inline-links--style-2">
-                                                                <li class="d-none d-lg-inline-block">
-                                        							<a href="#" class="link link--style-2 strong-600">Edit address</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#" class="link link--style-2 strong-600">Add new</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
+                                            <ul class="inline-links inline-links--style-2">
+                                                <li class="d-none d-lg-inline-block">
+                                                    <a href="#" class="link link--style-2 strong-600">Edit address</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="link link--style-2 strong-600">Add new</a>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
-                    </section>
-
-    <script>
-
-    $(document).ready(function () {
-
-        var herramientas = new Bloodhound({
-  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('text'),
-  queryTokenizer: Bloodhound.tokenizers.whitespace,
-  prefetch: '/api/herramientas'
-});
-herramientas.initialize();
-
-var elt = $('#herramientas');
-elt.tagsinput({
-  itemValue: 'id',
-  itemText: 'nombre',
-  typeaheadjs: {
-    name: 'herramientas',
-    displayKey: 'nombre',
-    source: herramientas.ttAdapter()
-  }
-});
-});
-    </script>
-
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 
 {% endblock body %}
+
+{% block custom_js %}
+    <script>
+
+        $(document).ready(function () {
+
+            var herramientas = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('nombre'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                prefetch: '/api/herramientas'
+            });
+            herramientas.initialize();
+
+            var elt = $('#herramientas');
+
+            elt.tagsinput({
+                itemValue: 'id',
+                itemText: 'nombre',
+                typeaheadjs: {
+                    name: 'herramientas',
+                    displayKey: 'nombre',
+                    source: herramientas.ttAdapter()
+                }
+            });
+
+        });
+    </script>
+{% endblock %}
