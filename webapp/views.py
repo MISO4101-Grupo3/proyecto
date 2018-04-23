@@ -1,7 +1,8 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponseNotFound, JsonResponse
+from django.http import HttpResponseNotFound, JsonResponse, HttpResponse
 from django.views.decorators.http import require_http_methods
 from .forms import *
 from .models import *
@@ -10,6 +11,7 @@ from functools import reduce
 from itertools import chain
 from operator import attrgetter
 from django.core.paginator import Paginator
+from django.core import serializers
 
 # Create your views here.
 
@@ -210,6 +212,11 @@ def info_herramienta(request,slug):
     context = {"herramienta":herramienta}
     return render(request,'pages/info_herramienta.html', context)
 
+def list_herramientas(request):
+    listHerramienta = Herramienta.objects.all().values('id','nombre')
+    dataHerramienta = list(listHerramienta)
+    return JsonResponse(dataHerramienta, safe=False)
+
 def info_ejemplo_de_uso(request,slug):
     ejemplo_de_uso = get_object_or_404(Ejemplo_De_Uso,slug=slug)
     context = {"ejemplo_de_uso":ejemplo_de_uso}
@@ -219,6 +226,22 @@ def info_persona_de_conectate(request,slug):
     persona_de_conectate = get_object_or_404(Persona_De_Conectate,slug=slug)
     context = {"persona_de_conectate":persona_de_conectate}
     return render(request,'pages/info_persona_de_conectate.html', context)
+
+@login_required
+def edit_persona_de_conectate(request):
+    editPersonaConectate = Persona_De_Conectate.objects.filter(user=request.user).get()
+    print(editPersonaConectate)
+    if request.method == 'POST':
+        form = Persona_De_ConectateForm(request.POST, request=request, instance=editPersonaConectate)
+        if form.is_valid():
+            form.save()
+            data = form.cleaned_data
+            print(data)
+            return redirect('inicio')
+    else:
+        context = {"edit_persona_de_conectate": editPersonaConectate}
+        form = Persona_De_ConectateForm(instance=editPersonaConectate)
+    return render(request, 'pages/editar_persona_de_conectate.html', {'form': form})
 
 
 def tutoriales(request,slug_herramienta,slug_tutorial):
