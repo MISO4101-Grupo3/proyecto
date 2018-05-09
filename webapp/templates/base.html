@@ -129,6 +129,18 @@
 
     <script>
         $(document).ready(function(){
+
+            {% if messages %}
+                {% for message in messages %}
+                    console.log("{{ message.tags }}")
+                    {% if  'LOGIN' in message.tags%}
+                        localStorage.setItem("message","success;:;Bienvenido,;:;{{ message }}");
+                    {% elif  'LOGOUT' in message.tags%}
+                        localStorage.setItem("message","info;:;Hasta pronto,;:;{{ message }}");
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
             //get it if Status key found
             var message = localStorage.getItem("message");
             if(message)
