@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from django.views.decorators.csrf import csrf_exempt
@@ -239,6 +240,42 @@ def tutoriales(request,slug_herramienta,slug_tutorial):
     context = {"tutorial":tutorial.first(),"tutoriales":tutoriales,"slug_tutorial":slug_tutorial}
     return render(request,'pages/tutoriales.html', context)
 
+def login_register(request):
+    if request.user.is_authenticated:
+        return redirect('buscar')
+    registro_form = RegistroUsuarioForm()
+    login_form = LoginForm()
+    accion = request.POST.get('accion','')
+    registro_submitted = False
+    login_submitted = False
+    if request.method == 'POST':
+        if 'registrar' == accion:
+            registro_submitted = True
+            registro_form = RegistroUsuarioForm(request.POST)
+            if registro_form.is_valid() :
+                user = registro_form.save(commit=False)
+                username = registro_form.cleaned_data.get('username')
+                user.email = username+'@uniandes.edu.co'
+                user.save()
+                print(user.username)
+                print(user.email)
+                raw_password = registro_form.cleaned_data.get('password1')
+                user = authenticate(username=username, password=raw_password)
+                login(request, user)
+                messages.add_message(request, messages.INFO, user.email, extra_tags='LOGIN', fail_silently=False)
+                return redirect('buscar')
+        elif 'login' == accion:
+            login_submitted = True
+            login_form = LoginForm(request.POST)
+            if login_form.is_valid():
+                user = authenticate(username=login_form.cleaned_data.get('usuario'), password=login_form.cleaned_data.get('contrasenia'))
+                login(request, user)
+                messages.add_message(request, messages.INFO, user.email, extra_tags='LOGIN', fail_silently=False)
+                return redirect('buscar')
+    context = {'registro_form':registro_form,'registro_submitted':registro_submitted,'login_form':login_form,'login_submitted':login_submitted}
+    return render(request, 'pages/login_register.html', context)
+
+
 @require_http_methods(["POST"])
 def rest_login(request):
     usuario = request.POST.get('usuario','')
@@ -257,6 +294,8 @@ def rest_login(request):
 
 
 def logout_view(request):
+    if request.user.is_authenticated:
+        messages.add_message(request, messages.INFO, "Esperamos que hayas tenido una agradable experiencia.", extra_tags='LOGOUT', fail_silently=False)
     logout(request)
     return redirect('inicio')
 
