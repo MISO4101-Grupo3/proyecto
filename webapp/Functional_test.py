@@ -108,7 +108,7 @@ class FunctionalTest(TestCase):
         assert self.is_element_present(By.ID, "id_contrasenia", 5)
         assert self.is_element_present(By.ID, "btn-submit-login", 5)
 
-    # Verifica la funcionalidad de registro
+    # Verifica la funcionalidad de registro (CON-158)
     # Casos de prueba:
     # 1. Prueba el registro con datos inválidos
     # 2. Prueba el registro con datos validos
