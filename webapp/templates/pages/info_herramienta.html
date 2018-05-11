@@ -50,6 +50,19 @@
 
                             <p> {{ herramienta.restricciones_de_uso }} </p>
 
+                            <h3 class="heading heading-4 strong-400 text-normal">Interacciones sociales</h3>
+
+                            <div class="row">
+                                <div class="col-4"></div>
+                                <div class="col-4"></div>
+                                <div class="col-4">
+                                        <a href="{% url 'likeObject' 'unused' 'Herramienta' '1' herramienta.slug %}">
+                                                <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left btn-blue">
+                                                    <i class="ion-happy-outline"></i> {{herramienta.likes}}</button>
+                                        </a>
+                                </div>
+                            </div>
+
                             <h3 class="heading heading-4 strong-400 text-normal"> Tutoriales </h3>
 
                             <div class="tagcloud tagcloud--style-1 clearfix">

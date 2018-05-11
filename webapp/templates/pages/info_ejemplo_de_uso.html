@@ -60,6 +60,16 @@
                                     </a>
                                 {% endfor %}
                             </div>
+                            <div class="row">
+                                <div class="col-4"></div>
+                                <div class="col-4"></div>
+                                <div class="col-4">
+                                        <a href="{% url 'likeObject' 'unused' 'Ejemplo' '1' ejemplo_de_uso.slug %}">
+                                                <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left btn-blue">
+                                                    <i class="ion-happy-outline"></i> {{ejemplo_de_uso.likes}}</button>
+                                        </a>
+                                </div>
+                            </div>
         </div>
             </div>
             <div class="col-lg-4">
