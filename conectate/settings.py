@@ -136,10 +136,6 @@ LANGUAGES = (
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR, 'static'),
-# )
-
 # MEDIA CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
 MEDIA_ROOT = os.path.normpath(os.path.join(BASE_DIR, 'media'))
@@ -167,7 +163,11 @@ if USE_S3:
     MEDIAFILES_LOCATION = 'media'
     DEFAULT_FILE_STORAGE = 'conectate.storage_backends.MediaStorage'
 
-
+else:
+    STATIC_ROOT = BASE_DIR
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, 'static'),
+    )
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
