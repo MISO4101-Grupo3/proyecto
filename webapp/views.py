@@ -21,6 +21,7 @@ def inicio(request):
 
 def buscar(request):
 
+
     q = request.GET.get('q','')
     e = request.GET.get('e','')
     d = request.GET.get('d','')
@@ -198,7 +199,7 @@ def buscar(request):
 
     page = paginator.page(page_num)
 
-    context = {'range':range(start, end),"resultados":page,"disciplinas":Disciplina.objects.all(),"estrategias":Estrategia_Pedagogica.objects.all(),"filtros_resultados":filtros_resultados}
+    context = {'range':range(start, end),"resultados":page,"disciplinas":Disciplina.objects.all(),"estrategias":Estrategia_Pedagogica.objects.all(),"filtros_resultados":filtros_resultados,"path":request.get_full_path()}
 
     filtros_disciplinas = list(set(filtros_disciplinas))
     filtros_estrategias = list(set(filtros_estrategias))
@@ -210,6 +211,33 @@ def buscar(request):
     context['filtros_estrategias'] = filtros_estrategias
 
     return render(request,'pages/resultados.html', context)
+
+def like(request,path,superClass,detailed,slug):
+    print(superClass)
+    if superClass == 'Herramienta':
+        objeto = get_object_or_404(Herramienta, slug=slug)
+        objeto.likeObject()
+        if detailed == '1':
+            return redirect("/herramientas/"+slug)
+    elif superClass == 'Ejemplo':
+        objeto = get_object_or_404(Ejemplo_De_Uso, slug=slug)
+        objeto.likeObject()
+        if detailed == '1':
+            return redirect("/ejemplos/"+slug)
+    else:
+        objeto = get_object_or_404(Tutorial, slug=slug)
+    return redirect(path)
+
+def likeTutorial(request, strTutorial, detailed,herramienta, tutorial, path):
+    tutoriall = Tutorial.objects.filter(slug=tutorial,herramienta__slug=herramienta)
+    if tutoriall.count()==0:
+        return HttpResponseNotFound()
+    tutoriall = tutoriall.first()
+    tutoriall.likeObject()
+    if detailed == '0':
+        return redirect(path)
+    else :
+        return redirect('/herramientas/'+herramienta+'/tutoriales/'+tutorial)
 
 def info_herramienta(request,slug):
     herramienta = get_object_or_404(Herramienta,slug=slug)

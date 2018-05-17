@@ -137,7 +137,16 @@
                                                             </div> -->
                                                         </div>
 
-
+                                                        <div class="row">
+                                                                <div class="col-4"></div>
+                                                                <div class="col-4"></div>
+                                                                <div class="col-4">
+                                                                        <a href="{% url 'likeTutorial' 'Tutorial' '1' tutorial.herramienta.slug tutorial.slug '/novalid' %}">
+                                                                                <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left btn-blue">
+                                                                                    <i class="ion-happy-outline"></i> {{tutorial.likes}}</button>
+                                                                        </a>
+                                                                </div>
+                                                            </div>
 
                                                         <!-- Account info -->
                                                         <div class="card no-border">
