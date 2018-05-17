@@ -1,9 +1,14 @@
 from django import forms
-from django.conf.locale import sl
+from django.contrib.auth import password_validation, authenticate
+from django.contrib.auth.forms import UserCreationForm
+from django.core import validators
 
 from .models import *
 from django.http.request import QueryDict
 from django.utils.text import slugify
+from django.utils.translation import ugettext_lazy as _
+from django.db.models import Q
+
 
 class HerramientaForm(forms.ModelForm):
 
@@ -173,3 +178,57 @@ class ArchivoForm(forms.ModelForm):
             exist = qs.first()
             if exist.id != id :
                 self.add_error('nombre',"No se puede crear un slug único con este nombre.")
+
+class RegistroUsuarioForm(UserCreationForm):
+    first_name = forms.CharField(max_length=30, required=True)
+    last_name = forms.CharField(max_length=30, required=True)
+    terminos = forms.BooleanField(required=True)
+
+    class Meta:
+        model = User
+        fields = ('username','password1','password2','first_name','last_name','terminos')
+        error_messages = {
+            'first_name': {
+                'required': _("Por favor ingresa tus nombres."),
+            },
+        }
+
+    def clean_terminos(self):
+        acepta = self.cleaned_data.get("terminos")
+        if not acepta:
+            raise forms.ValidationError("Debes aceptar los terminos y condiciones")
+        return acepta
+
+    def clean_username(self):
+        username = self.cleaned_data.get("username").strip()
+        if '@' in username and not username.endswith('@uniandes.edu.co'):
+            raise forms.ValidationError("El usuario no pertenece a @uniandes.edu.co")
+
+        q = User.objects.filter(Q(email=username)| Q(username=username))
+        if q.count() > 0:
+            raise  forms.ValidationError("El usuario ya está registrado.")
+
+        return username.replace('@uniandes.edu.co','')
+
+class LoginForm(forms.Form):
+    usuario = forms.CharField(max_length=150,required=True)
+    contrasenia = forms.CharField(widget=forms.PasswordInput)
+
+    def clean_usuario(self):
+        usuario = self.cleaned_data.get("usuario").strip()
+        if '@' in usuario and not usuario.endswith('@uniandes.edu.co'):
+            raise forms.ValidationError("El usuario no pertenece a @uniandes.edu.co")
+
+        q = User.objects.filter(Q(email=usuario) | Q(username=usuario))
+        if q.count() == 0:
+            raise forms.ValidationError("El usuario no está registrado.")
+
+        return usuario.replace('@uniandes.edu.co', '')
+
+    def _post_clean(self):
+        super()._post_clean()
+        usuario = self.cleaned_data.get('usuario')
+        user = authenticate(username=usuario, password=self.cleaned_data.get('contrasenia'))
+        if User.objects.filter(username=usuario).count()>0 and not user:
+            self.add_error('contrasenia', forms.ValidationError("Contraseña incorrecta"))
+

@@ -1,4 +1,6 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.csrf import csrf_exempt
@@ -25,6 +27,11 @@ def buscar(request):
     q = request.GET.get('q','')
     e = request.GET.get('e','')
     d = request.GET.get('d','')
+
+    if request.user.is_authenticated:
+        hist = Historial(busqueda=q+"&d="+d+"&e="+e, user=request.user)
+        hist.save()
+
     tipos = request.GET.get('t','u,h,a,l').split(',')
 
     if len(tipos) == 0:
@@ -243,6 +250,11 @@ def edit_persona_de_conectate(request):
         form = Persona_De_ConectateForm(instance=editPersonaConectate)
     return render(request, 'pages/editar_persona_de_conectate.html', {'form': form})
 
+def personal(request):
+    personas_de_conectate = get_list_or_404(Persona_De_Conectate)
+    herramientas = get_list_or_404(Herramienta)
+    context = {"personas_de_conectate":personas_de_conectate, "herramientas": herramientas}
+    return render(request,'pages/personal.html', context)
 
 def tutoriales(request,slug_herramienta,slug_tutorial):
     tutorial = Tutorial.objects.filter(slug=slug_tutorial,herramienta__slug=slug_herramienta)
@@ -251,6 +263,42 @@ def tutoriales(request,slug_herramienta,slug_tutorial):
     tutoriales = Tutorial.objects.filter(herramienta__slug=slug_herramienta)
     context = {"tutorial":tutorial.first(),"tutoriales":tutoriales,"slug_tutorial":slug_tutorial}
     return render(request,'pages/tutoriales.html', context)
+
+def login_register(request):
+    if request.user.is_authenticated:
+        return redirect('buscar')
+    registro_form = RegistroUsuarioForm()
+    login_form = LoginForm()
+    accion = request.POST.get('accion','')
+    registro_submitted = False
+    login_submitted = False
+    if request.method == 'POST':
+        if 'registrar' == accion:
+            registro_submitted = True
+            registro_form = RegistroUsuarioForm(request.POST)
+            if registro_form.is_valid() :
+                user = registro_form.save(commit=False)
+                username = registro_form.cleaned_data.get('username')
+                user.email = username+'@uniandes.edu.co'
+                user.save()
+                print(user.username)
+                print(user.email)
+                raw_password = registro_form.cleaned_data.get('password1')
+                user = authenticate(username=username, password=raw_password)
+                login(request, user)
+                messages.add_message(request, messages.INFO, user.email, extra_tags='LOGIN', fail_silently=False)
+                return redirect('buscar')
+        elif 'login' == accion:
+            login_submitted = True
+            login_form = LoginForm(request.POST)
+            if login_form.is_valid():
+                user = authenticate(username=login_form.cleaned_data.get('usuario'), password=login_form.cleaned_data.get('contrasenia'))
+                login(request, user)
+                messages.add_message(request, messages.INFO, user.email, extra_tags='LOGIN', fail_silently=False)
+                return redirect('buscar')
+    context = {'registro_form':registro_form,'registro_submitted':registro_submitted,'login_form':login_form,'login_submitted':login_submitted}
+    return render(request, 'pages/login_register.html', context)
+
 
 @require_http_methods(["POST"])
 def rest_login(request):
@@ -270,6 +318,8 @@ def rest_login(request):
 
 
 def logout_view(request):
+    if request.user.is_authenticated:
+        messages.add_message(request, messages.INFO, "Esperamos que hayas tenido una agradable experiencia.", extra_tags='LOGOUT', fail_silently=False)
     logout(request)
     return redirect('inicio')
 
@@ -287,6 +337,34 @@ def is_number(s):
         pass
 
     return False
+
+def historial(request):
+    if request.user.is_authenticated:
+        user_history = Historial.objects.filter(user=request.user).order_by("-fecha")
+        for historia in user_history:
+            newBusqueda = ""
+            params = historia.busqueda.split("&")
+            # print("a-"+params[0]+"-b")
+            if len(params[0])>0:
+                newBusqueda = params[0]
+            if len(params[1])>2:
+                disc = Disciplina.objects.get(id=params[1][2:]).nombre
+                if len(newBusqueda)>1 :
+                    newBusqueda = newBusqueda + ", Disciplina: "+ disc
+                else :
+                    newBusqueda = "Disciplina: "+disc
+            if len(params[2])>2:
+                estr = Estrategia_Pedagogica.objects.get(id=params[2][2:]).nombre
+                if len(newBusqueda)>1 :
+                    newBusqueda = newBusqueda + ", Estrategía Pedagógica: "+ estr
+                else :
+                    newBusqueda = "Estrategía Pedagógica: "+ estr
+            if newBusqueda == "":
+                newBusqueda = "Busqueda realizada sin filtros"
+            historia.newBusqued = newBusqueda
+            # disc = params[1]
+        context = {"historias":user_history}
+        return render(request,'pages/historial.html', context)
 
 class IdNombre:
     def __init__(self, id, nombre):
