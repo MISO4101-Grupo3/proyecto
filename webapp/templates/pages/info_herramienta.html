@@ -59,7 +59,12 @@
                                                     <i class="fa fa-facebook"></i> Compartir </button>
                                     </a>
                                 </div>
-                                <div class="col-4"></div>
+                                <div class="col-4">
+                                    <a href="https://twitter.com/home?status={{ request.build_absolute_uri }}">
+                                        <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left btn-blue">
+                                                    <i class="fa fa-twitter"></i> Tweet </button>
+                                    </a>
+                                </div>
                                 <div class="col-4">
                                         <a href="{% url 'likeObject' 'unused' 'Herramienta' '1' herramienta.slug %}">
                                                 <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left btn-blue">
