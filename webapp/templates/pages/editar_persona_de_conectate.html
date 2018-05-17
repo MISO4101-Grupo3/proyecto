@@ -95,8 +95,9 @@
                             <!-- Account settings -->
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <form class="form-default" data-toggle="validator" role="form">
+                                    <form method="post" class="form-default" data-toggle="validator" role="form" id="editarpersona-form">
                                         <!-- General information -->
+                                        {% csrf_token %}
                                         <div class="card no-border">
                                             <div class="card-title px-0 pb-0 no-border">
                                                 <h3 class="heading heading-6 strong-600">
@@ -111,14 +112,14 @@
                                                     <div class="col-md-6 col-lg-4">
                                                         <div class="form-group">
                                                             <label class="control-label">Nombres</label>
-                                                            <input type="text" class="form-control form-control-lg" placeholder="{{ user.first_name }}">
+                                                            <input type="text" id="id_nombres" class="form-control form-control-lg" value="{{ user.first_name }}">
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6 col-lg-4">
                                                         <div class="form-group">
                                                             <label class="control-label">Apellidos</label>
-                                                            <input type="text" class="form-control form-control-lg" placeholder="{{ user.last_name }}">
+                                                            <input type="text" id="id_apellidos" class="form-control form-control-lg" value="{{ user.last_name }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -126,7 +127,7 @@
                                                     <div class="col-md-6 col-lg-4">
                                                         <div class="form-group">
                                                             <label class="control-label">Correo Electrónico</label>
-                                                            <input type="text" class="form-control form-control-lg" placeholder="{{ user.email }}">
+                                                            <input type="text" id="id_email" class="form-control form-control-lg" value="{{ user.email }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -134,7 +135,7 @@
                                                     <div class="col-md-6 col-lg-8">
                                                         <div class="form-group">
                                                             <label class="control-label">Perfil Profesional</label>
-                                                            <input type="text" class="form-control form-control-lg" placeholder="{{ user.personal.perfil }}">
+                                                            <input type="text" id="id_perfil_profesional" class="form-control form-control-lg" value="{{ user.personal.perfil }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -147,10 +148,10 @@
                                         <div class="card no-border">
                                             <div class="card-title px-0 pb-0 no-border">
                                                 <h3 class="heading heading-6 strong-600">
-                                                    Account info
+                                                    Herramientas
                                                 </h3>
                                                 <p class="mt-1 mb-0">
-                                                    Edit your email and also, your newsletter subscriptions.
+                                                    Edita las herramientas que manejas
                                                 </p>
                                             </div>
                                             <div class="card-body px-0">
@@ -159,24 +160,12 @@
                                                         <div class="form-group">
                                                             <label class="control-label">Herramientas</label>
                                                             <div class="bootstrap-tagsinput w-100" >
-                                                                <input type="text" name="herramientas" class="form-control" id="herramientas" style="display: none">
+                                                                <input type="text" name="herramientas" class="form-control" id="herramientas" style="display: none" value="hola,mundo">
                                                             </div>
+                                                            <button type="submit" id="btn-editar" class="btn btn-styled btn-block btn-rounded btn-base-2">Editar</button>
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <!-- <div class="row">
-                                                     <div class="col-md-6 col-lg-4">
-                                                         <div class="form-group">
-                                                             <label class="control-label">Email frequency</label>
-                                                             <select class="form-control form-control-lg">
-                                                                 <option value="">Daily</option>
-                                                                 <option value="">Weekly</option>
-                                                                 <option value="">Monthly</option>
-                                                             </select>
-                                                         </div>
-                                                     </div>
-                                                 </div>-->
                                             </div>
                                         </div>
 
@@ -184,39 +173,6 @@
 
                                         <!-- Change password -->
                                         <div class="card no-border">
-                                            <div class="card-title px-0 pb-0 no-border">
-                                                <h3 class="heading heading-6 strong-600">
-                                                    Change password
-                                                </h3>
-                                            </div>
-                                            <div class="card-body px-0">
-                                                <div class="row">
-                                                    <div class="col-md-6 col-lg-4">
-                                                        <div class="form-group">
-                                                            <label class="control-label">Current password</label>
-                                                            <input type="text" class="form-control form-control-lg">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-6 col-lg-4">
-                                                        <div class="form-group">
-                                                            <label class="control-label">New password</label>
-                                                            <input type="text" class="form-control form-control-lg">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-6 col-lg-4">
-                                                        <div class="form-group">
-                                                            <label class="control-label">Confirm password</label>
-                                                            <input type="text" class="form-control form-control-lg">
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="text-right">
-                                                    <a href="#" class="btn btn-base-1">Change password</a>
-                                                </div>
-                                            </div>
                                         </div>
                                     </form>
                                 </div>
@@ -226,73 +182,7 @@
 
                             <!-- Addresses -->
                             <div class="py-4">
-                                <h3 class="heading heading-6 strong-600">My addresses</h3>
                             </div>
-
-                            <div class="row cols-md-space cols-sm-space cols-xs-space">
-                                <div class="col-lg-6">
-                                    <div class="card">
-                                        <div class="px-4 py-4">
-                                            <p class="c-gray-light">
-                                                Desiree Jinny
-                                                <br>
-                                                1333 Deerfield, State College
-                                                <br>
-                                                PA, 16803
-                                            </p>
-
-                                            <p class="c-gray-light mt-3">
-                                                E: desiree@example.com
-                                                <br>
-                                                T: 555 965 452
-                                            </p>
-
-                                            <span class="clearfix"></span>
-
-                                            <ul class="inline-links inline-links--style-2">
-                                                <li class="d-none d-lg-inline-block">
-                                                    <a href="#" class="link link--style-2 strong-600">Edit address</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="link link--style-2 strong-600">Add new</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="card">
-                                        <div class="px-4 py-4">
-                                            <p class="c-gray-light">
-                                                Desiree Jinny
-                                                <br>
-                                                1333 Deerfield, State College
-                                                <br>
-                                                PA, 16803
-                                            </p>
-
-                                            <p class="c-gray-light mt-3">
-                                                E: desiree@example.com
-                                                <br>
-                                                T: 555 965 452
-                                            </p>
-
-                                            <span class="clearfix"></span>
-
-                                            <ul class="inline-links inline-links--style-2">
-                                                <li class="d-none d-lg-inline-block">
-                                                    <a href="#" class="link link--style-2 strong-600">Edit address</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="link link--style-2 strong-600">Add new</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
                 </div>
@@ -327,6 +217,55 @@
                 }
             });
 
+            {% for h in persona_de_conectate.herramientas.all %}
+                $('#herramientas').tagsinput('add', { id: {{ h.id }}, nombre: "{{ h.nombre }}"});
+            {% endfor %}
         });
+
+        $("#editarpersona-form").submit(function(e){
+            e.preventDefault();
+            editarPersonaConectate();
+        });
+
+        function editarPersonaConectate() {
+        var csrf = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+        var nombres = document.getElementById('id_nombres');
+        var apellidos = document.getElementById('id_apellidos');
+        var email = document.getElementById("id_email");
+        var perfilProfesional = document.getElementById("id_perfil_profesional");
+        var herramienta = document.getElementById("herramientas");
+        $(nombres).prop('disabled', true);
+        $(apellidos).prop('disabled', true);
+        $(email).prop('disabled', true);
+        $(perfilProfesional).prop('disabled', true);
+        $(herramienta).prop('disabled', true);
+
+        var url = "{% url 'editar' %}"
+
+        var btnEditar = $(document.getElementById('btn-editar'));
+
+        btnEditar.html(btnEditar.data('loadingHtml'));
+        console.log("Guardando cambios");
+        $.post(url,{nombres:nombres.value,csrfmiddlewaretoken:csrf,apellidos:apellidos.value,email:email.value,perfilProfesional:perfilProfesional.value,herramientas:herramienta.value}, function (response) {
+            $(nombres).prop('disabled', false);
+            $(apellidos).prop('disabled', false);
+            $(email).prop('disabled', false);
+            $(perfilProfesional).prop('disabled', false);
+            $(herramienta).prop('disabled', false);
+            console.log(response);
+            var status = response.status;
+            if(status == 200){
+                //TODO
+                toastr.success(response.mensaje,'Exito');
+            }
+            else{
+                //toastr.error(response.message, 'Error');
+                //TODO
+
+            }
+        })
+
+    }
+
     </script>
 {% endblock %}

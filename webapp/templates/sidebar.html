@@ -29,11 +29,13 @@
         <h3 class="st-menu-title">Cuenta</h3>
         <div class="st-menu-list">
             <ul>
+                {% if user.personal %}
                 <li>
                     <a href="{% url 'editar' %}" id="link-perfil">
                         <i class="ion-ios-person-outline"></i> Perfil
                     </a>
                 </li>
+                {% endif %}
 
                 <li>
                     <a href="{% url 'logout' %}" id="link-logout">

@@ -236,19 +236,40 @@ def info_persona_de_conectate(request,slug):
 
 @login_required
 def edit_persona_de_conectate(request):
+    if Persona_De_Conectate.objects.filter(user=request.user).count() == 0:
+        return redirect('inicio')
     editPersonaConectate = Persona_De_Conectate.objects.filter(user=request.user).get()
-    print(editPersonaConectate)
     if request.method == 'POST':
-        form = Persona_De_ConectateForm(request.POST, request=request, instance=editPersonaConectate)
-        if form.is_valid():
-            form.save()
-            data = form.cleaned_data
-            print(data)
-            return redirect('inicio')
-    else:
-        context = {"edit_persona_de_conectate": editPersonaConectate}
-        form = Persona_De_ConectateForm(instance=editPersonaConectate)
-    return render(request, 'pages/editar_persona_de_conectate.html', {'form': form})
+
+        status = 200
+        mensaje = "Cambios guardados"
+        if False:  #TODO Verificar los posibles errores
+            status = 400
+            mensaje = "Error" # indicar el error aquí
+        else:
+            nombres = request.POST.get('nombres','')
+            apellidos = request.POST.get('apellidos','')
+            perfilProfesional = request.POST.get('perfilProfesional','')
+            herramientas = request.POST.get('herramientas','').split(',')
+
+            user = request.user
+            user.first_name = nombres
+            user.last_name = apellidos
+            editPersonaConectate.perfil = perfilProfesional
+            editPersonaConectate.herramientas.clear()
+            if len(herramientas) > 0:
+                for h in herramientas:
+                    id = int(h)
+                    herr = Herramienta.objects.filter(id=id)
+                    if herr.count()>0:
+                        editPersonaConectate.herramientas.add(herr.get())
+            user.save()
+            editPersonaConectate.save()
+
+        return JsonResponse({'status':status,'mensaje':mensaje});
+
+    context = {"persona_de_conectate": editPersonaConectate}
+    return render(request, 'pages/editar_persona_de_conectate.html', context)
 
 def personal(request):
     personas_de_conectate = get_list_or_404(Persona_De_Conectate)
