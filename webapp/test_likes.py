@@ -1,6 +1,5 @@
 from unittest import TestCase
 from webapp.models import Herramienta, Ejemplo_De_Uso, Tutorial, Estrategia_Pedagogica
-from django.contrib.auth.models import User
 
 
 class TestLikes(TestCase):
