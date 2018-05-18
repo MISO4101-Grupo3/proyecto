@@ -60,6 +60,26 @@
                                     </a>
                                 {% endfor %}
                             </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" >
+                                        <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left btn-blue">
+                                                    <i class="fa fa-facebook"></i> Compartir </button>
+                                    </a>
+                                </div>
+                                <div class="col-4">
+                                    <a href="https://twitter.com/home?status={{ request.build_absolute_uri }}">
+                                        <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left btn-blue">
+                                                    <i class="fa fa-twitter"></i> Tweet </button>
+                                    </a>
+                                </div>
+                                <div class="col-4">
+                                        <a href="{% url 'likeObject' 'unused' 'Ejemplo' '1' ejemplo_de_uso.slug %}">
+                                                <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left btn-blue">
+                                                    <i class="ion-happy-outline"></i> {{ejemplo_de_uso.likes}}</button>
+                                        </a>
+                                </div>
+                            </div>
         </div>
             </div>
             <div class="col-lg-4">

@@ -164,11 +164,17 @@
                                         <div class="card-footer">
                                             <div class="product-buttons">
                                                 <div class="row align-items-center">
-                                                    <div class="col-12">
+                                                    <div class="col-7">
                                                         <a href="{% url 'herramientas' res.slug %}">
                                                             <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left">
                                                                 <i class="ion-information-circled"></i> More Info
                                                             </button>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-5">
+                                                        <a href="{% url 'likeObject' path 'Herramienta' '0' res.slug %}">
+                                                            <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left btn-blue">
+                                                                <i class="ion-happy-outline"></i> {{res.likes}}</button>
                                                         </a>
                                                     </div>
                                                 </div>
@@ -228,11 +234,17 @@
                                                         <i class="ion-ios-cloud-download"></i>
                                                     </button>
                                                 </div> -->
-                                                <div class="col-12">
+                                                <div class="col-7">
                                                     <a href="{% url 'ejemplos' res.slug%}">
                                                         <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left">
                                                             <i class="ion-information-circled"></i> More Info
                                                         </button>
+                                                    </a>
+                                                </div>
+                                                <div class="col-5">
+                                                    <a href="{% url 'likeObject' path 'Ejemplo' '0' res.slug %}">
+                                                        <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left btn-blue">
+                                                            <i class="ion-happy-outline"></i> {{res.likes}}</button>
                                                     </a>
                                                 </div>
                                             </div>
@@ -258,13 +270,19 @@
                                     <div class="card-footer">
                                         <div class="product-buttons">
                                             <div class="row align-items-center">
-                                                <div class="col-12">
+                                                <div class="col-7">
                                                     <a href="{% url 'tutoriales' res.herramienta.slug res.slug %}">
                                                         <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left">
                                                             <i class="ion-information-circled"></i> More Info
                                                         </button>
                                                     </a>
 
+                                                </div>
+                                                <div class="col-5">
+                                                    <a href="{% url 'likeTutorial' 'Tutorial' '0' res.herramienta.slug res.slug path %}">
+                                                        <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left btn-blue">
+                                                            <i class="ion-happy-outline"></i> {{res.likes}}</button>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
