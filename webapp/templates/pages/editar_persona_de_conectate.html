@@ -21,51 +21,7 @@
                                     <h3 class="heading heading-light heading-6 strong-400 profile-location">Extensión: {{ user.personal.contacto }}</h3>
                                 </div>
 
-                                <!-- Profile connect -->
-                                <!--<div class="profile-connect mt-4">
-                                    <a href="#" class="btn btn-styled btn-block btn-rounded btn-base-1">Follow</a>
-                                    <a href="#" class="btn btn-styled btn-block btn-rounded btn-base-2">Send message</a>
-                                </div> -->
 
-                                <!-- Profile stats -->
-                                <!--<div class="profile-stats clearfix">
-                                    <div class="stats-entry">
-                                        <span class="stats-count">180</span>
-                                        <span class="stats-label text-uppercase">Projects</span>
-                                    </div>
-                                    <div class="stats-entry">
-                                        <span class="stats-count">1.3K</span>
-                                        <span class="stats-label text-uppercase">Followers</span>
-                                    </div>
-                                </div>-->
-
-                                <!-- Profile connected accounts -->
-                                <!--<div class="profile-useful-links clearfix">
-                                    <div class="useful-links">
-                                        <a href="#" class="link link--style-1">
-                                            <i class="icon ion-social-instagram-outline"></i>
-                                            instagram.com/webpixels_io
-                                        </a>
-                                        <a href="#" class="link link--style-1">
-                                            <i class="icon ion-social-dribbble"></i>
-                                            dribbble.com/webpixels
-                                        </a>
-
-                                        <a href="#" class="link link--style-1">
-                                            <i class="icon ion-earth"></i>
-                                            webpixels.io
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <div class="profile-useful-links clearfix">
-                                    <div class="useful-links">
-                                        <a href="#" class="link link--style-1">
-                                            <i class="icon ion-code-download"></i>
-                                            Export page as PDF
-                                        </a>
-                                    </div>
-                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -249,19 +205,15 @@
         $.post(url,{nombres:nombres.value,csrfmiddlewaretoken:csrf,apellidos:apellidos.value,email:email.value,perfilProfesional:perfilProfesional.value,herramientas:herramienta.value}, function (response) {
             $(nombres).prop('disabled', false);
             $(apellidos).prop('disabled', false);
-            $(email).prop('disabled', false);
             $(perfilProfesional).prop('disabled', false);
             $(herramienta).prop('disabled', false);
-            console.log(response);
+
             var status = response.status;
             if(status == 200){
-                //TODO
                 toastr.success(response.mensaje,'Exito');
             }
             else{
-                //toastr.error(response.message, 'Error');
-                //TODO
-
+                toastr.error(response.message, 'Error');
             }
         })
 
