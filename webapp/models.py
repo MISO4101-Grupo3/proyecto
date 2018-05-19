@@ -139,6 +139,7 @@ class Persona_De_Conectate(models.Model):
 
     class Meta:
         verbose_name_plural = "Personal de conectate"
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, related_name="personal", null=True, blank=True)
     nombre = models.CharField(null=True, blank=True, max_length=255)
     perfil = models.TextField(null=True, blank=True)
     herramientas = models.ManyToManyField('Herramienta', related_name='personal_de_conectate', blank=True)

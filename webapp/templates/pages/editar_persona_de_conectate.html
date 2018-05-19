@@ -1,0 +1,223 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+    <section class="slice-sm sct-color-1">
+        <div class="profile">
+            <div class="container">
+                <div class="row cols-xs-space cols-sm-space cols-md-space">
+                    <div class="col-lg-4">
+                        <div class="sidebar sidebar--style-2 no-border">
+                            <div class="widget">
+                                <!-- Profile picture -->
+                                <div class="profile-picture profile-picture--style-2">
+                                    <img src="{{ user.personal.imagen.url }}" class="img-center">
+                                </div>
+
+                                <!-- Profile details -->
+                                <div class="profile-details">
+                                    <h2 class="heading heading-4 strong-500 profile-name">{{ user.personal.nombre }}</h2>
+                                    <h3 class="heading heading-6 strong-400 profile-occupation mt-3">{{ user.personal.perfil }}</h3>
+                                    <h3 class="heading heading-light heading-6 strong-400 profile-location">Extensión: {{ user.personal.contacto }}</h3>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8">
+                        <div class="main-content">
+                            <!-- Page title -->
+                            <div class="page-title">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-6 col-12">
+                                        <h2 class="heading heading-5 text-capitalize strong-500 mb-0">
+                                            <a>
+                                                <i class="ion-ios-arrow-back"></i> Mi perfil
+                                            </a>
+                                        </h2>
+                                    </div>
+                                    <div class="col-lg-6 col-12">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="link-menu link-menu--style-3 py-4 border-bottom">
+                                <a href="../../pages/profile/account-settings.html" class="active">Perfil</a>
+                            </div>
+
+                            <!-- Account settings -->
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <form method="post" class="form-default" data-toggle="validator" role="form" id="editarpersona-form">
+                                        <!-- General information -->
+                                        {% csrf_token %}
+                                        <div class="card no-border">
+                                            <div class="card-title px-0 pb-0 no-border">
+                                                <h3 class="heading heading-6 strong-600">
+                                                    Informacion de tu cuenta
+                                                </h3>
+                                                <p class="mt-1 mb-0">
+                                                    Puedes editar cualquiera de los siguientes campos
+                                                </p>
+                                            </div>
+                                            <div class="card-body px-0">
+                                                <div class="row">
+                                                    <div class="col-md-6 col-lg-4">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Nombres</label>
+                                                            <input type="text" id="id_nombres" class="form-control form-control-lg" value="{{ user.first_name }}">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-lg-4">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Apellidos</label>
+                                                            <input type="text" id="id_apellidos" class="form-control form-control-lg" value="{{ user.last_name }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 col-lg-4">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Correo Electrónico</label>
+                                                            <input type="text" id="id_email" class="form-control form-control-lg" value="{{ user.email }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 col-lg-8">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Perfil Profesional</label>
+                                                            <input type="text" id="id_perfil_profesional" class="form-control form-control-lg" value="{{ user.personal.perfil }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <hr class="mt-0 mb-0">
+
+                                        <!-- Account info -->
+                                        <div class="card no-border">
+                                            <div class="card-title px-0 pb-0 no-border">
+                                                <h3 class="heading heading-6 strong-600">
+                                                    Herramientas
+                                                </h3>
+                                                <p class="mt-1 mb-0">
+                                                    Edita las herramientas que manejas
+                                                </p>
+                                            </div>
+                                            <div class="card-body px-0">
+                                                <div class="row align-items-center">
+                                                    <div class="col-md-6 col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Herramientas</label>
+                                                            <div class="bootstrap-tagsinput w-100" >
+                                                                <input type="text" name="herramientas" class="form-control" id="herramientas" style="display: none" value="hola,mundo">
+                                                            </div>
+                                                            <button type="submit" id="btn-editar" class="btn btn-styled btn-block btn-rounded btn-base-2">Editar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <hr class="mt-0 mb-0">
+
+                                        <!-- Change password -->
+                                        <div class="card no-border">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <hr class="mt-0 mb-0">
+
+                            <!-- Addresses -->
+                            <div class="py-4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock body %}
+
+{% block custom_js %}
+    <script>
+
+        $(document).ready(function () {
+
+            var herramientas = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('nombre'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                prefetch: '/api/herramientas'
+            });
+            herramientas.initialize();
+
+            var elt = $('#herramientas');
+
+            elt.tagsinput({
+                itemValue: 'id',
+                itemText: 'nombre',
+                typeaheadjs: {
+                    name: 'herramientas',
+                    displayKey: 'nombre',
+                    source: herramientas.ttAdapter()
+                }
+            });
+
+            {% for h in persona_de_conectate.herramientas.all %}
+                $('#herramientas').tagsinput('add', { id: {{ h.id }}, nombre: "{{ h.nombre }}"});
+            {% endfor %}
+        });
+
+        $("#editarpersona-form").submit(function(e){
+            e.preventDefault();
+            editarPersonaConectate();
+        });
+
+        function editarPersonaConectate() {
+        var csrf = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+        var nombres = document.getElementById('id_nombres');
+        var apellidos = document.getElementById('id_apellidos');
+        var email = document.getElementById("id_email");
+        var perfilProfesional = document.getElementById("id_perfil_profesional");
+        var herramienta = document.getElementById("herramientas");
+        $(nombres).prop('disabled', true);
+        $(apellidos).prop('disabled', true);
+        $(email).prop('disabled', true);
+        $(perfilProfesional).prop('disabled', true);
+        $(herramienta).prop('disabled', true);
+
+        var url = "{% url 'editar' %}"
+
+        var btnEditar = $(document.getElementById('btn-editar'));
+
+        btnEditar.html(btnEditar.data('loadingHtml'));
+        console.log("Guardando cambios");
+        $.post(url,{nombres:nombres.value,csrfmiddlewaretoken:csrf,apellidos:apellidos.value,email:email.value,perfilProfesional:perfilProfesional.value,herramientas:herramienta.value}, function (response) {
+            $(nombres).prop('disabled', false);
+            $(apellidos).prop('disabled', false);
+            $(perfilProfesional).prop('disabled', false);
+            $(herramienta).prop('disabled', false);
+
+            var status = response.status;
+            if(status == 200){
+                toastr.success(response.mensaje,'Exito');
+            }
+            else{
+                toastr.error(response.message, 'Error');
+            }
+        })
+
+    }
+
+    </script>
+{% endblock %}

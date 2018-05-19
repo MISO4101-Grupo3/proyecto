@@ -1,8 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponseNotFound, JsonResponse
+from django.http import HttpResponseNotFound, JsonResponse, HttpResponse
 from django.views.decorators.http import require_http_methods
 from .forms import *
 from .models import *
@@ -11,6 +13,7 @@ from functools import reduce
 from itertools import chain
 from operator import attrgetter
 from django.core.paginator import Paginator
+from django.core import serializers
 
 # Create your views here.
 
@@ -256,6 +259,11 @@ def info_herramienta(request,slug):
     context = {"herramienta":herramienta, "comentarios":comentarios}
     return render(request,'pages/info_herramienta.html', context)
 
+def list_herramientas(request):
+    listHerramienta = Herramienta.objects.all().values('id','nombre')
+    dataHerramienta = list(listHerramienta)
+    return JsonResponse(dataHerramienta, safe=False)
+
 def info_ejemplo_de_uso(request,slug):
     ejemplo_de_uso = get_object_or_404(Ejemplo_De_Uso,slug=slug)
     comentarios = Comentario.objects.filter(tipo='ejemplo', id_tipo=ejemplo_de_uso.pk)
@@ -266,6 +274,43 @@ def info_persona_de_conectate(request,slug):
     persona_de_conectate = get_object_or_404(Persona_De_Conectate,slug=slug)
     context = {"persona_de_conectate":persona_de_conectate}
     return render(request,'pages/info_persona_de_conectate.html', context)
+
+@login_required
+def edit_persona_de_conectate(request):
+    if Persona_De_Conectate.objects.filter(user=request.user).count() == 0:
+        return redirect('inicio')
+    editPersonaConectate = Persona_De_Conectate.objects.filter(user=request.user).get()
+    if request.method == 'POST':
+
+        status = 200
+        mensaje = "Cambios guardados"
+        if False:  #TODO Verificar los posibles errores
+            status = 400
+            mensaje = "Error" # indicar el error aquí
+        else:
+            nombres = request.POST.get('nombres','')
+            apellidos = request.POST.get('apellidos','')
+            perfilProfesional = request.POST.get('perfilProfesional','')
+            herramientas = request.POST.get('herramientas','').split(',')
+
+            user = request.user
+            user.first_name = nombres
+            user.last_name = apellidos
+            editPersonaConectate.perfil = perfilProfesional
+            editPersonaConectate.herramientas.clear()
+            if len(herramientas) > 0:
+                for h in herramientas:
+                    id = int(h)
+                    herr = Herramienta.objects.filter(id=id)
+                    if herr.count()>0:
+                        editPersonaConectate.herramientas.add(herr.get())
+            user.save()
+            editPersonaConectate.save()
+
+        return JsonResponse({'status':status,'mensaje':mensaje});
+
+    context = {"persona_de_conectate": editPersonaConectate}
+    return render(request, 'pages/editar_persona_de_conectate.html', context)
 
 def personal(request):
     personas_de_conectate = get_list_or_404(Persona_De_Conectate)

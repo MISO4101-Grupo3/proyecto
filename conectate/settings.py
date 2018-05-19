@@ -173,3 +173,5 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'conectate.authentication_backends.EmailBackend',
 )
+
+LOGIN_URL='/ingresar'
