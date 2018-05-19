@@ -19,6 +19,17 @@ def inicio(request):
     #return render(request, 'pages/inicio.html', context)
     return  redirect('buscar')
 
+@require_http_methods(["POST"])
+def rest_add_comment(request):
+    descripcion = request.POST.get('comentario','')
+    id_tipo = int(request.POST.get('id',''))
+    tipo = request.POST.get('tipo','')
+
+    comentario = Comentario(descripcion=descripcion,tipo=tipo,id_tipo=id_tipo,usuario=request.user)
+    comentario.save()
+
+    return JsonResponse({'status': 'OK'})
+
 def buscar(request):
 
 
@@ -241,12 +252,14 @@ def likeTutorial(request, strTutorial, detailed,herramienta, tutorial, path):
 
 def info_herramienta(request,slug):
     herramienta = get_object_or_404(Herramienta,slug=slug)
-    context = {"herramienta":herramienta}
+    comentarios = Comentario.objects.filter(tipo='herramienta', id_tipo=herramienta.pk)
+    context = {"herramienta":herramienta, "comentarios":comentarios}
     return render(request,'pages/info_herramienta.html', context)
 
 def info_ejemplo_de_uso(request,slug):
     ejemplo_de_uso = get_object_or_404(Ejemplo_De_Uso,slug=slug)
-    context = {"ejemplo_de_uso":ejemplo_de_uso}
+    comentarios = Comentario.objects.filter(tipo='ejemplo', id_tipo=ejemplo_de_uso.pk)
+    context = {"ejemplo_de_uso":ejemplo_de_uso, "comentarios":comentarios}
     return render(request,'pages/info_ejemplo_de_uso.html', context)
 
 def info_persona_de_conectate(request,slug):
@@ -265,7 +278,8 @@ def tutoriales(request,slug_herramienta,slug_tutorial):
     if tutorial.count()==0:
         return HttpResponseNotFound()
     tutoriales = Tutorial.objects.filter(herramienta__slug=slug_herramienta)
-    context = {"tutorial":tutorial.first(),"tutoriales":tutoriales,"slug_tutorial":slug_tutorial}
+    comentarios = Comentario.objects.filter(tipo='tutorial', id_tipo=tutorial.first().pk)
+    context = {"tutorial":tutorial.first(),"tutoriales":tutoriales,"slug_tutorial":slug_tutorial, "comentarios":comentarios}
     return render(request,'pages/tutoriales.html', context)
 
 def login_register(request):

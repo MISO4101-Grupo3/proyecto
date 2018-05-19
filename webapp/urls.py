@@ -16,4 +16,5 @@ urlpatterns = [
     path('ingresar', views.login_register, name='ingresar'),
     path('auth/logout', views.logout_view, name='logout'),
     path('historial', views.historial, name="historial"),
+    path('comentario', views.rest_add_comment, name='anadir_comentario')
 ]
