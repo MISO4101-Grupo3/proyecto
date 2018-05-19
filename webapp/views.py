@@ -255,7 +255,7 @@ def likeTutorial(request, strTutorial, detailed,herramienta, tutorial, path):
 
 def info_herramienta(request,slug):
     herramienta = get_object_or_404(Herramienta,slug=slug)
-    comentarios = Comentario.objects.filter(tipo='herramienta', id_tipo=herramienta.pk)
+    comentarios = Comentario.objects.filter(tipo='herra', id_tipo=herramienta.pk)
     context = {"herramienta":herramienta, "comentarios":comentarios}
     return render(request,'pages/info_herramienta.html', context)
 
