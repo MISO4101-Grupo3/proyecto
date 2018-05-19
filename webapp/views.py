@@ -22,7 +22,19 @@ def inicio(request):
     #return render(request, 'pages/inicio.html', context)
     return  redirect('buscar')
 
+@require_http_methods(["POST"])
+def rest_add_comment(request):
+    descripcion = request.POST.get('comentario','')
+    id_tipo = int(request.POST.get('id',''))
+    tipo = request.POST.get('tipo','')
+
+    comentario = Comentario(descripcion=descripcion,tipo=tipo,id_tipo=id_tipo,usuario=request.user)
+    comentario.save()
+
+    return JsonResponse({'status': 'OK'})
+
 def buscar(request):
+
 
     q = request.GET.get('q','')
     e = request.GET.get('e','')
@@ -201,7 +213,7 @@ def buscar(request):
 
     page = paginator.page(page_num)
 
-    context = {'range':range(start, end),"resultados":page,"disciplinas":Disciplina.objects.all(),"estrategias":Estrategia_Pedagogica.objects.all(),"filtros_resultados":filtros_resultados}
+    context = {'range':range(start, end),"resultados":page,"disciplinas":Disciplina.objects.all(),"estrategias":Estrategia_Pedagogica.objects.all(),"filtros_resultados":filtros_resultados,"path":request.get_full_path()}
 
     filtros_disciplinas = list(set(filtros_disciplinas))
     filtros_estrategias = list(set(filtros_estrategias))
@@ -214,9 +226,37 @@ def buscar(request):
 
     return render(request,'pages/resultados.html', context)
 
+def like(request,path,superClass,detailed,slug):
+    print(superClass)
+    if superClass == 'Herramienta':
+        objeto = get_object_or_404(Herramienta, slug=slug)
+        objeto.likeObject()
+        if detailed == '1':
+            return redirect("/herramientas/"+slug)
+    elif superClass == 'Ejemplo':
+        objeto = get_object_or_404(Ejemplo_De_Uso, slug=slug)
+        objeto.likeObject()
+        if detailed == '1':
+            return redirect("/ejemplos/"+slug)
+    else:
+        objeto = get_object_or_404(Tutorial, slug=slug)
+    return redirect(path)
+
+def likeTutorial(request, strTutorial, detailed,herramienta, tutorial, path):
+    tutoriall = Tutorial.objects.filter(slug=tutorial,herramienta__slug=herramienta)
+    if tutoriall.count()==0:
+        return HttpResponseNotFound()
+    tutoriall = tutoriall.first()
+    tutoriall.likeObject()
+    if detailed == '0':
+        return redirect(path)
+    else :
+        return redirect('/herramientas/'+herramienta+'/tutoriales/'+tutorial)
+
 def info_herramienta(request,slug):
     herramienta = get_object_or_404(Herramienta,slug=slug)
-    context = {"herramienta":herramienta}
+    comentarios = Comentario.objects.filter(tipo='herramienta', id_tipo=herramienta.pk)
+    context = {"herramienta":herramienta, "comentarios":comentarios}
     return render(request,'pages/info_herramienta.html', context)
 
 def list_herramientas(request):
@@ -226,7 +266,8 @@ def list_herramientas(request):
 
 def info_ejemplo_de_uso(request,slug):
     ejemplo_de_uso = get_object_or_404(Ejemplo_De_Uso,slug=slug)
-    context = {"ejemplo_de_uso":ejemplo_de_uso}
+    comentarios = Comentario.objects.filter(tipo='ejemplo', id_tipo=ejemplo_de_uso.pk)
+    context = {"ejemplo_de_uso":ejemplo_de_uso, "comentarios":comentarios}
     return render(request,'pages/info_ejemplo_de_uso.html', context)
 
 def info_persona_de_conectate(request,slug):
@@ -282,7 +323,8 @@ def tutoriales(request,slug_herramienta,slug_tutorial):
     if tutorial.count()==0:
         return HttpResponseNotFound()
     tutoriales = Tutorial.objects.filter(herramienta__slug=slug_herramienta)
-    context = {"tutorial":tutorial.first(),"tutoriales":tutoriales,"slug_tutorial":slug_tutorial}
+    comentarios = Comentario.objects.filter(tipo='tutorial', id_tipo=tutorial.first().pk)
+    context = {"tutorial":tutorial.first(),"tutoriales":tutoriales,"slug_tutorial":slug_tutorial, "comentarios":comentarios}
     return render(request,'pages/tutoriales.html', context)
 
 def login_register(request):

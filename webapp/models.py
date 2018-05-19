@@ -4,6 +4,24 @@ from django.utils.text import slugify
 
 from .utils import *
 
+# Comentario
+
+class Comentario(models.Model):
+    def __str__(self):
+        return self.descripcion
+    
+    def class_name(self):
+        return self.__class__.__name__
+
+    descripcion = models.TextField(null=True, blank=True)
+    tipo = models.CharField(null=True, blank=True, max_length=10)
+    id_tipo = models.IntegerField(default=0)
+    usuario = models.ForeignKey(User, related_name='usuario_comentario', null=True, on_delete=models.CASCADE)
+    fecha = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        super(Comentario, self).save(*args, **kwargs)
+
 # Disciplina
 
 class Disciplina(models.Model):
@@ -72,10 +90,15 @@ class Herramienta(models.Model):
     integracion_con_lms = models.BooleanField(default=False, null=False)
     imagen = models.ImageField(upload_to=UploadToPathAndRename('uploads/imagenes'), null=True)
     slug = models.SlugField(max_length=250, unique=True, null=False, blank=False)
+    likes = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.nombre)
         super(Herramienta, self).save(*args, **kwargs)
+
+    def likeObject(self):
+        self.likes = self.likes + 1
+        self.save()
 
 
 # Ejemplo_De_Uso
@@ -95,10 +118,15 @@ class Ejemplo_De_Uso(models.Model):
     herramientas = models.ManyToManyField('Herramienta', related_name='ejemplos_de_uso', blank=True)
     estrategia = models.ForeignKey('Estrategia_Pedagogica', related_name='ejemplos_de_uso', on_delete=models.CASCADE)
     slug = models.SlugField(max_length=250, default="")
+    likes = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.nombre)
         super(Ejemplo_De_Uso, self).save(*args, **kwargs)
+
+    def likeObject(self):
+        self.likes = self.likes + 1
+        self.save()
 
 # Personal_de_conectate
 
@@ -141,10 +169,15 @@ class Tutorial(models.Model):
     url_recurso = models.URLField(null=True, blank=True)
     herramienta = models.ForeignKey('Herramienta', related_name='tutoriales', null=True, on_delete=models.CASCADE)
     slug = models.SlugField(max_length=250, null=False, blank=False)
+    likes = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.nombre)
         super(Tutorial, self).save(*args, **kwargs)
+
+    def likeObject(self):
+        self.likes = self.likes + 1
+        self.save()
 
 class Historial(models.Model):
 
