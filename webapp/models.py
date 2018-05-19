@@ -4,6 +4,24 @@ from django.utils.text import slugify
 
 from .utils import *
 
+# Comentario
+
+class Comentario(models.Model):
+    def __str__(self):
+        return self.descripcion
+    
+    def class_name(self):
+        return self.__class__.__name__
+
+    descripcion = models.TextField(null=True, blank=True)
+    tipo = models.CharField(null=True, blank=True, max_length=10)
+    id_tipo = models.IntegerField(default=0)
+    usuario = models.ForeignKey(User, related_name='usuario_comentario', null=True, on_delete=models.CASCADE)
+    fecha = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        super(Comentario, self).save(*args, **kwargs)
+
 # Disciplina
 
 class Disciplina(models.Model):
