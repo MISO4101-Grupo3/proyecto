@@ -50,6 +50,29 @@
 
                             <p> {{ herramienta.restricciones_de_uso }} </p>
 
+                            <h3 class="heading heading-4 strong-400 text-normal">Interacciones sociales</h3>
+
+                            <div class="row">
+                                <div class="col-4">
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" >
+                                        <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left btn-blue">
+                                                    <i class="fa fa-facebook"></i> Compartir </button>
+                                    </a>
+                                </div>
+                                <div class="col-4">
+                                    <a href="https://twitter.com/home?status={{ request.build_absolute_uri }}">
+                                        <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left btn-blue">
+                                                    <i class="fa fa-twitter"></i> Tweet </button>
+                                    </a>
+                                </div>
+                                <div class="col-4">
+                                        <a href="{% url 'likeObject' 'unused' 'Herramienta' '1' herramienta.slug %}">
+                                                <button type="button" class="btn btn-block btn-base-1 btn-circle btn-icon-left btn-blue">
+                                                    <i class="ion-happy-outline"></i> {{herramienta.likes}}</button>
+                                        </a>
+                                </div>
+                            </div>
+
                             <h3 class="heading heading-4 strong-400 text-normal"> Tutoriales </h3>
 
                             <div class="tagcloud tagcloud--style-1 clearfix">
@@ -340,7 +363,81 @@
 
                     </div>
                 </div>
+                <div class="col-lg-8">
+                    <div class="row">
+                        {% if user.is_authenticated %}
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-title px-4">
+                                    <h3 class="heading heading-5 strong-500">
+                                        Añade un comentario
+                                    </h3>
+                                </div>
+                                <div class="card-body px-4">
+                                    <form id="add_comment" >
+                                        <input type="hidden" name="id" value="{{herramienta.pk}}" />
+                                        <input type="hidden" name="tipo" value="herra" />
+                                        {% csrf_token %}
+                    
+                                        <div class="row">
+                                            <div class="col-md-12 mb-3 reg-field">
+                                                <textarea name="comentario" class="form-control form-control-lg" placeholder="Comentario"></textarea>
+                                            </div>
+                                        </div>
+                    
+                                        <div class="row align-items-center">
+                    
+                                            <div class="col-md-12 text-center">
+                                                <button type="button" class="btn btn-styled btn-base-1 px-4" name="accion" id="btn-submit-comentario">Comentar</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                    
+                    
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        <div class="col-12">
+                            <ul style="margin-top: 15px;">
+                            {% if comentarios %}
+                                {% for comentario in comentarios %}
+                                    <li style="list-style-type: none; border-left: 2px #ccc solid; padding-left: 5px;">
+                                        <blockquote>
+                                            {{comentario}} <br/>
+                                            <small>{{comentario.usuario.first_name}} {{comentario.usuario.last_name}} - <i>{{comentario.fecha}}</i></small>
+                                        </blockquote>
+                                    </li>
+                                {% endfor %}
+                            {% else %}
+                                <li>No hay comentarios aún, se el primero en añadir uno :)</li>
+                            {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
+{% endblock %}
+
+{% block custom_js %}
+
+    <script>
+        $(document).ready(function () {
+
+            $("#btn-submit-comentario").click(function () {
+                $.post('{% url 'anadir_comentario' %}', $('#add_comment').serialize())
+                .done(function() {
+                    window.location.reload(false);
+                })
+                .fail(function() {
+                    alert( "No pudimos agregar el comentario" );
+                })
+            });
+
+
+        });
+    </script>
+
 {% endblock %}

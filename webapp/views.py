@@ -1,7 +1,10 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponseNotFound, JsonResponse
+from django.http import HttpResponseNotFound, JsonResponse, HttpResponse
 from django.views.decorators.http import require_http_methods
 from .forms import *
 from .models import *
@@ -10,6 +13,7 @@ from functools import reduce
 from itertools import chain
 from operator import attrgetter
 from django.core.paginator import Paginator
+from django.core import serializers
 
 # Create your views here.
 
@@ -18,7 +22,19 @@ def inicio(request):
     #return render(request, 'pages/inicio.html', context)
     return  redirect('buscar')
 
+@require_http_methods(["POST"])
+def rest_add_comment(request):
+    descripcion = request.POST.get('comentario','')
+    id_tipo = int(request.POST.get('id',''))
+    tipo = request.POST.get('tipo','')
+
+    comentario = Comentario(descripcion=descripcion,tipo=tipo,id_tipo=id_tipo,usuario=request.user)
+    comentario.save()
+
+    return JsonResponse({'status': 'OK'})
+
 def buscar(request):
+
 
     q = request.GET.get('q','')
     e = request.GET.get('e','')
@@ -197,7 +213,7 @@ def buscar(request):
 
     page = paginator.page(page_num)
 
-    context = {'range':range(start, end),"resultados":page,"disciplinas":Disciplina.objects.all(),"estrategias":Estrategia_Pedagogica.objects.all(),"filtros_resultados":filtros_resultados}
+    context = {'range':range(start, end),"resultados":page,"disciplinas":Disciplina.objects.all(),"estrategias":Estrategia_Pedagogica.objects.all(),"filtros_resultados":filtros_resultados,"path":request.get_full_path()}
 
     filtros_disciplinas = list(set(filtros_disciplinas))
     filtros_estrategias = list(set(filtros_estrategias))
@@ -210,20 +226,91 @@ def buscar(request):
 
     return render(request,'pages/resultados.html', context)
 
+def like(request,path,superClass,detailed,slug):
+    print(superClass)
+    if superClass == 'Herramienta':
+        objeto = get_object_or_404(Herramienta, slug=slug)
+        objeto.likeObject()
+        if detailed == '1':
+            return redirect("/herramientas/"+slug)
+    elif superClass == 'Ejemplo':
+        objeto = get_object_or_404(Ejemplo_De_Uso, slug=slug)
+        objeto.likeObject()
+        if detailed == '1':
+            return redirect("/ejemplos/"+slug)
+    else:
+        objeto = get_object_or_404(Tutorial, slug=slug)
+    return redirect(path)
+
+def likeTutorial(request, strTutorial, detailed,herramienta, tutorial, path):
+    tutoriall = Tutorial.objects.filter(slug=tutorial,herramienta__slug=herramienta)
+    if tutoriall.count()==0:
+        return HttpResponseNotFound()
+    tutoriall = tutoriall.first()
+    tutoriall.likeObject()
+    if detailed == '0':
+        return redirect(path)
+    else :
+        return redirect('/herramientas/'+herramienta+'/tutoriales/'+tutorial)
+
 def info_herramienta(request,slug):
     herramienta = get_object_or_404(Herramienta,slug=slug)
-    context = {"herramienta":herramienta}
+    comentarios = Comentario.objects.filter(tipo='herra', id_tipo=herramienta.pk)
+    context = {"herramienta":herramienta, "comentarios":comentarios}
     return render(request,'pages/info_herramienta.html', context)
+
+def list_herramientas(request):
+    listHerramienta = Herramienta.objects.all().values('id','nombre')
+    dataHerramienta = list(listHerramienta)
+    return JsonResponse(dataHerramienta, safe=False)
 
 def info_ejemplo_de_uso(request,slug):
     ejemplo_de_uso = get_object_or_404(Ejemplo_De_Uso,slug=slug)
-    context = {"ejemplo_de_uso":ejemplo_de_uso}
+    comentarios = Comentario.objects.filter(tipo='ejemplo', id_tipo=ejemplo_de_uso.pk)
+    context = {"ejemplo_de_uso":ejemplo_de_uso, "comentarios":comentarios}
     return render(request,'pages/info_ejemplo_de_uso.html', context)
 
 def info_persona_de_conectate(request,slug):
     persona_de_conectate = get_object_or_404(Persona_De_Conectate,slug=slug)
     context = {"persona_de_conectate":persona_de_conectate}
     return render(request,'pages/info_persona_de_conectate.html', context)
+
+@login_required
+def edit_persona_de_conectate(request):
+    if Persona_De_Conectate.objects.filter(user=request.user).count() == 0:
+        return redirect('inicio')
+    editPersonaConectate = Persona_De_Conectate.objects.filter(user=request.user).get()
+    if request.method == 'POST':
+
+        status = 200
+        mensaje = "Cambios guardados"
+        if False:  #TODO Verificar los posibles errores
+            status = 400
+            mensaje = "Error" # indicar el error aquí
+        else:
+            nombres = request.POST.get('nombres','')
+            apellidos = request.POST.get('apellidos','')
+            perfilProfesional = request.POST.get('perfilProfesional','')
+            herramientas = request.POST.get('herramientas','').split(',')
+
+            user = request.user
+            user.first_name = nombres
+            user.last_name = apellidos
+            editPersonaConectate.perfil = perfilProfesional
+            editPersonaConectate.herramientas.clear()
+            if len(herramientas) > 0:
+                for h in herramientas:
+                    id = int(h)
+                    herr = Herramienta.objects.filter(id=id)
+                    if herr.count()>0:
+                        editPersonaConectate.herramientas.add(herr.get())
+            user.save()
+            editPersonaConectate.save()
+
+        return JsonResponse({'status':status,'mensaje':mensaje});
+
+    context = {"persona_de_conectate": editPersonaConectate}
+    return render(request, 'pages/editar_persona_de_conectate.html', context)
 
 def personal(request):
     personas_de_conectate = get_list_or_404(Persona_De_Conectate)
@@ -236,8 +323,45 @@ def tutoriales(request,slug_herramienta,slug_tutorial):
     if tutorial.count()==0:
         return HttpResponseNotFound()
     tutoriales = Tutorial.objects.filter(herramienta__slug=slug_herramienta)
-    context = {"tutorial":tutorial.first(),"tutoriales":tutoriales,"slug_tutorial":slug_tutorial}
+    comentarios = Comentario.objects.filter(tipo='tutorial', id_tipo=tutorial.first().pk)
+    context = {"tutorial":tutorial.first(),"tutoriales":tutoriales,"slug_tutorial":slug_tutorial, "comentarios":comentarios}
     return render(request,'pages/tutoriales.html', context)
+
+def login_register(request):
+    if request.user.is_authenticated:
+        return redirect('buscar')
+    registro_form = RegistroUsuarioForm()
+    login_form = LoginForm()
+    accion = request.POST.get('accion','')
+    registro_submitted = False
+    login_submitted = False
+    if request.method == 'POST':
+        if 'registrar' == accion:
+            registro_submitted = True
+            registro_form = RegistroUsuarioForm(request.POST)
+            if registro_form.is_valid() :
+                user = registro_form.save(commit=False)
+                username = registro_form.cleaned_data.get('username')
+                user.email = username+'@uniandes.edu.co'
+                user.save()
+                print(user.username)
+                print(user.email)
+                raw_password = registro_form.cleaned_data.get('password1')
+                user = authenticate(username=username, password=raw_password)
+                login(request, user)
+                messages.add_message(request, messages.INFO, user.email, extra_tags='LOGIN', fail_silently=False)
+                return redirect('buscar')
+        elif 'login' == accion:
+            login_submitted = True
+            login_form = LoginForm(request.POST)
+            if login_form.is_valid():
+                user = authenticate(username=login_form.cleaned_data.get('usuario'), password=login_form.cleaned_data.get('contrasenia'))
+                login(request, user)
+                messages.add_message(request, messages.INFO, user.email, extra_tags='LOGIN', fail_silently=False)
+                return redirect('buscar')
+    context = {'registro_form':registro_form,'registro_submitted':registro_submitted,'login_form':login_form,'login_submitted':login_submitted}
+    return render(request, 'pages/login_register.html', context)
+
 
 @require_http_methods(["POST"])
 def rest_login(request):
@@ -257,6 +381,8 @@ def rest_login(request):
 
 
 def logout_view(request):
+    if request.user.is_authenticated:
+        messages.add_message(request, messages.INFO, "Esperamos que hayas tenido una agradable experiencia.", extra_tags='LOGOUT', fail_silently=False)
     logout(request)
     return redirect('inicio')
 

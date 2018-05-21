@@ -4,6 +4,11 @@
 
 <head>
 
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/tagmanager/3.0.2/tagmanager.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tagmanager/3.0.2/tagmanager.min.js"></script>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,6 +31,7 @@
     <link rel="stylesheet" href="{% static  'assets/vendor/hamburgers/hamburgers.min.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static  'assets/vendor/animate/animate.min.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static  'assets/vendor/fancybox/css/jquery.fancybox.min.css' %}">
+    <link rel="stylesheet" href="{% static  'assets/css/bootstrap-tagsinput.css' %}">
 
     <!-- Icons -->
     <link rel="stylesheet" href="{% static  'assets/fonts/font-awesome/css/font-awesome.min.css' %}" type="text/css">
@@ -87,6 +93,8 @@
     <!-- Bootstrap Extensions -->
     <script src="{% static  'assets/vendor/bootstrap-notify/bootstrap-growl.min.js' %}"></script>
     <script src="{% static  'assets/vendor/scrollpos-styler/scrollpos-styler.js' %}"></script>
+    <script src="{% static  'assets/js/bootstrap-tagsinput.min.js' %}"></script>
+
 
     <!-- Plugins: Sorted A-Z -->
     <script src="{% static  'assets/vendor/adaptive-backgrounds/adaptive-backgrounds.js' %}"></script>
@@ -108,6 +116,7 @@
     <script src="{% static  'assets/vendor/select2/js/select2.min.js' %}"></script>
     <script src="{% static  'assets/vendor/sticky-kit/sticky-kit.min.js' %}"></script>
     <script src="{% static  'assets/vendor/swiper/js/swiper.min.js' %}"></script>
+    <script src="{% static  'assets/vendor/swiper/js/moment-with-locales.min.js' %}"></script>
     <script src="{% static  'assets/vendor/textarea-autosize/autosize.min.js' %}"></script>
     <script src="{% static  'assets/vendor/typeahead/typeahead.bundle.min.js' %}"></script>
     <script src="{% static  'assets/vendor/typed/typed.min.js' %}"></script>
@@ -129,6 +138,18 @@
 
     <script>
         $(document).ready(function(){
+
+            {% if messages %}
+                {% for message in messages %}
+                    console.log("{{ message.tags }}")
+                    {% if  'LOGIN' in message.tags%}
+                        localStorage.setItem("message","success;:;Bienvenido,;:;{{ message }}");
+                    {% elif  'LOGOUT' in message.tags%}
+                        localStorage.setItem("message","info;:;Hasta pronto,;:;{{ message }}");
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
             //get it if Status key found
             var message = localStorage.getItem("message");
             if(message)

@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load webapp_extras %}
+
+{% block body %}
+
+    <section class="slice sct-color-1 pt-md-2">
+        <div class="profile">
+            <div class="container container-lg">
+                <div class="row cols-xs-space cols-sm-space cols-md-space">
+                    <div class="col-md-5">
+                        <div class="card">
+                            <div class="card-title px-4">
+                                <h3 class="heading heading-5 strong-500">
+                                    Iniciar sesión
+                                </h3>
+                            </div>
+                            <div class="card-body px-4">
+                                <form method="post" class="" >
+                                    {% csrf_token %}
+
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3 reg-field">
+                                            <label for="id_usuario">Usuario uniandes</label>
+                                            {% if login_form.usuario.errors %}
+                                                {% render_field login_form.usuario class+="form-control form-control-lg is-invalid" placeholder="Usuario uniandes" %}
+                                                <div class="invalid-feedback">
+                                                    {{ login_form.usuario.errors|striptags}}
+                                                </div>
+                                            {% elif login_submitted %}
+                                                {% render_field login_form.usuario class+="form-control form-control-lg is-valid" placeholder="Usuario uniandes" %}
+                                            {% else %}
+                                                {% render_field login_form.usuario class+="form-control form-control-lg" placeholder="Usuario uniandes" %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3 reg-field">
+                                            <label for="contrasenia_reg">Contraseña</label>
+                                            {% if login_form.contrasenia.errors %}
+                                                {% render_field login_form.contrasenia class+="form-control form-control-lg is-invalid" placeholder="Contraseña" %}
+                                                <div class="invalid-feedback">
+                                                    {{ login_form.contrasenia.errors|striptags}}
+                                                </div>
+                                            {% elif login_submitted %}
+                                                {% render_field login_form.contrasenia class+="form-control form-control-lg is-valid" placeholder="Contraseña" %}
+                                            {% else %}
+                                                {% render_field login_form.contrasenia class+="form-control form-control-lg" placeholder="Contraseña" %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="row align-items-center">
+
+                                        <div class="col-md-12 text-center">
+                                            <button type="submit" class="btn btn-styled btn-base-1 px-4" name="accion" value="login" id="btn-submit-login">Entrar</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+
+                            </div>
+                        </div>
+                        <div>
+                            <img src="https://conectate.uniandes.edu.co/images/yootheme/logo_conectate.png" style="width: 100%; padding-top: 15px" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-7">
+                        <div class="card">
+                            <div class="card-title px-4">
+                                <h3 class="heading heading-5 strong-500">
+                                    Registrarse
+                                </h3>
+                            </div>
+                            <div class="card-body px-4">
+
+                                {% comment %}                                {% if registro_form.errors %}
+                                    <!-- Error messaging -->
+                                    <div id="errors">
+                                        <div class="inner">
+                                            <p>There were some errors in the information you entered. Please correct the following:</p>
+                                            {{ registro_form.non_field_errors }}
+                                            <ul>
+                                                {% for field in registro_form %}
+                                                    {% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!-- /Error messaging -->
+                                {% endif %}{% endcomment %}
+
+                                <form method="post" class="" >
+
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3 reg-field">
+                                            <label for="usuario_reg">Usuario uniandes</label>
+                                            {% if registro_form.username.errors %}
+                                                {% render_field registro_form.username class+="form-control form-control-lg is-invalid" placeholder="Usuario uniandes" id="usuario_reg" %}
+                                                <div class="invalid-feedback">
+                                                    {{ registro_form.username.errors|striptags}}
+                                                </div>
+                                            {% elif registro_submitted %}
+                                                {% render_field registro_form.username class+="form-control form-control-lg is-valid" placeholder="Usuario uniandes" id="usuario_reg" %}
+                                            {% else %}
+                                                {% render_field registro_form.username class+="form-control form-control-lg" placeholder="Usuario uniandes" id="usuario_reg" %}
+                                            {% endif %}
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3 reg-field">
+                                            <label>Nombres</label>
+                                            {% if registro_form.first_name.errors %}
+                                                {% render_field registro_form.first_name class+="form-control form-control-lg is-invalid" placeholder="Nombres" %}
+                                                <div class="invalid-feedback">
+                                                    {{ registro_form.first_name.errors|striptags}}
+                                                </div>
+                                            {% elif registro_submitted %}
+                                                {% render_field registro_form.first_name class+="form-control form-control-lg is-valid" placeholder="Nombres" %}
+                                            {% else %}
+                                                {% render_field registro_form.first_name class+="form-control form-control-lg" placeholder="Nombres" %}
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="col-md-6 mb-3 reg-field">
+                                            <label>Apellidos</label>
+                                            {% if registro_form.last_name.errors %}
+                                                {% render_field registro_form.last_name class+="form-control form-control-lg is-invalid" placeholder="Apellidos" %}
+                                                <div class="invalid-feedback">
+                                                    {{ registro_form.last_name.errors|striptags}}
+                                                </div>
+                                            {% elif registro_submitted %}
+                                                {% render_field registro_form.last_name class+="form-control form-control-lg is-valid" placeholder="Apellidos" %}
+                                            {% else %}
+                                                {% render_field registro_form.last_name class+="form-control form-control-lg" placeholder="Apellidos" %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3 reg-field">
+                                            <label>Contraseña</label>
+                                            {% if registro_form.password1.errors or registro_form.password2.errors %}
+                                                {% render_field registro_form.password1 class+="form-control form-control-lg is-invalid" placeholder="Contraseña" %}
+                                            {% else %}
+                                                {% render_field registro_form.password1 class+="form-control form-control-lg" placeholder="Contraseña" %}
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="col-md-6 mb-3 reg-field">
+                                            <label>Confirmar contraseña</label>
+                                            {% if registro_form.password2.errors %}
+                                                {% render_field registro_form.password2 class+="form-control form-control-lg is-invalid" placeholder="Confirmar contraseña" %}
+                                            {% else %}
+                                                {% render_field registro_form.password2 class+="form-control form-control-lg" placeholder="Confirmar contraseña" %}
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-md-12">
+                                            {% if registro_form.password1.errors or registro_form.password2.errors %}
+                                                <input  type="hidden" class="form-control is-invalid">
+                                                <div class="invalid-feedback">
+                                                    {% for err in registro_form.password2.errors %}
+                                                        {{ err}} <span> </span>
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="row py-4 align-items-center">
+
+                                        <div class="col-md-8">
+                                            <div class="checkbox">
+                                                {{ registro_form.terminos |attr:"oninvalid:this.setCustomValidity('Debes aceptar terminos y condiciones.')" |attr:"onchange:this.setCustomValidity('')" }}
+                                                <label for="id_terminos">Aceptas nuestros <a href="#.">terminos y condiciones</a></label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <button type="submit" class="btn btn-styled btn-base-1" name="accion" value="registrar" id="btn-registrar">Registrarse</button>
+                                        </div>
+                                    </div>
+
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}
+
+{% block custom_js %}
+
+
+{% endblock %}
