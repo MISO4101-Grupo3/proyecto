@@ -145,6 +145,9 @@ MEDIA_URL = '/media/'
 # END MEDIA CONFIGURATION
 
 USE_S3 = config('USE_S3', default=False, cast=bool)
+STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, 'static'),
+    )
 
 if USE_S3:
     # S3 Configuration
@@ -165,9 +168,7 @@ if USE_S3:
 
 else:
     STATIC_ROOT = BASE_DIR
-    STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, 'static'),
-    )
+
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
